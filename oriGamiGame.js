@@ -9,5 +9,12 @@ app.directive('navbar', function() {
 
 
 app.controller("MapController", [ "$scope", function($scope) {
-  // Nothing to see here yet!
+  angular.extend($scope, {
+    // Center the map
+    center: {
+      lat: 52,
+      lng: 7,
+      zoom: 6
+    },
+  });
 }]);
