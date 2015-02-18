@@ -1,8 +1,14 @@
 html, body {
   height: 100%;
+  padding:0px;
+  margin:0px;
 }
 
 .angular-leaflet-map {
   width: device-width;
   height: 100%;
+}
+
+.leaflet-top.leaflet-left {
+  top: 50px;
 }
