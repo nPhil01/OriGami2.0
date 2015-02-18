@@ -1,4 +1,4 @@
-var app = angular.module("oriGamiGame", []);
+var app = angular.module("oriGamiGame", ['leaflet-directive']);
 
 app.directive('navbar', function() {
   return {
@@ -6,3 +6,8 @@ app.directive('navbar', function() {
     templateUrl: "navbar.html"
   }
 });
+
+
+app.controller("MapController", [ "$scope", function($scope) {
+  // Nothing to see here yet!
+}]);
