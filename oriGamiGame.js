@@ -1,4 +1,4 @@
-var app = angular.module("oriGamiGame", ['leaflet-directive'], ['ngGeolocation']);
+var app = angular.module("oriGamiGame", ['leaflet-directive']);
 
 app.directive('navbar', function() {
   return {
@@ -8,22 +8,42 @@ app.directive('navbar', function() {
 });
 
 
-app.controller("MapController", [ "$scope", function($scope) {
+app.controller("MapController", [ "$scope", function($scope, $http) {
   angular.extend($scope, {
     // Center the map
     center: {
+      autoDiscover:true,
+      zoom: 8
+    }
+    ,
+    defaults: {
       lat: 52,
       lng: 7,
-      zoom: 6
-    },
+      zoom:7
+    }
+    ,
+
   });
 }]);
+
+app.controller("GeoCtrl", function($scope, $window){
+ $window.navigator.geolocation.getCurrentPosition(function(position){
+       console.log(position);
+       var lat = position.coords.latitude;
+       var lng = position.coords.longitude;
+
+       $scope.$apply(function(){
+        $scope.lat = lat;
+        $scope.lng = lng;
+       });
+     });
+});
 
  /*
   Geolocation Controller
     get current position with HTML5 Geolocation
-  */
-app.controller('GeolocationController',['$geolocation', '$scope' function ($geolocation, $scope){
+/*  
+app.controller('GeolocationController',['$geolocation', '$scope', function ($geolocation, $scope){
   $scope.myPosition = $geolocation.getCurrentPosition({
   timeout: 60000
      }).then(function(position) {
@@ -43,3 +63,4 @@ app.controller('GeolocationController',['$geolocation', '$scope' function ($geol
         $scope.myError = $geolocation.position.error; // this becomes truthy, and has 'code' and 'message' if an error occurs
     }]);
    );
+*/
