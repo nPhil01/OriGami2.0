@@ -7,8 +7,15 @@ app.directive('navbar', function() {
   }
 });
 
+app.controller("NavigationController", [ "$scope", function($scope) {
+  console.log("Create navigation controller");
+  angular.extend($scope, {
+    
+  });
+}]);
 
 app.controller("MapController", [ "$scope", function($scope) {
+  console.log("Create map controller");
   angular.extend($scope, {
     // Center the map
     center: {
@@ -16,5 +23,24 @@ app.controller("MapController", [ "$scope", function($scope) {
       lng: 7,
       zoom: 6
     },
+    layers: {
+            baselayers: {
+                osm: {
+                    name: 'OpenStreetMap',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    type: 'xyz'
+                },
+                streets: {
+                    name: 'OpenStreetMap',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    type: 'xyz'
+                },
+                topographic: {
+                    name: 'OpenStreetMap',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    type: 'xyz'
+                }
+            }
+        }
   });
 }]);
