@@ -1,4 +1,4 @@
-var app = angular.module("oriGamiGame", ['leaflet-directive']);
+var app = angular.module("oriGamiGame", ['leaflet-directive','ui.bootstrap']);
 
 app.directive('navbar', function() {
   return {
@@ -9,9 +9,40 @@ app.directive('navbar', function() {
 
 app.controller("NavigationController", [ "$scope", function($scope) {
   console.log("Create navigation controller");
-  angular.extend($scope, {
+  $scope.navbarCollapsed = true;
+  $scope.dropdownCollapsed = true;
 
-  });
+  $scope.items = [
+    'OpenStreetMap',
+    'Streets',
+    'Topographic',
+    'Satellite'
+  ];
+
+  $scope.setLayer = function (layerName) {
+    if (layerName==$scope.items[0]) {
+      $scope.layers.baselayers.osm.top = true
+      $scope.layers.baselayers.streets.top = false
+      $scope.layers.baselayers.topographic.top = false
+      $scope.layers.baselayers.satellite.top = false
+    } else if (layerName==$scope.items[1]) {
+      $scope.layers.baselayers.osm.top = false
+      $scope.layers.baselayers.streets.top = true
+      $scope.layers.baselayers.topographic.top = false
+      $scope.layers.baselayers.satellite.top = false
+    } else if (layerName==$scope.items[2]) {
+      $scope.layers.baselayers.osm.top = false
+      $scope.layers.baselayers.streets.top = false
+      $scope.layers.baselayers.topographic.top = true
+      $scope.layers.baselayers.satellite.top = false
+    } else if (layerName==$scope.items[3]) {
+      $scope.layers.baselayers.osm.top = false
+      $scope.layers.baselayers.streets.top = false
+      $scope.layers.baselayers.topographic.top = false
+      $scope.layers.baselayers.satellite.top = true
+    }
+  }
+
 }]);
 
 
@@ -33,17 +64,42 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
         osm: {
           name: 'OpenStreetMap',
           url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
+          type: 'xyz',
+          top: true,
+          layerOptions: {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            continuousWorld: false
+          }
         },
         streets: {
-          name: 'OpenStreetMap',
-          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
+          name: 'Streets',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          type: 'xyz',
+          top: false,
+          layerOptions: {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
+            continuousWorld: false
+          }
         },
         topographic: {
-          name: 'OpenStreetMap',
-          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
+          name: 'Topographic',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+          type: 'xyz',
+          top: false,
+          layerOptions: {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+            continuousWorld: false
+          }
+        },
+        satellite: {
+          name: 'Satellite',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          type: 'xyz',
+          top: false,
+          layerOptions: {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            continuousWorld: false
+          }
         }
       }
     }
