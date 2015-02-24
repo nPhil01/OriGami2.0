@@ -15,7 +15,8 @@ app.controller("NavigationController", [ "$scope", function($scope) {
   $scope.items = [
     'OpenStreetMap',
     'Streets',
-    'Topographic'
+    'Topographic',
+    'Satellite'
   ];
 
   $scope.setLayer = function (layerName) {
@@ -23,14 +24,22 @@ app.controller("NavigationController", [ "$scope", function($scope) {
       $scope.layers.baselayers.osm.top = true
       $scope.layers.baselayers.streets.top = false
       $scope.layers.baselayers.topographic.top = false
+      $scope.layers.baselayers.satellite.top = false
     } else if (layerName==$scope.items[1]) {
       $scope.layers.baselayers.osm.top = false
       $scope.layers.baselayers.streets.top = true
       $scope.layers.baselayers.topographic.top = false
+      $scope.layers.baselayers.satellite.top = false
     } else if (layerName==$scope.items[2]) {
       $scope.layers.baselayers.osm.top = false
       $scope.layers.baselayers.streets.top = false
       $scope.layers.baselayers.topographic.top = true
+      $scope.layers.baselayers.satellite.top = false
+    } else if (layerName==$scope.items[3]) {
+      $scope.layers.baselayers.osm.top = false
+      $scope.layers.baselayers.streets.top = false
+      $scope.layers.baselayers.topographic.top = false
+      $scope.layers.baselayers.satellite.top = true
     }
   }
 
@@ -56,19 +65,41 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
           name: 'OpenStreetMap',
           url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           type: 'xyz',
-          top: false
+          top: true,
+          layerOptions: {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            continuousWorld: false
+          }
         },
         streets: {
           name: 'Streets',
-          url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           type: 'xyz',
-          top: true
+          top: false,
+          layerOptions: {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
+            continuousWorld: false
+          }
         },
         topographic: {
           name: 'Topographic',
-          url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
           type: 'xyz',
-          top: false
+          top: false,
+          layerOptions: {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+            continuousWorld: false
+          }
+        },
+        satellite: {
+          name: 'Satellite',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          type: 'xyz',
+          top: false,
+          layerOptions: {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            continuousWorld: false
+          }
         }
       }
     }
