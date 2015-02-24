@@ -14,15 +14,12 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
     center: {
       autoDiscover:true,
       zoom: 8
-    }
-    ,
+    },
     defaults: {
       lat: 52,
       lng: 7,
-      zoom:7
+      zoom: 7
     }
-    ,
-
   });
 }]);
 
@@ -42,7 +39,7 @@ app.controller("GeoCtrl", function($scope, $window){
  /*
   Geolocation Controller
     get current position with HTML5 Geolocation
-/*  
+/*
 app.controller('GeolocationController',['$geolocation', '$scope', function ($geolocation, $scope){
   $scope.myPosition = $geolocation.getCurrentPosition({
   timeout: 60000
@@ -51,7 +48,7 @@ app.controller('GeolocationController',['$geolocation', '$scope', function ($geo
          });
     }]);
 
-//watch position 
+//watch position
 
 app.controller('GeolocationController',['$geolocation', '$scope' function ($geolocation, $scope){
    $geolocation.watchPosition({
