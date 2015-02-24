@@ -20,7 +20,7 @@
           <a href class="dropdown-toggle" dropdown-toggle>Basemap</a>
           <ul class="dropdown-menu">
             <li ng-repeat="choice in items">
-              <a href>{{choice}}</a>
+              <a href ng-click="setLayer(choice)" >{{choice}}</a>
             </li>
           </ul>
         </li>

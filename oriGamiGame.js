@@ -18,6 +18,22 @@ app.controller("NavigationController", [ "$scope", function($scope) {
     'Topographic'
   ];
 
+  $scope.setLayer = function (layerName) {
+    if (layerName==$scope.items[0]) {
+      $scope.layers.baselayers.osm.top = true
+      $scope.layers.baselayers.streets.top = false
+      $scope.layers.baselayers.topographic.top = false
+    } else if (layerName==$scope.items[1]) {
+      $scope.layers.baselayers.osm.top = false
+      $scope.layers.baselayers.streets.top = true
+      $scope.layers.baselayers.topographic.top = false
+    } else if (layerName==$scope.items[2]) {
+      $scope.layers.baselayers.osm.top = false
+      $scope.layers.baselayers.streets.top = false
+      $scope.layers.baselayers.topographic.top = true
+    }
+  }
+
 }]);
 
 
@@ -39,17 +55,20 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
         osm: {
           name: 'OpenStreetMap',
           url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
+          type: 'xyz',
+          top: false
         },
         streets: {
           name: 'Streets',
-          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
+          url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+          type: 'xyz',
+          top: true
         },
         topographic: {
           name: 'Topographic',
-          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
+          url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+          type: 'xyz',
+          top: false
         }
       }
     }
