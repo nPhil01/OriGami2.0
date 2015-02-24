@@ -1,4 +1,4 @@
-var app = angular.module("oriGamiGame", ['leaflet-directive']);
+var app = angular.module("oriGamiGame", ['leaflet-directive','ui.bootstrap']);
 
 app.directive('navbar', function() {
   return {
@@ -9,9 +9,15 @@ app.directive('navbar', function() {
 
 app.controller("NavigationController", [ "$scope", function($scope) {
   console.log("Create navigation controller");
-  angular.extend($scope, {
+  $scope.navbarCollapsed = true;
+  $scope.dropdownCollapsed = true;
 
-  });
+  $scope.items = [
+    'OpenStreetMap',
+    'Streets',
+    'Topographic'
+  ];
+
 }]);
 
 
@@ -36,12 +42,12 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
           type: 'xyz'
         },
         streets: {
-          name: 'OpenStreetMap',
+          name: 'Streets',
           url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           type: 'xyz'
         },
         topographic: {
-          name: 'OpenStreetMap',
+          name: 'Topographic',
           url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           type: 'xyz'
         }
