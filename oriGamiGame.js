@@ -51,7 +51,7 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
   angular.extend($scope, {
     // Center the map
     center: {
-      autoDiscover:true,
+      autoDiscover: true,
       zoom: 8
     },
     defaults: {
@@ -106,18 +106,20 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
   });
 }]);
 
-    app.controller("GeoCtrl", function($scope, $window){
-      $window.navigator.geolocation.getCurrentPosition(function(position){
-        console.log(position);
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
+app.controller("GeoCtrl", function($scope, $window){
 
-        $scope.$apply(function(){
-          $scope.lat = lat;
-          $scope.lng = lng;
-        });
-      });
+  $window.navigator.geolocation.watchPosition( function(position) {
+    $scope.position = position
+    //console.log(position.coords.latitude+' '+position.coords.longitude);
+    // update map
+    $scope.$apply(function(){
+      $scope.center.lat = $scope.position.coords.latitude
+      $scope.center.lng = $scope.position.coords.longitude
+      //$scope.center.zoom = 14
     });
+  });
+
+});
 
     /*
     Geolocation Controller
