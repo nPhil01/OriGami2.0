@@ -46,8 +46,18 @@ app.controller("NavigationController", [ "$scope", function($scope) {
 }]);
 
 
-app.controller("MapController", [ "$scope", function($scope, $http) {
+app.controller("MapController", [ "$scope", "$http", function($scope, $http) {
   console.log("Create map controller");
+  // load the layers
+  $http.get('baselayers.json').
+    success(function(data, status, headers, config) {
+      $scope.layers.baselayers = data;
+      console.log($scope.layers.baselayers);
+      console.log("test")
+    }).
+    error(function(data, status, headers, config) {
+      console.log("could not load layers from file");
+    });
   angular.extend($scope, {
     // Center the map
     center: {
@@ -61,7 +71,7 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
     },
     layers: {
       baselayers: {
-        osm: {
+        /*osm: {
           name: 'OpenStreetMap',
           url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           type: 'xyz',
@@ -100,7 +110,7 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
             continuousWorld: false
           }
-        }
+        }*/
       }
     }
   });
