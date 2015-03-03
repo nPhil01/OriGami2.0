@@ -59,6 +59,13 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
       lng: 7,
       zoom: 6
     },
+    markers: {
+      circleMarker: {
+        opacity: 0.0,
+        lat: 52,
+        lng: 7
+      }
+    },
     layers: {
       baselayers: {
         osm: {
@@ -110,14 +117,21 @@ app.controller("GeoCtrl", function($scope, $window){
 
   $window.navigator.geolocation.watchPosition( function(position) {
     $scope.position = position
-    //console.log(position.coords.latitude+' '+position.coords.longitude);
+    console.log(position.coords.latitude+' '+position.coords.longitude);
     // update map
     $scope.$apply(function(){
       $scope.center.lat = $scope.position.coords.latitude
       $scope.center.lng = $scope.position.coords.longitude
       //$scope.center.zoom = 14
+      $scope.updateMarker()
     });
   });
+
+  $scope.updateMarker = function() {
+    $scope.markers.circleMarker.lat = $scope.position.coords.latitude
+    $scope.markers.circleMarker.lng = $scope.position.coords.longitude
+    $scope.markers.circleMarker.opacity = 1.0
+  }
 
 });
 
