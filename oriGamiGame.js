@@ -59,11 +59,15 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
       lng: 7,
       zoom: 6
     },
-    markers: {
-      circleMarker: {
+    paths: {
+      userPos: {
+        type: 'circleMarker',
+        color: '#2E64FE',
+        weight: 2,
+        radius: 1,
         opacity: 0.0,
-        lat: 52,
-        lng: 7
+        clickable : false,
+        latlngs: {lat: 52, lng: 7}
       }
     },
     layers: {
@@ -128,9 +132,14 @@ app.controller("GeoCtrl", function($scope, $window){
   });
 
   $scope.updateMarker = function() {
-    $scope.markers.circleMarker.lat = $scope.position.coords.latitude
-    $scope.markers.circleMarker.lng = $scope.position.coords.longitude
-    $scope.markers.circleMarker.opacity = 1.0
+    $scope.paths.userPos.latlngs.lat = $scope.position.coords.latitude
+    $scope.paths.userPos.latlngs.lng = $scope.position.coords.longitude
+    $scope.paths.userPos.opacity = 1.0
+    $scope.paths.userPos.radius = $scope.position.coords.accuracy
+  }
+
+  $scope.metersToPixels = function(meters) {
+    //TODO: implement function
   }
 
 });
