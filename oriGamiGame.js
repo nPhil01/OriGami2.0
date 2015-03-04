@@ -68,6 +68,17 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
         opacity: 0.0,
         clickable : false,
         latlngs: {lat: 52, lng: 7}
+      },
+      userPosCenter: {
+        type: 'circleMarker',
+        color: '#2E64FE',
+        fill: true,
+        radius: 3,
+        opacity: 0.0,
+        fillOpacity: 1.0,
+        clickable: false,
+        updateTrigger: true,
+        latlngs: {lat: 52, lng: 7}
       }
     },
     layers: {
@@ -139,6 +150,7 @@ app.controller("GeoCtrl", function($scope, $window){
       $scope.paths.userPos.latlngs.lng = $scope.position.coords.longitude
       $scope.paths.userPos.opacity = 1.0
       $scope.paths.userPos.radius = $scope.metersToPixels($scope.position.coords.accuracy)
+      $scope.paths.userPos.updateTrigger = !$scope.paths.userPos.updateTrigger
     }
   }
 
@@ -151,12 +163,17 @@ app.controller("GeoCtrl", function($scope, $window){
     y = $scope.position.coords.latitude
     // input for cosine function has to be converted in radians first
     distOnePixelInMeters = C*Math.cos(y*(Math.PI / 180))/Math.pow(2,(zoom+8))
-    console.log(distOnePixelInMeters)
     return (meters/distOnePixelInMeters)
   }
 
   $scope.$watch("center.zoom", function(zoom) {
     $scope.updateMarker();
+  });
+
+  $scope.$watch("paths.userPos.updateTrigger", function() {
+    $scope.paths.userPosCenter.latlngs.lat = $scope.paths.userPos.latlngs.lat
+    $scope.paths.userPosCenter.latlngs.lng = $scope.paths.userPos.latlngs.lng
+    $scope.paths.userPosCenter.opacity = $scope.paths.userPos.opacity
   });
 
 });
