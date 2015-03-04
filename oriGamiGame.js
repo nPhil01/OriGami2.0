@@ -51,13 +51,35 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
   angular.extend($scope, {
     // Center the map
     center: {
-      autoDiscover:true,
+      autoDiscover: true,
       zoom: 8
     },
     defaults: {
       lat: 52,
       lng: 7,
       zoom: 6
+    },
+    paths: {
+      userPos: {
+        type: 'circleMarker',
+        color: '#2E64FE',
+        weight: 2,
+        radius: 1,
+        opacity: 0.0,
+        clickable : false,
+        latlngs: {lat: 52, lng: 7}
+      },
+      userPosCenter: {
+        type: 'circleMarker',
+        color: '#2E64FE',
+        fill: true,
+        radius: 3,
+        opacity: 0.0,
+        fillOpacity: 1.0,
+        clickable: false,
+        updateTrigger: true,
+        latlngs: {lat: 52, lng: 7}
+      }
     },
     layers: {
       baselayers: {
@@ -106,41 +128,52 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
   });
 }]);
 
-    app.controller("GeoCtrl", function($scope, $window){
-      $window.navigator.geolocation.getCurrentPosition(function(position){
-        console.log(position);
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
+app.controller("GeoCtrl", function($scope, $window){
 
-        $scope.$apply(function(){
-          $scope.lat = lat;
-          $scope.lng = lng;
-        });
-      });
+  $window.navigator.geolocation.watchPosition( function(position) {
+    //timeout: 60000,
+    //maximumAge: 250,
+    $scope.position = position
+    console.log(position.coords.latitude+' '+position.coords.longitude+' '+position.coords.accuracy);
+    // update map
+    $scope.$apply(function(){
+      $scope.center.lat = $scope.position.coords.latitude
+      $scope.center.lng = $scope.position.coords.longitude
+      $scope.center.zoom = 17
+      $scope.updateMarker()
     });
+  });
 
-    /*
-    Geolocation Controller
-    get current position with HTML5 Geolocation
-    /*
-    app.controller('GeolocationController',['$geolocation', '$scope', function ($geolocation, $scope){
-    $scope.myPosition = $geolocation.getCurrentPosition({
-    timeout: 60000
-  }).then(function(position) {
-  $scope.myPosition = position;
+  $scope.updateMarker = function() {
+    if ($scope.position != null) {
+      $scope.paths.userPos.latlngs.lat = $scope.position.coords.latitude
+      $scope.paths.userPos.latlngs.lng = $scope.position.coords.longitude
+      $scope.paths.userPos.opacity = 1.0
+      $scope.paths.userPos.radius = $scope.metersToPixels($scope.position.coords.accuracy)
+      $scope.paths.userPos.updateTrigger = !$scope.paths.userPos.updateTrigger
+    }
+  }
+
+  $scope.metersToPixels = function(meters) {
+    // http://wiki.openstreetmap.org/wiki/Zoom_levels
+    // S=C*cos(y)/2^(z+8)
+    // circumference of earth in meters
+    C = 40075017
+    zoom = $scope.center.zoom
+    y = $scope.position.coords.latitude
+    // input for cosine function has to be converted in radians first
+    distOnePixelInMeters = C*Math.cos(y*(Math.PI / 180))/Math.pow(2,(zoom+8))
+    return (meters/distOnePixelInMeters)
+  }
+
+  $scope.$watch("center.zoom", function(zoom) {
+    $scope.updateMarker();
+  });
+
+  $scope.$watch("paths.userPos.updateTrigger", function() {
+    $scope.paths.userPosCenter.latlngs.lat = $scope.paths.userPos.latlngs.lat
+    $scope.paths.userPosCenter.latlngs.lng = $scope.paths.userPos.latlngs.lng
+    $scope.paths.userPosCenter.opacity = $scope.paths.userPos.opacity
+  });
+
 });
-}]);
-
-//watch position
-
-app.controller('GeolocationController',['$geolocation', '$scope' function ($geolocation, $scope){
-$geolocation.watchPosition({
-timeout: 60000,
-maximumAge: 250,
-enableHighAccuracy: true
-};
-$scope.myCoords = $geolocation.position.coords; // this is regularly updated
-$scope.myError = $geolocation.position.error; // this becomes truthy, and has 'code' and 'message' if an error occurs
-}]);
-);
-*/
