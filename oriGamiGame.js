@@ -123,25 +123,40 @@ app.controller("GeoCtrl", function($scope, $window){
     //timeout: 60000,
     //maximumAge: 250,
     $scope.position = position
-    console.log(position.coords.latitude+' '+position.coords.longitude);
+    console.log(position.coords.latitude+' '+position.coords.longitude+' '+position.coords.accuracy);
     // update map
     $scope.$apply(function(){
       $scope.center.lat = $scope.position.coords.latitude
       $scope.center.lng = $scope.position.coords.longitude
-      //$scope.center.zoom = 14
+      $scope.center.zoom = 17
       $scope.updateMarker()
     });
   });
 
   $scope.updateMarker = function() {
-    $scope.paths.userPos.latlngs.lat = $scope.position.coords.latitude
-    $scope.paths.userPos.latlngs.lng = $scope.position.coords.longitude
-    $scope.paths.userPos.opacity = 1.0
-    $scope.paths.userPos.radius = $scope.position.coords.accuracy
+    if ($scope.position != null) {
+      $scope.paths.userPos.latlngs.lat = $scope.position.coords.latitude
+      $scope.paths.userPos.latlngs.lng = $scope.position.coords.longitude
+      $scope.paths.userPos.opacity = 1.0
+      $scope.paths.userPos.radius = $scope.metersToPixels($scope.position.coords.accuracy)
+    }
   }
 
   $scope.metersToPixels = function(meters) {
-    //TODO: implement function
+    // http://wiki.openstreetmap.org/wiki/Zoom_levels
+    // S=C*cos(y)/2^(z+8)
+    // circumference of earth in meters
+    C = 40075017
+    zoom = $scope.center.zoom
+    y = $scope.position.coords.latitude
+    // input for cosine function has to be converted in radians first
+    distOnePixelInMeters = C*Math.cos(y*(Math.PI / 180))/Math.pow(2,(zoom+8))
+    console.log(distOnePixelInMeters)
+    return (meters/distOnePixelInMeters)
   }
+
+  $scope.$watch("center.zoom", function(zoom) {
+    $scope.updateMarker();
+  });
 
 });
