@@ -10,30 +10,34 @@ app.directive('navbar', function() {
 app.controller("NavigationController", [ "$scope", function($scope) {
   console.log("Create navigation controller");
 
-  $scope.items = [
-    'OpenStreetMap',
-    'Streets',
-    'Topographic',
-    'Satellite'
-  ];
+  $scope.layerNames = [];
+
+  $scope.getLayerNames = function () {
+    var names = [];
+    for (var k in $scope.layers.baselayers) {
+      $scope.layerNames[$scope.layerNames.length] = $scope.layers.baselayers[k].name
+    }
+  }
+
+  $scope.getLayerNames();
 
   $scope.setLayer = function (layerName) {
-    if (layerName==$scope.items[0]) {
+    if (layerName==$scope.layerNames[0]) {
       $scope.layers.baselayers.osm.top = true
       $scope.layers.baselayers.streets.top = false
       $scope.layers.baselayers.topographic.top = false
       $scope.layers.baselayers.satellite.top = false
-    } else if (layerName==$scope.items[1]) {
+    } else if (layerName==$scope.layerNames[1]) {
       $scope.layers.baselayers.osm.top = false
       $scope.layers.baselayers.streets.top = true
       $scope.layers.baselayers.topographic.top = false
       $scope.layers.baselayers.satellite.top = false
-    } else if (layerName==$scope.items[2]) {
+    } else if (layerName==$scope.layerNames[2]) {
       $scope.layers.baselayers.osm.top = false
       $scope.layers.baselayers.streets.top = false
       $scope.layers.baselayers.topographic.top = true
       $scope.layers.baselayers.satellite.top = false
-    } else if (layerName==$scope.items[3]) {
+    } else if (layerName==$scope.layerNames[3]) {
       $scope.layers.baselayers.osm.top = false
       $scope.layers.baselayers.streets.top = false
       $scope.layers.baselayers.topographic.top = false
