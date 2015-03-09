@@ -9,8 +9,6 @@ app.directive('navbar', function() {
 
 app.controller("NavigationController", [ "$scope", function($scope) {
   console.log("Create navigation controller");
-  $scope.navbarCollapsed = true;
-  $scope.dropdownCollapsed = true;
 
   $scope.items = [
     'OpenStreetMap',
