@@ -34,6 +34,26 @@ app.directive('navbar', function() {
   }
 });
 
+app.directive('server-connection', function() {
+  return {
+    restrict: 'E'
+  }
+});
+
+app.controller("ServerConnectionController", [ "$scope", function($scope) {
+  // use custom layer element from angular-leaflet-directive
+  /*var stops = L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0').query().run(function(error, featureCollection){
+    console.log(featureCollection);
+  });*/
+
+  var routeID = "0GNo7";
+  L.esri.featureLayer('http://giv-learn2.uni-muenster.de/arcgis/rest/services/GeoSpatialLearning/route/MapServer/0',
+  {fields: ['*']})
+    .query()
+    .run(function(error, featureCollection){
+      console.log(featureCollection);
+    });
+}]);
 
 app.controller("MapController", [ "$scope", function($scope, $http) {
   console.log("Create map controller");
