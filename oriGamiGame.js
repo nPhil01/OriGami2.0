@@ -1,49 +1,38 @@
 var app = angular.module("oriGamiGame", ['leaflet-directive','ui.bootstrap']);
 
+// self containing navbar directive
 app.directive('navbar', function() {
   return {
+    scope: {
+      layers: '=bindlayers'
+    },
     restrict: 'E',
-    templateUrl: "navbar.html"
-  }
-});
-
-app.controller("NavigationController", [ "$scope", function($scope) {
-  console.log("Create navigation controller");
-  $scope.navbarCollapsed = true;
-  $scope.dropdownCollapsed = true;
-
-  $scope.items = [
-    'OpenStreetMap',
-    'Streets',
-    'Topographic',
-    'Satellite'
-  ];
-
-  $scope.setLayer = function (layerName) {
-    if (layerName==$scope.items[0]) {
-      $scope.layers.baselayers.osm.top = true
-      $scope.layers.baselayers.streets.top = false
-      $scope.layers.baselayers.topographic.top = false
-      $scope.layers.baselayers.satellite.top = false
-    } else if (layerName==$scope.items[1]) {
-      $scope.layers.baselayers.osm.top = false
-      $scope.layers.baselayers.streets.top = true
-      $scope.layers.baselayers.topographic.top = false
-      $scope.layers.baselayers.satellite.top = false
-    } else if (layerName==$scope.items[2]) {
-      $scope.layers.baselayers.osm.top = false
-      $scope.layers.baselayers.streets.top = false
-      $scope.layers.baselayers.topographic.top = true
-      $scope.layers.baselayers.satellite.top = false
-    } else if (layerName==$scope.items[3]) {
-      $scope.layers.baselayers.osm.top = false
-      $scope.layers.baselayers.streets.top = false
-      $scope.layers.baselayers.topographic.top = false
-      $scope.layers.baselayers.satellite.top = true
+    templateUrl: "navbar.html",
+    link: function(scope, elem, attrs) {
+    },
+    controller: function($scope, $element){
+      $scope.layerNames = [];
+      // function that gets the layer names of layers object passed over to the directive
+      $scope.setLayerNames = function () {
+        var names = [];
+        for (var k in $scope.layers.baselayers) {
+          $scope.layerNames[$scope.layerNames.length] = $scope.layers.baselayers[k].name
+        }
+      }
+      $scope.setLayerNames();
+      // change visibility of layers based on passed layer name
+      $scope.setLayer = function (layerName) {
+        for (var k in $scope.layers.baselayers) {
+          if ($scope.layers.baselayers[k].name==layerName) {
+            $scope.layers.baselayers[k].top = true
+          } else {
+            $scope.layers.baselayers[k].top = false
+          }
+        }
+      }
     }
   }
-
-}]);
+});
 
 
 app.controller("MapController", [ "$scope", function($scope, $http) {
