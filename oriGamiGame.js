@@ -41,15 +41,20 @@ app.directive('server-connection', function() {
 });
 
 app.controller("ServerConnectionController", [ "$scope", function($scope) {
-  // use custom layer element from angular-leaflet-directive
+  // use custom layer element from angular-leaflet-directive to load route
+
   var routeID = "0GNo7";
-  L.esri.featureLayer('http://giv-learn2.uni-muenster.de/arcgis/rest/services/GeoSpatialLearning/route/MapServer/0',
-  {fields: ['*']})
+
+  $scope.loadRoute = function (routeID) {
+    L.esri.featureLayer('http://giv-learn2.uni-muenster.de/arcgis/rest/services/GeoSpatialLearning/route/MapServer/0',
+    { fields: ['*'] })
     .query()
     .where("route_id='"+routeID+"'")
     .run(function(error, featureCollection){
       console.log(featureCollection);
     });
+  };
+
 }]);
 
 app.controller("MapController", [ "$scope", function($scope, $http) {
