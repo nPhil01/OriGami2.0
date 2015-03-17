@@ -4,13 +4,15 @@ var app = angular.module("oriGamiGame", ['leaflet-directive','ui.bootstrap']);
 app.directive('navbar', function() {
   return {
     scope: {
-      layers: '=bindlayers'
+      layers: '=bindlayers',
+      route_id: '=',
+      user_id: '='
     },
     restrict: 'E',
     templateUrl: "navbar.html",
     link: function(scope, elem, attrs) {
     },
-    controller: function($scope, $element){
+    controller: function($scope, $element, $modal){
       $scope.layerNames = [];
       // function that gets the layer names of layers object passed over to the directive
       $scope.setLayerNames = function () {
@@ -30,6 +32,33 @@ app.directive('navbar', function() {
           }
         }
       }
+
+      $scope.open = function () {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'routeLoaderModal.html',
+          controller: function($scope, $modalInstance){
+            // set the user_id and participant_id
+            $scope.load = function () {
+              console.log($scope.layers);
+              //$scope.submit($scope.route_id,$scope.user_id)
+              $scope.user_id = $scope.m_user_id;
+              $scope.participant_id = $scope.m_participant_id;
+              $modalInstance.close();
+            };
+
+            $scope.cancel = function () {
+              $modalInstance.dismiss('cancel');
+            };
+          },
+          resolve: {
+            //items: function () {
+              //return $scope.items;
+            //}
+          }
+        });
+      }
+
     }
   }
 });
@@ -43,8 +72,6 @@ app.directive('server-connection', function() {
 app.controller("ServerConnectionController", [ "$scope", function($scope) {
   // use custom layer element from angular-leaflet-directive to load route
 
-  var routeID = "0GNo7";
-
   $scope.loadRoute = function (routeID) {
     L.esri.featureLayer('http://giv-learn2.uni-muenster.de/arcgis/rest/services/GeoSpatialLearning/route/MapServer/0',
     { fields: ['*'] })
@@ -55,11 +82,19 @@ app.controller("ServerConnectionController", [ "$scope", function($scope) {
     });
   };
 
+  // fetch new route when the route_id changes
+  $scope.$watch("route_id", function(route_id) {
+    console.log(route_id);
+    $scope.loadRoute(route_id);
+  });
+
 }]);
 
 app.controller("MapController", [ "$scope", function($scope, $http) {
   console.log("Create map controller");
   angular.extend($scope, {
+    user_id: "",
+    route_id: "",
     // Center the map
     center: {
       autoDiscover: true,
