@@ -1,17 +1,67 @@
 var app = angular.module("oriGamiGame", ['leaflet-directive','ui.bootstrap']);
 
-app.service('gameDataService', function () {
-  var data = [
+app.factory('GameData', function () {
+
+  var data = {};
+
+  data.test = "blub";
+
     // private application data in the background
-    //TODO: add data structures
-  ];
+  data.baselayers = {
+    osm: {
+      name: 'OpenStreetMap',
+      url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      type: 'xyz',
+      top: true,
+      layerOptions: {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        continuousWorld: false
+      }
+    },
+    streets: {
+      name: 'Streets',
+      url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+      type: 'xyz',
+      top: false,
+      layerOptions: {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
+        continuousWorld: false
+      }
+    },
+    topographic: {
+      name: 'Topographic',
+      url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+      type: 'xyz',
+      top: false,
+      layerOptions: {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+        continuousWorld: false
+      }
+    },
+    satellite: {
+      name: 'Satellite',
+      url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      type: 'xyz',
+      top: false,
+      layerOptions: {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+        continuousWorld: false
+      }
+    }
+  };
 
   // public API
   return {
-    //TODO: implement public API
+    title: 'Starcraft'
   };
 
 });
+
+// just for testing
+app.factory('Data', function () {
+    return { FirstName: 'blub' };
+});
+
 
 // self containing navbar directive
 app.directive('navbar', function() {
@@ -70,7 +120,7 @@ app.controller("ServerConnectionController", [ "$scope", function($scope) {
 
 }]);
 
-app.controller("MapController", [ "$scope", function($scope, $http) {
+app.controller("MapController", [ "$scope", "GameData", function($scope, $http, GameData, Data) {
   console.log("Create map controller");
   angular.extend($scope, {
     // Center the map
@@ -107,57 +157,22 @@ app.controller("MapController", [ "$scope", function($scope, $http) {
     },
     layers: {
       baselayers: {
-        osm: {
-          name: 'OpenStreetMap',
-          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz',
-          top: true,
-          layerOptions: {
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            continuousWorld: false
-          }
-        },
-        streets: {
-          name: 'Streets',
-          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-          type: 'xyz',
-          top: false,
-          layerOptions: {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
-            continuousWorld: false
-          }
-        },
-        topographic: {
-          name: 'Topographic',
-          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-          type: 'xyz',
-          top: false,
-          layerOptions: {
-            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
-            continuousWorld: false
-          }
-        },
-        satellite: {
-          name: 'Satellite',
-          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-          type: 'xyz',
-          top: false,
-          layerOptions: {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-            continuousWorld: false
-          }
-        }
+
       }
     }
   });
+  //$scope.layers.baselayers =  GameData.baselayers();
+  //console.log(GameData.title);
 }]);
 
-app.controller("GeoCtrl", function($scope, $window){
+app.controller("GeoCtrl", function($scope, $window, GameData, Data){
 
   $window.navigator.geolocation.watchPosition( function(position) {
     //timeout: 60000,
     //maximumAge: 250,
     $scope.position = position
+    console.log(Data.FirstName);
+    console.log(GameData.title);
     console.log(position.coords.latitude+' '+position.coords.longitude+' '+position.coords.accuracy);
     // update map
     $scope.$apply(function(){
