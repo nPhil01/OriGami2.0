@@ -18,14 +18,15 @@
 
 </head>
 <body ng-controller="MapController">
-<div class="container" ng-controller="GeoCtrl">
+<div class="container" ng-controller="GeoCtrl"></div>
 
-  </div>
-
+  <!--custom navbar directive needs binding to layers-->
   <navbar bindlayers="layers"></navbar>
 
+  <!--leaflet directive with bindings-->
   <leaflet paths="paths" layers="layers" center="center"></leaflet>
 
+  <!--server connection directive. better: use factory and encapsulate in module-->
   <server-connection ng-controller="ServerConnectionController"></sever-connection>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -33,7 +34,7 @@
   <script src="js/js.js"></script>
   <script src="js/angular-leaflet-directive.js"></script>
   <script src="js/ui-bootstrap-tpls-0.12.1.js"></script>
-  <!-- Feature Layer Only Build -->
+  <!-- Feature Layer Only Build of the esri leaflet directive -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet-feature-layer.js"></script>
   <script src="oriGamiGame.js"></script>
 
