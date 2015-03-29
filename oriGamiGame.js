@@ -1,5 +1,18 @@
 var app = angular.module("oriGamiGame", ['leaflet-directive','ui.bootstrap']);
 
+app.service('gameDataService', function () {
+  var data = [
+    // private application data in the background
+    //TODO: add data structures
+  ];
+
+  // public API
+  return {
+    //TODO: implement public API
+  };
+
+});
+
 // self containing navbar directive
 app.directive('navbar', function() {
   return {
