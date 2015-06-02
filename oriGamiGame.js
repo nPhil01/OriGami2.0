@@ -63,6 +63,7 @@ app.controller("MapController", [ "$scope", "$http", function($scope, $http) {
   console.log("Create map controller");
 
  
+
   angular.extend($scope, {
     // Center the map
     center: {
@@ -77,6 +78,19 @@ app.controller("MapController", [ "$scope", "$http", function($scope, $http) {
 
     geojson:{},
 
+  
+    
+
+    events: {
+          map: {
+            enable: ['click', 'drag', 'blur', 'touchstart','mousedown'],
+            logic: 'emit'
+          },
+          markers:{
+            enable: ['click'],
+            logic : 'emit'
+          }
+        },
     paths: {
       userPos: {
         type: 'circleMarker',
@@ -156,6 +170,28 @@ app.controller("MapController", [ "$scope", "$http", function($scope, $http) {
   
 
        
+     // Get the  gamearea geojson data from a JSON
+    $http.get("map.geojson").success(function(data, status) {
+      console.log("json" + data + status);
+        angular.extend($scope, {
+            geojson: {
+                data: data,
+                style: {
+                    weight: 2,
+                    opacity: 1,
+                    color: 'red',
+                    dashArray: '3',
+                    fillOpacity: 0,
+                    clickable: false,
+                  }
+            }
+        });
+    });
+
+
+
+
+
 }]);
 
 app.controller("GeoCtrl", function($scope, $window){
@@ -272,9 +308,8 @@ app.controller('ModalController', ["$scope" , "$http" ,'leafletData',  function(
  };
  $scope.addStartpoint = function(){
 
-      console.log("add");
-
     
+      console.log("add");
  
   }
 
