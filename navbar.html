@@ -1,9 +1,11 @@
 <!--Navbar -->
-<div class="container">
+<div ng-controller="MController" class="container">
   <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+      
+      
+      <button type="button" class="navbar-toggle" ng-init="navbarCollapsed = true" ng-click="navbarCollapsed = !navbarCollapsed">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -11,19 +13,132 @@
       </button>
       <a href="#" class="navbar-brand">OriGami 2.0</a>
     </div>
+   
     <!-- Collection of nav links, forms, and other content for toggling -->
-    <div id="navbarCollapse" class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" collapse="navbarCollapsed">
       <ul class="nav navbar-nav">
-        <li><a href="#">Route</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li class="dropdown">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">Basemap<b class="caret"></b></a>
-          <ul role="menu" class="dropdown-menu">
-            <li><a href="#">Inbox</a></li>
-            <li><a href="#">Drafts</a></li>
-            <li><a href="#">Sent Items</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Trash</a></li>
+        <li class="dropdown" dropdown>
+        <a href class="dropdown-toggle" dropdown-toggle>Route</a>
+        <ul  class="dropdown-menu">
+        <li><a ng-click="showNewRoute()">Neue Route</a></li>
+
+
+        <!--Template for new Route-->
+
+        <script type="text/ng-template" id="newroutemodal.html">
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Neue Route</h4>
+              </div>
+              <div class="modal-body">
+
+                <p>Folgende Kombination: <b class="label label-info" id="routeID"></b> ist die RouteID</p>
+                <p> Wähle einen Namen </p> <input type="textfield" id="RouteName" required> 
+                <br>
+                <p>Falls Sie die RouteID als Mail zugeschickt bekommen möchten, tragen Sie hier die Empfängeradresse ein:</br> 
+                  <input type="email" name="email" id="inputEmail" placeholder="Email" class="input-xlarge">
+                <p> GameArea erstellen ? </p><input type="checkbox"id="GameArea">
+                <p>Wählen Sie einen Startpunkt auf der Karte</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" id="StarteRoute" ng-click="addStartpoint('Startpunkt')" class="btn btn-primary" data-dismiss="modal">Startpunkt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+     </script>
+
+
+    
+        
+        <li><a ng-click="showloadRoute()">Lade Route</a></li>
+            
+     <!-- The actual modal template, just a bit o bootstrap -->
+     <script type="text/ng-template" id="loadroutemodal.html">
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Lade Route</h4>
+              </div>
+              <div class="modal-body">
+                <h5>RouteID angeben</h5>
+                <input type="texfield">
+                <p>Die Route {{message}} wird geladen...</p>
+                <p>{{message}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" ng-click="close('Yes')" class="btn btn-primary" data-dismiss="modal">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+     </script>
+
+        <li><a ng-click="showChangeRoute()">Bearbeite Route</a></li>
+
+        <script type="text/ng-template" id="changeRoutemodal.html">
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Bearbeite Route</h4>
+              </div>
+              <div class="modal-body">
+                <h5>RouteID angeben</h5>
+                <input type="texfield">
+                <p>Die Route {{message}} wird geladen...</p>
+                <p>{{message}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" ng-click="close('Yes')" class="btn btn-primary" data-dismiss="modal">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+     </script>
+
+        
+        </ul>
+        </li>
+        <li><a ng-click="showFAQ()">FAQ</a></li>
+
+           <script type="text/ng-template" id="FAQmodal.html">
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">FAQ</h4>
+              </div>
+              <div class="modal-body">
+                <h5>......</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button"  class="btn btn-default" data-dismiss="modal">OK</button
+              </div>
+            </div>
+          </div>
+        </div>
+     </script>
+
+
+
+
+        <li class="dropdown" dropdown>
+          <a href class="dropdown-toggle" dropdown-toggle>Basemap</a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="choice in layerNames">
+              <a href ng-click="setLayer(choice)" >{{choice}}</a>
+            </li>
           </ul>
         </li>
       </ul>
