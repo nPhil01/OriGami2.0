@@ -1,0 +1,15 @@
+<ion-view title="OriGami" >
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+
+  </ion-nav-buttons>
+ 
+
+  <ion-content data-tap-disabled="true" >
+
+    <leaflet defaults="map.defaults"  layers="map.layers" center="map.center" paths="map.paths" markers="map.markers" geojson="map.geojson" ng-if="map"></leaflet>
+
+  </ion-content>
+
+</ion-view>
