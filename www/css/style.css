@@ -1,1 +1,23 @@
-/* Empty. Add your own CSS if you like */
+.game_backg{
+    height: 200px;
+    background-image: url("/www/img/navigation.jpg");
+    background-size: cover;
+    display: block;
+}
+
+.game_backg h2{
+    font-size: 2em;
+     text-align: left;
+     color: white;
+}
+.game_backg p{
+     font-size: 1.5em;
+     text-align: left ;
+    color: white;
+}
+
+
+.scroll {
+  min-height: 100%;
+}
+

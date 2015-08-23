@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic-material','starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -56,6 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
+
    .state('tab.avgames', {
     url: '/avgames',
     views: {
@@ -71,6 +72,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'tab-home': {
         templateUrl: 'templates/teach-menu.html',
         controller: 'TeacherCtrl'
+      }
+    }
+  })
+  .state('tab.newgame', {
+    url: '/teachmenu/newgame',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/new-game.html',
+        controller: 'GamesCtrl'
       }
     }
   })
