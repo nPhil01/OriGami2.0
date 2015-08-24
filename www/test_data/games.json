@@ -1,0 +1,22 @@
+  [{
+    "id": "ori_01",
+    "name": "Test Game 1",
+    "description": "This is a test game",
+    "duration": "30 min",
+    "difficulty": "Easy",
+    "navigation_tasks": []
+  }, {
+    "id": "ori_02",
+    "name": "Test Game 2",
+    "description": "This is another test game",
+    "duration": "40 min",
+    "difficulty": "Intermediate",
+    "navigation_tasks": []
+  }, {
+    "id": "ori_03",
+    "name": "Test Game 3",
+    "description": "Yet another test game",
+    "duration": "60 min",
+    "difficulty": "Hard",
+    "navigation_tasks": []
+  }]

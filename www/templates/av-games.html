@@ -1,8 +1,21 @@
 <ion-view view-title="Available games">
-    <ion-nav-bar class="bar-positive">
+  <ion-nav-bar class="bar-positive">
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
   <ion-content>
-      <!-- Here are games, which were created before-->
+<!-- Here are games, which were created before-->
+    <div ng-hide="gameRetrievalFailed">
+      <ion-list>
+        <ion-item class="item-divider" ng-click="gameClick(game.id)" ng-repeat="game in games">
+          {{game.name}}
+        </ion-item>
+      </ion-list>
+    </div>
+<!-- Show message when failing to retrieve games -->
+    <div ng-show="gameRetrievalFailed">
+      <p>
+        Failed to get games
+      </p>
+    </div>
   </ion-content>
 </ion-view>

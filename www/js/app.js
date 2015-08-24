@@ -84,6 +84,15 @@ angular.module('starter', ['ionic','ionic-material','starter.controllers', 'star
       }
     }
   })
+  .state('tab.playgame', {
+    url: '/playgame/:gameId',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/play-game.html',
+        controller: 'PlayCtrl'
+      }
+    }
+  })
 ;
 
   // if none of the above states are matched, use this as the fallback
