@@ -5,13 +5,16 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic-material','starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers',
+  'starter.services', 'starter.directives', 'leaflet-directive'
+])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins
+      .Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
@@ -40,60 +43,59 @@ angular.module('starter', ['ionic','ionic-material','starter.controllers', 'star
 
   // Each tab has its own nav history stack:
   .state('tab.info', {
-    url: '/info',
-    views: {
-      'tab-info': {
-        templateUrl: 'templates/info.html'
+      url: '/info',
+      views: {
+        'tab-info': {
+          templateUrl: 'templates/info.html'
+        }
       }
-    }
-  })
-  .state('tab.home', {
-    url: '/home',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl'
+    })
+    .state('tab.home', {
+      url: '/home',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeCtrl'
+        }
       }
-    }
-  })
+    })
 
-   .state('tab.avgames', {
-    url: '/avgames',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/av-games.html',
-        controller: 'GamesCtrl'
+  .state('tab.avgames', {
+      url: '/avgames',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/av-games.html',
+          controller: 'GamesCtrl'
+        }
       }
-    }
-  })
-  .state('tab.teachmenu', {
-    url: '/teachmenu',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/teach-menu.html',
-        controller: 'TeacherCtrl'
+    })
+    .state('tab.teachmenu', {
+      url: '/teachmenu',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/teach-menu.html',
+          controller: 'TeacherCtrl'
+        }
       }
-    }
-  })
-  .state('tab.newgame', {
-    url: '/teachmenu/newgame',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/new-game.html',
-        controller: 'GamesCtrl'
+    })
+    .state('tab.newgame', {
+      url: '/teachmenu/newgame',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/new-game.html',
+          controller: 'GamesCtrl'
+        }
       }
-    }
-  })
-  .state('tab.playgame', {
-    url: '/playgame/:gameId',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/play-game.html',
-        controller: 'PlayCtrl'
+    })
+    .state('tab.playgame', {
+      url: '/playgame/:gameId',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/play-game.html',
+          controller: 'PlayCtrl'
+        }
       }
-    }
-  })
-;
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');

@@ -4,7 +4,20 @@
     "description": "This is a test game",
     "duration": "30 min",
     "difficulty": "Easy",
-    "navigation_tasks": []
+    "navigation_tasks": [],
+    "settings": {
+      "map": {
+        "center": {
+          "lat": 52,
+          "lon": 7
+        },
+        "zoom": 15,
+        "scrollable": true,
+        "zoomable": true,
+        "rotatable": true,
+        "basemap": "openstreetmap"
+      }
+    }
   }, {
     "id": "ori_02",
     "name": "Test Game 2",
