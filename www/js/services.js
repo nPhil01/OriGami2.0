@@ -1,4 +1,37 @@
 angular.module('starter.services', [])
+.factory('Data', function(){
+    var activities = []; 
+    var tasks = [];
+    var gameType = "";
+    
+    var actService = {};
+    
+    actService.newAct = function(value){
+        activities.push(value);
+    };
+    actService.addType = function(type){
+        gameType = type;
+    };
+    
+    // Get all the current activities and game types (Path plan / Aid wayf)
+    actService.getAct = function(){
+        return activities;
+    };
+    actService.getType = function(){
+        return gameType;
+    };
+    
+    // Clean current activities and game types (Path plan / Aid wayf)
+    actService.clearAct = function(){
+        activities.splice(0, activities.length);
+    };
+    
+    actService.clearType = function(){
+        gameType = "";
+    };
+    
+    return actService;
+})
 .factory('API', function ($rootScope, $http, $ionicLoading, $window){
     var base = "http://giv-origami.uni-muenster.de:8000";
     $rootScope.show = function (text) {

@@ -1,23 +1,83 @@
-.game_backg{
-    height: 200px;
+.game-backg{
+    height: 180px;
     background-image: url("/www/img/navigation.jpg");
     background-size: cover;
     display: block;
+    position: relative;
 }
 
-.game_backg h2{
+.game-backg h2{
     font-size: 2em;
-     text-align: left;
+     text-align: center;
      color: white;
+    left:5%;
 }
-.game_backg p{
+.game-backg p{
      font-size: 1.5em;
-     text-align: left ;
+     text-align: center;
     color: white;
+    left:5%;
 }
 
+.game-type{
+    position: absolute;
+    bottom: 10%;
+    left: 15%;
+    display: flex;
+    margin: auto;
+}
+
+.game-type button{
+    margin-left: 10px;
+}
 
 .scroll {
   min-height: 100%;
 }
 
+.scroll, .angular-leaflet-map {
+  height: 100%;
+}
+
+.leaflet-bottom {
+  bottom : 10px;
+}
+
+.games-cont .fab.button-fab-bottom-right {
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    left: auto;
+    position: relative;
+}
+
+/* Collapsed list */
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+
+.createdAct{
+    margin-bottom: 20px;
+}
+
+/* Tasks creation */
+.tasks{
+    position: absolute;
+    bottom: 10%;
+    left: 15%;
+    display: flex;
+}
+.tasks .fab.button-fab{
+    
+}

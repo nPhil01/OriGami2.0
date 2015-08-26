@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic-material','starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','leaflet-directive','ionic-material','starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -80,7 +80,7 @@ angular.module('starter', ['ionic','ionic-material','starter.controllers', 'star
     views: {
       'tab-home': {
         templateUrl: 'templates/new-game.html',
-        controller: 'GamesCtrl'
+        controller: 'NewGameCtrl'
       }
     }
   })
@@ -92,6 +92,35 @@ angular.module('starter', ['ionic','ionic-material','starter.controllers', 'star
         controller: 'PlayCtrl'
       }
     }
+  })
+  
+// Creation of task - Aided navigation and Path planning
+  .state('tab.aidnavig', {
+   url: "/aidnavig",
+   views: {
+      'tab-home' :{
+       templateUrl: "templates/map/aid_navig.html",
+       controller: 'MapController'
+          }
+        }
+      })
+  .state('tab.pathplan', {
+   url: "/pathplan",
+   views: {
+      'tab-home' :{
+       templateUrl: "templates/map/path_plan.html",
+       controller: 'MapController'
+          }
+        }
+      })
+  .state('tab.quest',{
+    url: "/qtask",
+    views: {
+      'tab-home' :{
+       templateUrl: "templates/tasks/quest.html",
+       controller: 'taskCreation'
+          }
+        }
   })
 ;
 

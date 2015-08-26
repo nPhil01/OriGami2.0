@@ -1,25 +1,50 @@
 <ion-view view-title="Games">
-            <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-positive">
            <ion-nav-back-button></ion-nav-back-button>
        </ion-nav-bar>
 <ion-content>
-      <div class = "game_backg">
+      <div class = "game-backg">
           <h2>New Game</h2>
           <p>Add several activities and tasks for each activity</p>
-          <button class="button button-fab button-fab-top-right button-assertive icon ion-android-compass waves-effect waves-button waves-light"></button>
+          <div class="game-type">
+              <button class="button icon-left ion-arrow-graph-up-right button-energized" ui-sref="tab.pathplan" ng-click = "pathGame()">Path Planning</button>
+              <button class="button icon-right ion-location button-energized" ui-sref="tab.aidnavig" ng-click = "aidGame()">Aided Navigation</button>
+          </div>
+          <button class="button button-fab button-fab-bottom-right button-assertive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()" ui-sref="tab.teachmenu"></button>
+          <button class="button button-fab button-fab-bottom-left button-assertive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
       </div>
       <label class="item item-input">
         <span class="input-label">Game Title</span>
-        <input type="text">
+        <input type="text" ng-model = "newgame.title">
       </label>
       <label class="item item-input">
         <span class="input-label">Time of completion</span>
-        <input type="text">
+        <input type="text" ng-model = "newgame.time">
       </label>
       <label class="item item-input">
         <span class="input-label">Difficulty</span>
-        <input type="text">
+        <input type="text" ng-model = "newgame.difficulty">
       </label>
-      <button class="button button-fab button-fab-bottom-right button-assertive icon ion-plus waves-effect waves-button waves-light"></button>
+    
+    <div class="createdAct">
+        
+    </div>
+    
+    <ion-list>
+        <div ng-repeat="act in navactivities">
+          <ion-item class="item-stable item-icon-left item-icon-right assertive" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
+              <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
+               <p style="font-size:2em;">{{act.name}}</p>
+              <i class="icon ion-ios-game-controller-b-outline" ui-sref="tab.quest"></i>
+          </ion-item>
+          <ion-item class="item-accordion"
+                    ng-repeat="item in act.tasks"
+                    ng-show="isActivityShown(act)">
+            {{item}}
+          </ion-item>
+        </div>
+      </ion-list>
+    
+    
   </ion-content>
 </ion-view>
