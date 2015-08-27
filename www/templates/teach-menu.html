@@ -7,17 +7,17 @@
       <!-- The only difference is that teacher can change settings of the game and create new games -->
     <div class="card in done" ng-repeat="item in list" >
         <a class="item clear-bg">
-            <h2 style="font-size:2.5em; color:#387ef5; ">{{ item.name }}</h2>
+            <h2 style="font-size:2.5em; color:#387ef5; ">{{item.name}}</h2>
             <p style="color:#387ef5">{{item.Description}}</p>
             <div class="card-footer text-right">
-               <i class="icon ion-chatboxes positive"></i>
-               2
-               <i class="icon ion-heart assertive"></i>
-               4
                <i class="icon ion-clock"></i>
-               {{ item.duration }}
+               {{item.duration}}
                <i class="icon ion-clock"></i>
-               {{ item.difficulty }}
+               {{item.difficulty}}
+                <div class="pull-left">
+                     <i class="icon ion-trash-a" ng-click="deleteItem('{{item.name}}','{{item}}')"></i>
+                     <i class="icon ion-edit"></i>
+                 </div>
              </div>
         </a>
    </div>
@@ -27,9 +27,9 @@
             There are no games created at the moment. CLick <a href="javascript:" ng-click="newTask()">Here</a> and create one
          </span>
       </div>
-   </div>
-      
-      <button class="button button-fab button-fab-bottom-right button-assertive icon ion-plus waves-effect waves-button waves-light" ui-sref="tab.newgame"></button>
+    </div>
+          <button id="fab" class="button button-positive icon ion-plus button-fab button-fab-bottom-right" ng-click = "createGame()" ui-sref="tab.newgame">
+      </div>
   </ion-content>
 </div>
 </ion-view>
