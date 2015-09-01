@@ -6,7 +6,7 @@
 <!-- Here are games, which were created before-->
     <div ng-hide="gameRetrievalFailed">
       <ion-list>
-        <ion-item class="item-divider" ng-click="gameClick(game.id)" ng-repeat="game in games">
+        <ion-item class="item-divider" ng-click="gameSelect(game.name)" ng-repeat="game in games">
           {{game.name}}
         </ion-item>
       </ion-list>
