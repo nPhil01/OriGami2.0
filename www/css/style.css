@@ -99,3 +99,20 @@
     top: 2%;
     opacity: 0.7;
 }
+
+
+/* "Play Game" part ------------------ */
+.game-desc span{
+    font-size: 1.0em;
+}
+.game-desc h2,.game-desc p, .game-desc p a, .game-desc{
+    color: white; 
+   font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+  font-style: normal;
+}
+.game-desc h2{
+    font-size: 2em;
+}
+.game-desc p{
+    font-size: 1em;
+}

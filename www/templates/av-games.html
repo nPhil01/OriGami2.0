@@ -4,18 +4,24 @@
   </ion-nav-bar>
   <ion-content>
 <!-- Here are games, which were created before-->
-    <div ng-hide="gameRetrievalFailed">
-      <ion-list>
-        <ion-item class="item-divider" ng-click="gameSelect(game.name)" ng-repeat="game in games">
-          {{game.name}}
-        </ion-item>
-      </ion-list>
-    </div>
-<!-- Show message when failing to retrieve games -->
-    <div ng-show="gameRetrievalFailed">
-      <p>
-        Failed to get games
-      </p>
-    </div>
+      
+      <div class="list card calm-bg"  ng-repeat="game in games">
+                <div class="item item-avatar game-desc">
+                    <img src="/www/img/navigation.png">
+                    <h2>{{game.name}}</h2>
+                    <p>Difficulty: {{game.difficulty}}</p>
+                </div>
+                <div class="item item-body game-desc">
+                   <span>
+                       {{game.description}}
+                    </span>
+                    <p>
+                        <a class="subdued"> <i class="icon ion-clock"></i>  {{game.timecompl}}</a>
+                        <a class="subdued"> <i class="icon ion-android-textsms"></i>   5 Comments</a>
+                    </p>
+                    
+                    <button id="fab" class="button button-balanced icon ion-ios-game-controller-b-outline button-fab button-fab-bottom-right" ng-click = "gameSelect(game.name)">
+                </div>
+            </div>
   </ion-content>
 </ion-view>

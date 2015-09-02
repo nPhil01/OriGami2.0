@@ -16,6 +16,28 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.gameRetrievalFailed = true;
             console.log("Unable to retrive games list. HTTP request failed - \"" + response + "\"");
         });
+    
+    /*
+    API.getAll().success(function (data, status, headers, config) {
+        for (var i = 0; i < data.length; i++) {
+            $scope.list.push(data[i]);
+        }
+        if ($scope.list.length == 0) {
+            $scope.noData = true;
+        } else {
+            $scope.noData = false;
+        }
+        $rootScope.hide();
+    }).error(function (data, status, headers, config) {
+        $rootScope.hide();
+        $rootScope.notify(
+            "Oops something went wrong!! Please try again later");
+        console.log("something was wrong");
+    });*/
+    
+    
+    
+    //Selected game
     $scope.gameSelect = function (gameName) {
         param = "/tab/playgame/" + gameName;
         $location.path(param);
