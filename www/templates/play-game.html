@@ -15,11 +15,11 @@
         </ion-modal-view>
     </script>
     <ion-content scroll=false>
-        <div style="height:100%; width:100%" ng-controller="StudentMapCtrl">
-            <div id="map" style="height:80%; width:100%">
+        <div class="map-container" ng-controller="StudentMapCtrl">
+            <div id="map">
                 <leaflet defaults="map.defaults" center="map.center" markers="map.markers" event-broadcast="map.events" ng-if="map"></leaflet>
             </div>
-            <div id="smiley" class="smiley" style="display:flex; align-items:center; justify-content: center">
+            <div id="smiley" class="smiley">
                 <canvas class="smiley" smiley style="border:0px solid"></canvas>
             </div>
         </div>
