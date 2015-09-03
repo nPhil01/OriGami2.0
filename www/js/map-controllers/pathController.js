@@ -1,16 +1,11 @@
 
-angular.module('starter').controller('MapController',[ '$scope','$ionicModal', 
+angular.module('starter').controller('pathController',[ '$scope','$ionicModal', 
     function(
       $scope,
       $ionicModal
       ) {
-
-    
-
         $scope.map = {
-
           center:{
-
             autoDiscover: true,
             zoom: 16 
           },
@@ -102,32 +97,6 @@ angular.module('starter').controller('MapController',[ '$scope','$ionicModal',
       }
     }
   };
-       
-
-/* Add Marker without Modal ( Wayfinding.html)
-
-     
-  $scope.map.markers = new Array();
-
- //Log :Coordinates by Click 
-  $scope.$on('leafletDirectiveMap.click', function(event, args){
-    var latlng = args.leafletEvent.latlng;
-    console.log('Lat: ' + latlng.lat + 'Lng: ' + latlng.lng);
-    $scope.latn = args.leafletEvent.latlng.lat;
-    $scope.lngn = args.leafletEvent.latlng.lng;
-    $scope.map.markers.push({
-          lat: latlng.lat,
-          lng: latlng.lng,
-          message: 'Test Lat: ' + latlng.lat + 'Lng: ' + latlng.lng
-    });
-  });
-
-  //Get Log if marker is clicked
-    $scope.$on('leafletDirectiveMarker.click', function(event, args){
-    console.log( $scope.map.markers[args.markerName]);
-     });
-
-*/
    
   
    $scope.map.markers = new Array();
@@ -163,8 +132,13 @@ angular.module('starter').controller('MapController',[ '$scope','$ionicModal',
         $scope.modal.remove();
       };
           
+       $scope.savePoint = function(){
+           $scope.map.markers.push($scope.newWaypoint);
+           $scope.modal.remove();
+          };
+          
      $scope.closeModal = function() {
-         $scope.modal.remove();
+         $scope.modal.hide();
       };
           
      $scope.removeMarkers = function(){

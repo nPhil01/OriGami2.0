@@ -100,7 +100,7 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ionic-material', 'star
             views: {
                 'tab-home': {
                     templateUrl: "templates/map/aid_navig.html",
-                    controller: 'MapController'
+                    controller: 'aidController'
                 }
             }
         })
@@ -109,7 +109,7 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ionic-material', 'star
             views: {
                 'tab-home': {
                     templateUrl: "templates/map/path_plan.html",
-                    controller: 'MapController'
+                    controller: 'pathController'
                 }
             }
         })

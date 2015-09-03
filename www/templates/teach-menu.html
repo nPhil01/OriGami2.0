@@ -2,25 +2,29 @@
     <ion-nav-bar class="bar-positive">
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
-  <ion-content>
+  <ion-content style = "background-color:#80DEEA">
       <!-- Here are games, which were created before-->
       <!-- The only difference is that teacher can change settings of the game and create new games -->
-    <div class="card in done" ng-repeat="item in list" >
-        <a class="item clear-bg">
-            <h2 style="font-size:2.5em; color:#387ef5; ">{{item.name}}</h2>
-            <p style="color:#387ef5">{{item.Description}}</p>
-            <div class="card-footer text-right">
-               <i class="icon ion-clock"></i>
-               {{item.duration}}
-               <i class="icon ion-clock"></i>
-               {{item.difficulty}}
-                <div class="pull-left">
-                     <i class="icon ion-trash-a" ng-click="deleteItem('{{item.name}}','{{item}}')"></i>
-                     <i class="icon ion-edit"></i>
-                 </div>
-             </div>
-        </a>
-   </div>
+      
+       <div class="list card"  style = "background-color:#FFEB3B" ng-repeat="item in list">
+                <div class="item item-avatar game-desc">
+                    <img src="/www/img/navigation.png">
+                    <h2>{{item.name}}</h2>
+                    <p>Difficulty: {{item.difficulty}}</p>
+                </div>
+                <div class="item item-body game-desc">
+                   <span>
+                       {{item.description}}
+                    </span>
+                    <p>
+                        <a class="subdued"> <i class="icon ion-clock"></i>  {{item.timecompl}}</a>
+                        <i class="icon ion-trash-a"  ng-click="deleteItem('{{item.name}}',item)">  Delete</i>
+                        <!-- <i class="icon ion-edit">  Edit</i> -->
+                    </p>
+                </div>
+            </div>
+           
+           
    <div class="card" >
       <div class="item item-text-wrap" ng-show="noData">
          <span>

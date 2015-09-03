@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory) {
 
     //test games
-    $scope.games = $http.get('test_data/games.json').
+   /* $scope.games = $http.get('test_data/games.json').
     then(
         function (response) { // On success
             $scope.games = response.data;
@@ -15,14 +15,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         function (response) { // On failure
             $scope.gameRetrievalFailed = true;
             console.log("Unable to retrive games list. HTTP request failed - \"" + response + "\"");
-        });
+        });*/
     
-    /*
+    $scope.games = [];
+    
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
-            $scope.list.push(data[i]);
+            $scope.games.push(data[i]);
         }
-        if ($scope.list.length == 0) {
+        if ($scope.games.length == 0) {
             $scope.noData = true;
         } else {
             $scope.noData = false;
@@ -33,9 +34,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $rootScope.notify(
             "Oops something went wrong!! Please try again later");
         console.log("something was wrong");
-    });*/
+    });
     
-    
+    /*Set random class for the game
+    $scope.setClass = function(){
+        var classes = ["calm-bg","positive-bg","royal-bg","balanced-bg","energized-bg","assertive-bg"];
+        return classes[Math.floor((Math.random()* classes.length))];
+    };*/
     
     //Selected game
     $scope.gameSelect = function (gameName) {
@@ -43,36 +48,48 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $location.path(param);
     };
 
-    // Show info popup for the Path planning task
-    $scope.showPathInfo = function () {
-        var alertPopup = $ionicPopup.alert({
-            title: 'Path Planning',
-            template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'
-        });
-    };
-
+     // Show info popup for the Path planning task
+  $scope.showPathInfo = function() {
+   var alertPopup = $ionicPopup.alert({
+     title: 'Path Planning',
+     template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'
+   });
+ }; 
+    
     // Show info popup for the Aided Navigation task
-    $scope.showAidInfo = function () {
-        var alertPopup = $ionicPopup.alert({
-            title: 'Aided navigation',
-            template: 'Navigators follow a trail to the destination. Less cognitive effort.'
-        });
+    $scope.showAidInfo = function() {
+      var alertPopup = $ionicPopup.alert({
+         title: 'Aided navigation',
+         template: 'Navigators follow a trail to the destination. Less cognitive effort.'
+      });
     };
-
-    // Create Path plannning activity point and
-    $scope.submitPoint = function () {
+    
+    // Create Path plannning activity point and 
+    $scope.submitPoint = function(){
         $scope.gamestype = Data.getType();
-        $scope.activity = {
-            name: $scope.map.markers[0].name,
-            Description: $scope.map.markers[0].description,
-            lon: $scope.map.markers[0].lng,
-            lat: $scope.map.markers[0].lat,
-            created: Date.now(),
-            type: $scope.gamestype,
-            tasks: ['task1', 'task2', 'task3']
-        };
-        Data.newAct($scope.activity);
+          var points = [];
+        
+          for (var i = 0; i < $scope.map.markers.length; i++){
+              var point = {
+                name: $scope.map.markers[i].name,
+                description: $scope.map.markers[i].description,
+                lon: $scope.map.markers[i].lng,
+                lat: $scope.map.markers[i].lat,
+                created: Date.now(),
+                tasks: ['task1', 'task2', 'task3']
+              };    
+            points.push(point);
+          }
+          
+          // Complete Activity object
+        $scope.activities = {
+                acts: points,
+                type: $scope.gamestype
+            };
+          
+        Data.newAct($scope.activities);
         Data.clearType();
+        $scope.modal.remove();
     };
 })
 
@@ -96,10 +113,17 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         console.log("something was wrong");
     });
 
-
+    /*Set random class for the game
+    $scope.setClass = function(){
+        var classes = ["calm-bg","positive-bg","royal-bg","balanced-bg","energized-bg","assertive-bg"];
+        console.log(classes[Math.floor((Math.random()* classes.length))]);
+        return classes[Math.floor((Math.random()* classes.length))];
+    };*/
+    
     // Delete the entire game by clicking on the trash icon
     $scope.deleteItem = function (name, item) {
-        $scope.list.splice(item, 1);
+        
+        $scope.list.splice($scope.list.indexOf(item, 1));
         API.deleteItem(name, $rootScope.getToken())
             .success(function (data, status, headers, config) {
                 $rootScope.hide();
@@ -132,54 +156,50 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 .controller('NewGameCtrl', function ($rootScope, $scope, $http, $location,
     $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory) {
-    $scope.newgame = {}; //General description of the game
-
-    $scope.pathGame = function () {
+     $scope.newgame = {}; //General description of the game
+    
+    $scope.pathGame = function(){
         Data.addType("Path Planning");
     };
-    $scope.aidGame = function () {
+    $scope.aidGame = function(){
         Data.addType("Aided Wayfinding");
     };
-
+    
     // List of activities and types
     $scope.navactivities = Data.getAct();
-    console.log($scope.navactivities);
-
+    
     //Collapsed list with tasks for each activity
-    $scope.toggleActivity = function (activity) {
-        activity.show = !activity.show;
+  $scope.toggleActivity = function(activity) {
+    activity.show = !activity.show;
+  };
+  $scope.isActivityShown = function(activity) {
+    return activity.show;
+  };
+    
+    // Submit game 
+    $scope.submitGame = function(){
+        $scope.completeGame = {
+                name: $scope.newgame.title,
+                description: $scope.newgame.description,
+                timecompl: $scope.newgame.time,
+                difficulty: $scope.newgame.difficulty,
+                activities: $scope.navactivities
+            };
+        console.log($scope.completeGame);
+        
+        API.saveItem($scope.completeGame)
+                .success(function (data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.doRefresh(1);
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.notify("Oops something went wrong!! Please try again later");
+                });
+        Data.clearAct();
     };
-    $scope.isActivityShown = function (activity) {
-        return activity.show;
-    };
-
-    // Submit game
-    $scope.submitGame = function () {
-        if ($scope.newgame.title == undefined) {
-
-        }
-
-        $scope.activity = {
-            name: $scope.newgame.title,
-            timecompl: $scope.newgame.time,
-            difficulty: $scope.newgame.difficulty,
-            activities: $scope.navactivities
-        };
-
-        API.saveItem($scope.activity)
-            .success(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.doRefresh(1);
-            })
-            .error(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.notify(
-                    "Oops something went wrong!! Please try again later");
-            });
-        //Data.clearAct();
-    };
-
-    $scope.cancelGame = function () {
+    
+    $scope.cancelGame = function(){
         Data.clearAct();
         $ionicHistory.goBack();
     };

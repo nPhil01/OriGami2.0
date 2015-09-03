@@ -10,12 +10,39 @@
                 <h1 class="title">Game Info</h1>
                 <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
             </ion-header-bar>
-            <ion-content>
+ 
+            <ion-content style = "height: 100%; background-color:#fec00f">
+<!-- 
 		    <h3>Your destination is <b>{{nextDestination}}</b></h3>
                     <h4>Plan your route and start heading towards the destination. The smiley indicates whether you are headed in the right direction.</h4>
-            </ion-content>
+-->
+               <div class = "plan-route" style = "background-color:#3F51B5">
+                   <div class="information">
+                       <i class="ion-android-map"></i>
+                       <h1>Step 1</h1>
+                        <p>Plan your route to destination</p>
+                   </div>
+                </div>
+                
+               <div class = "plan-route" style = "background-color:#673AB7;">
+                   <div class="information">
+                      <i class="ion-android-walk"></i>
+                      <h1>Step 2</h1>
+                      <p>Start heading towards the destination</p>
+                  </div>
+            </div>
+                
+                <div class = "plan-route" >
+                    <div class="information">
+              <i class="ion-happy-outline"></i>
+              <h1>Keep in mind: </h1>
+              <p>The smiley indicates whether you are headed in the right direction</p>
+          </div>
+                </div>
+            </ion-content> 
+            
         </ion-modal-view>
-    </script> --> 
+    </script> 
     
     
     <ion-content scroll=false>

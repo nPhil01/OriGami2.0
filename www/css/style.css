@@ -6,6 +6,12 @@
     position: relative;
 }
 
+.game-modal{
+     background-image: url("/www/img/1.png");
+     background-size: cover;
+    height: 100%;
+}
+
 .game-backg h2{
     font-size: 2em;
      text-align: center;
@@ -106,7 +112,7 @@
     font-size: 1.0em;
 }
 .game-desc h2,.game-desc p, .game-desc p a, .game-desc{
-    color: white; 
+    color: black; 
    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
   font-style: normal;
 }
@@ -116,3 +122,72 @@
 .game-desc p{
     font-size: 1em;
 }
+
+
+/*Info tab */
+
+.info-tab{
+    height:40%;
+    background-color: #3F51B5;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+    color: #fafafa;
+    position:relative;
+}
+.info-tab .information{
+   position: relative;
+    top:20%;
+}
+.info-tab i {
+    font-size:5em;
+}
+
+.info-tab h1{
+    font-size: 2em;
+     text-align: center;
+     color: white;
+}
+.info-tab p{
+     font-size: 1.5em;
+     text-align: center;
+    color: white;
+}
+
+
+
+/* Modal window with explanation of the game rules */
+.plan-route{
+    height:30%;
+    background-color: #3F51B5;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+    color: #fafafa;
+    position:relative;
+    background-color: #fec00f;
+}
+.plan-route .information{
+   position: relative;
+}
+.plan-route i {
+    font-size:5em;
+}
+
+.plan-route h1{
+    font-size: 2em;
+     text-align: center;
+     color: white;
+}
+.plan-route p{
+     font-size: 1.5em;
+     text-align: center;
+    color: white;
+}
+
