@@ -1,4 +1,4 @@
-<ion-view view-title="Play Game - {{}}">
+<ion-view view-title="Play Game - {{}}" cache-view="false">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
@@ -82,6 +82,29 @@
                         <i class="ion-flag"></i>
                         <h1>Congratulations!</h1>
                         <p> You have successfully completed the game </p>
+                    </div>
+                </div>
+            </ion-content>
+            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+                <p class="title">OK</p>
+            </ion-footer-bar>
+
+        </ion-modal-view>
+    </script>
+
+    <!-- Error Modal -->
+    <script id="error-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar-positive">
+                <h1 class="title">Error!</h1>
+            </ion-header-bar>
+
+            <ion-content style="height: 100%; background-color:#673AB7">
+                <div class="plan-route" style="background-color:#673AB7">
+                    <div class="information">
+                        <i class="ion-alert-circled"></i>
+                        <h1>Error!</h1>
+                        <p> {{errorMsg}} </p>
                     </div>
                 </div>
             </ion-content>
