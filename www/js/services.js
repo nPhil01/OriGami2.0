@@ -59,8 +59,9 @@ angular.module('starter.services', [])
     taskService.addPhoto = function(taskPhoto){
          task.photo = taskPhoto;
      };
-    taskService.addCoordinates = function(taskCoordinates){
-         task.coordinates = taskCoordinates;
+    taskService.addCoordinates = function(lat,lng){
+         task.lat = lat;
+         task.lng = lng;
      };
     
     taskService.addIndexes = function(actIndex,pointIndex){

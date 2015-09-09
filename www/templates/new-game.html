@@ -1,6 +1,5 @@
 <ion-view  view-title="Games">
-    <ion-nav-bar align-title = "right" class="bar-positive">
-           <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-bar align-title = "center" class="bar-positive">
        </ion-nav-bar>
 <ion-content>
       <div class = "game-backg">
@@ -13,19 +12,19 @@
           <button class="button button-fab button-fab-top-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()"></button>
           <button class="button button-fab button-fab-top-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
       </div>
-      <label class="item item-input">
+      <label class="item item-input input-info">
         <span class="input-label">Game Title</span>
         <input type="text" ng-model = "newgame.title" placeholder="Game Title" required>
       </label>
-      <label class="item item-input">
+      <label class="item item-input input-info">
         <span class="input-label">Game Description</span>
         <input type="text" ng-model = "newgame.description" placeholder="Short description" required>
       </label>
-      <label class="item item-input">
+      <label class="item item-input input-info">
         <span class="input-label">Time of completion</span>
         <input type="text" ng-model = "newgame.time" placeholder="How long will it take to finish the game?" required>
       </label>
-      <label class="item item-input">
+      <label class="item item-input input-info">
         <span class="input-label">Difficulty</span>
         <input type="text" ng-model = "newgame.difficulty" placeholder="How difficult this game is?" required>
       </label>
@@ -42,8 +41,10 @@
                <p>Number of Points: {{act.acts.length}}</p>
           </ion-item>
           <ion-item class="item-accordion" ng-repeat="item in act.points" ng-show="isActivityShown(act)">
-            {{item.name}} : {{item.description}}
-            <i class="icon ion-ios-game-controller-b-outline" ng-click = "addTaskPoint(act,item)" ui-sref="tab.tasktype"></i>
+              <div class="points-cont">
+                  <h2>{{item.name}}</h2>
+                   <i class="icon ion-plus-circled">Add Task</i>
+              </div>
           </ion-item>
         </div>
       </ion-list>

@@ -100,6 +100,8 @@
     background-size: cover;
     display: block;
     position: relative;
+    
+    
 }
 
 .game-modal{
@@ -113,6 +115,7 @@
      text-align: center;
      color: white;
     left:5%;
+    
 }
 .game-backg p{
      font-size: 1.5em;
@@ -398,9 +401,9 @@
 }
 
 .georef .georef_step1 img{
-    heigh: 50%;
-    width: 70%;
-    left:15%;
+    heigh: 40%;
+    width: 80%;
+    left:10%;
     top:20%;
     position: absolute;
 }
@@ -413,8 +416,9 @@
 
 /* step 2 */
 .georef .georef_step2{
+    left:10%;
     height: 30%;
-    width: 100%;
+    width: 80%;
     position: relative;
 }
 
@@ -458,4 +462,38 @@
     width: 100%;
     background-image: url("/www/img/april.jpg");
     background-size: cover;
+}
+
+
+.input-info{
+     letter-spacing: 0.04em;
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: left;
+    font-style: normal;
+}
+
+
+/* List with all created points and task for each point ------------------*/
+.points-cont{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.points-cont h2{
+    position: absolute;
+    letter-spacing: 0.04em;
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    left: 20%;
+}
+
+.points-cont i{
+    position: absolute;
+    letter-spacing: 0.04em;
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    right: 10%;
 }

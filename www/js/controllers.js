@@ -129,13 +129,88 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             });
         $scope.list.splice($scope.list.indexOf(item), 1);
     };
+    
+    
+    
+    // EDIT GAME PART ----------------------------------
+    $ionicModal.fromTemplateUrl('templates/edit-game.html', {
+           scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+            $scope.modal = modal;
+         });
+    
+    $scope.editItem = function(item){
+        $scope.editedGame = [];
+        $scope.navactivities = [];
+        
+        API.getOne(item)
+            .success(function (data, status, headers, config) {
+                $scope.editedGame = data.slice()[0];
+            console.log($scope.editedGame);
+            $scope.navactivities = $scope.editedActivity.activities;
+            }).error(function (data, status, headers, config) {
+                $rootScope.notify(
+                    "Oops something went wrong!! Please try again later");
+                alert("fail");
+            });
+        
+        $scope.modal.show();
+      };
+    
+    $scope.closeModal = function(){
+         $scope.modal.hide();
+    };
 })
 
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', function ($rootScope, $scope, $http, $location,
-    $ionicModal, API, Data, Task, $window, $timeout, $ionicPopup, $ionicHistory) {
+.controller('NewGameCtrl', ['$rootScope','$scope','$http','$location', '$cordovaGeolocation','$ionicModal','API','Data','Task','$window','$ionicPopup','$ionicHistory','leafletData','$stateParams',  function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
+    $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory,leafletData, $stateParams) {
      $scope.newgame = {}; //General description of the game
+    
+    // Current location of GeoReference Task Creation
+    $scope.map = {
+          center:{
+            autoDiscover: true,
+            zoom: 16 
+          },
+          defaults: {
+            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            maxZoom: 18,
+            zoomControlPosition: 'topleft',
+            lat: 57,
+            lng: 8
+          },
+
+          geojson:{},
+          markers : [],
+          events: {
+            map: {
+              enable: ['context'],
+              logic: 'emit'
+            }
+          },
+      };
+    
+     $scope.currentLocation = function(){
+          $cordovaGeolocation
+            .getCurrentPosition()
+            .then(function (position) {
+                $scope.map.center.lat = position.coords.latitude;
+                $scope.map.center.lng = position.coords.longitude;
+                $scope.map.center.zoom = 15;
+                $scope.map.center.message = "Photo was taken from here";
+                $scope.map.markers.push($scope.map.center);
+              
+            }, function (err) {
+                // error
+                console.log("Geolocation error!");
+                console.log(err);
+            });
+     };
+        
+    
     
     $scope.pathGame = function(){
         Data.addType("Path Planning");
@@ -178,8 +253,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
     
     $scope.submitGRTask = function(){
-        Task.addPhoto("/www/img/background1.jpg");
-        Task.addCoordinates("there are coordinates");
+        Task.addPhoto("/www/img/ifgi.jpg");
+        
+        Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
         
         $scope.task = Task.getTask();
         $scope.currentActIndex = Task.getActIndex();
@@ -188,8 +264,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         //Add created task to the choosen activity point
         $scope.navactivities[$scope.currentActIndex].points[$scope.currentPointIndex].tasks.push($scope.task);
         
-        console.log($scope.navactivities);
         //Clear the scope and get back to the new game creation menu
+        $scope.task = {};
+        $scope.currentActIndex = null;
+        $scope.currentPointIndex = null;
+        $ionicHistory.goBack();
+    };
+    
+    $scope.cancelGRTask = function(){
         $scope.task = {};
         $scope.currentActIndex = null;
         $scope.currentPointIndex = null;
@@ -226,7 +308,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Data.clearAct();
         $ionicHistory.goBack();
     };
-})
+}])
 
 
 // COntroller for view, which creates new tasks for already created activities
@@ -401,7 +483,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                     message: "You Are Here",
-                    focus: true,
                     draggable: false
                 });
             }, function (err) {

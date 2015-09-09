@@ -6,15 +6,16 @@
   <ion-content style = "background-color:#80DEEA;">
       <div class = "georef">
           <div class="georef_step1">
-              <button class="button icon-left ion-camera" style = "background-color:#FFEB3B" style="color:black;">Take a picture</button>
+              <button class="button icon-left ion-camera" ng-click = "currentLocation()" style = "background-color:#FFEB3B" style="color:black;">Take a picture</button>
               <img src = "/www/img/background1.jpg"/>
           </div>
           <div class="georef_step2">
-              <label class="item item-input item-md-label" placeholder="Username" highlight-color="balanced" type="text"><input type="text"><span class="input-label"></span><div class="highlight highlight-balanced"></div></label>
+             <leaflet defaults="map.defaults" center="map.center" paths="map.paths" markers="map.markers" geojson="map.geojson" ng-if="map"></leaflet>
           </div>
+          
           <div class="georef_step3">
               <button class="button button-fab button-fab-bottom-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light"  ng-click = "submitGRTask()"></button>
-              <button class="button button-fab button-fab-bottom-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "submitGRTask()" ui-sref = "tab.newgame"></button>
+              <button class="button button-fab button-fab-bottom-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGRTask()" ui-sref = "tab.newgame"></button>
           </div>
       </div>
   </ion-content>
