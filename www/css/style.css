@@ -1,3 +1,99 @@
+/* NEW HOME PAGE ---------------------------------------- */ 
+.person-type {
+    background-color:#80DEEA; 
+    height: 100%;
+    position: relative;
+}
+
+.person-type .player{
+    background-color: #3F51B5;
+    height: 50%;
+    position: relative;
+}
+
+.person-type .player .type-picture{
+   height: 100%;
+   position: relative;
+}
+.person-type .player .type-picture img{
+   top: 35%;
+    left: 5%;
+    position: absolute;
+}
+.person-type .player .type-picture .info{
+   height: 100%;
+    left: 30%;
+    top:35%;
+    position: absolute;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+}
+.person-type .player .type-picture .info h2{
+    color: white;
+    font-family: 'RobotoDraft', sans-serif;
+}
+
+.person-type .player .type-picture .info p{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.person-type .player .type-picture .next{
+    right: 5%;
+    bottom: 5%;
+    position: absolute;
+}
+
+
+
+
+.person-type .teacher{
+    height: 50%;
+    background-color: #FF5752;
+}
+.person-type .teacher .type-picture{
+   height: 100%;
+   position: relative;
+}
+.person-type .teacher .type-picture img{
+    top: 25%;
+    right: 5%;
+    position: absolute;
+}
+.person-type .teacher .type-picture .info{
+   height: 100%;
+    width: 60%;
+    left: 5%;
+    top: 25%;
+    position: absolute;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+}
+.person-type .teacher .type-picture .info h2{
+    color: white;
+    font-family: 'RobotoDraft', sans-serif;
+}
+
+.person-type .teacher .type-picture .info p{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.person-type .teacher .type-picture .next{
+    left: 5%;
+    bottom: 5%;
+    position: absolute;
+}
+
+
+
 .game-backg{
     height: 180px;
     background-image: url("/www/img/navigation.jpg");
@@ -191,3 +287,165 @@
     color: white;
 }
 
+
+/* Page where user chooses task types ---------------------------------------- */ 
+
+.task-type {
+    background-color:#80DEEA; 
+    height: 100%;
+    position: relative;
+}
+
+.task-type .type1{
+    background-color: #673AB7;
+    height: 50%;
+    position: relative;
+}
+
+.task-type .type1 .type-picture{
+   height: 100%;
+   position: relative;
+}
+.task-type .type1 .type-picture img{
+   top: 35%;
+    left: 5%;
+    position: absolute;
+}
+.task-type .type1 .type-picture .info{
+   height: 100%;
+    left: 30%;
+    top:35%;
+    position: absolute;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+}
+.task-type .type1 .type-picture .info h2{
+    color: white;
+    font-family: 'RobotoDraft', sans-serif;
+}
+
+.task-type .type1 .type-picture .info p{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.task-type .type1 .type-picture .next{
+    right: 5%;
+    bottom: 5%;
+    position: absolute;
+}
+
+
+
+
+.task-type .type2{
+    height: 50%;
+    background-color: #fec00f;
+}
+.task-type .type2 .type-picture{
+   height: 100%;
+   position: relative;
+}
+.task-type .type2 .type-picture img{
+    top: 25%;
+    left: 5%;
+    position: absolute;
+}
+.task-type .type2 .type-picture .info{
+   height: 100%;
+    left: 30%;
+    top:25%;
+    position: absolute;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+}
+.task-type .type2 .type-picture .info h2{
+    color: black;
+    font-family: 'RobotoDraft', sans-serif;
+}
+
+.task-type .type2 .type-picture .info p{
+    color: black;
+    font-family: 'Roboto', sans-serif;
+}
+
+.task-type .type2 .type-picture .next{
+    right: 5%;
+    bottom: 5%;
+    position: absolute;
+}
+
+
+/* Georefence task creation -------------------------- */
+.georef{
+    height: 100%;
+    width:100%;
+    position: relative;
+}
+
+/* step 1*/
+.georef .georef_step1{
+    height: 60%;
+    width: 100%;
+    position: relative;
+}
+
+.georef .georef_step1 img{
+    heigh: 50%;
+    width: 70%;
+    left:15%;
+    top:20%;
+    position: absolute;
+}
+
+.georef .georef_step1 button{
+    left:30%;
+    top:5%;
+    position: absolute;
+}
+
+/* step 2 */
+.georef .georef_step2{
+    height: 30%;
+    width: 100%;
+    position: relative;
+}
+
+.georef .georef_step2 label{
+    top: 10%;
+    height:70%;
+    width: 95%;
+}
+.georef .georef_step2 label input{
+    top: 10%;
+    height:70%;
+    width: 100%;
+}
+
+/* step 3 */
+.georef .georef_step3{
+    height: 10%;
+    width: 100%;
+    position: relative;
+}
+
+
+.dev-phase{
+     height: 100%;
+    width: 60%;
+    left: 25%;
+    top: 25%;
+    position: absolute;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+}

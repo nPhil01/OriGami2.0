@@ -1,5 +1,5 @@
-<ion-view view-title="Games">
-    <ion-nav-bar class="bar-positive">
+<ion-view  view-title="Games">
+    <ion-nav-bar align-title = "right" class="bar-positive">
            <ion-nav-back-button></ion-nav-back-button>
        </ion-nav-bar>
 <ion-content>
@@ -7,11 +7,11 @@
           <h2>New Game</h2>
           <p>Add several activities and tasks for each activity</p>
           <div class="game-type">
-              <button class="button icon-left ion-arrow-graph-up-right" style = "background-color:#FFEB3B" ui-sref="tab.pathplan" ng-click = "pathGame()" style="color:black;">Path Planning</button>
-              <button class="button icon-right ion-location"  style = "background-color:#FFEB3B" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Aided Navigation</button>
+              <button class="button icon-left ion-arrow-graph-up-right" style = "background-color:#FFEB3B" ui-sref="tab.pathplan" ng-click = "pathGame()" style="color:black;">Find destination</button>
+              <button class="button icon-right ion-location"  style = "background-color:#FFEB3B" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Follow route</button>
           </div>
-          <button class="button button-fab button-fab-bottom-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()" ui-sref="tab.teachmenu"></button>
-          <button class="button button-fab button-fab-bottom-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
+          <button class="button button-fab button-fab-top-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()" ui-sref="tab.teachmenu"></button>
+          <button class="button button-fab button-fab-top-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
       </div>
       <label class="item item-input">
         <span class="input-label">Game Title</span>
@@ -40,7 +40,7 @@
               <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
                <p style="font-size:2em;">Activity: {{act.type}}</p>
                <p>Number of Points: {{act.acts.length}}</p>
-              <i class="icon ion-ios-game-controller-b-outline" ui-sref="tab.quest"></i>
+              <i class="icon ion-ios-game-controller-b-outline" ui-sref="tab.tasktype"></i>
           </ion-item>
           <ion-item class="item-accordion"
                     ng-repeat="item in act.acts[0].tasks"

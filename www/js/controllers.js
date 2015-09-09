@@ -51,16 +51,18 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
      // Show info popup for the Path planning task
   $scope.showPathInfo = function() {
    var alertPopup = $ionicPopup.alert({
-     title: 'Path Planning',
-     template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'
+     title: 'Find destination',
+    /* template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'*/
+      template: 'Put longer tap on map to add point'
    });
  }; 
     
     // Show info popup for the Aided Navigation task
     $scope.showAidInfo = function() {
       var alertPopup = $ionicPopup.alert({
-         title: 'Aided navigation',
-         template: 'Navigators follow a trail to the destination. Less cognitive effort.'
+         title: 'Follow route',
+         template: 'Put longer tap on map to add point'
+         //template: 'Navigators follow a trail to the destination. Less cognitive effort.'
       });
     };
     
@@ -90,6 +92,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Data.newAct($scope.activities);
         Data.clearType();
         $scope.modal.remove();
+        $scope.$apply();
     };
 })
 

@@ -73,7 +73,7 @@ angular.module('starter').controller('aidController',[ '$scope','$ionicModal',
       };
           
      $scope.removeMarkers = function(){
-          $ionicHistory.goBack();
+         $scope.modal.remove();
        };
 
     }]);

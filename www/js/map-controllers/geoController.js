@@ -11,7 +11,7 @@ angular.module('starter').controller("GeoCtrl", function($rootScope,$scope, API,
     return (meters/distOnePixelInMeters)
   }
   
-  // Show info popup for the Path planning task
+  /* Show info popup for the Path planning task
   $scope.showPathInfo = function() {
    var alertPopup = $ionicPopup.alert({
      title: 'Path Planning',
@@ -24,9 +24,9 @@ angular.module('starter').controller("GeoCtrl", function($rootScope,$scope, API,
      title: 'Aided navigation',
      template: 'Navigators follow a trail to the destination. Less cognitive effort.'
    });
- };
+ };*/
     
-    // Get back in the history
+    /* Get back in the history
     $scope.submitPoint = function(){
         $ionicHistory.goBack();
         console.log($scope.map.markers);
@@ -48,7 +48,7 @@ angular.module('starter').controller("GeoCtrl", function($rootScope,$scope, API,
                     $rootScope.hide();
                     $rootScope.notify("Oops something went wrong!! Please try again later");
                 });
-    };
+    };*/
     
     
 });

@@ -113,12 +113,31 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ionic-material', 'star
                 }
             }
         })
-        .state('tab.quest', {
-            url: "/qtask",
+        .state('tab.tasktype', {
+            url: "/tasktype",
+            views: {
+                'tab-home': {
+                    templateUrl: "templates/tasks/task-type.html",
+                    controller: 'taskCreation'
+                }
+            }
+        })
+    // States, responsible for TASK creation (Either 
+    .state('tab.georef', {
+            url: "/georef",
+            views: {
+                'tab-home': {
+                    templateUrl: "templates/tasks/georef.html",
+                    controller: 'NewGameCtrl'
+                }
+            }
+        })
+    .state('tab.quest', {
+            url: "/quest",
             views: {
                 'tab-home': {
                     templateUrl: "templates/tasks/quest.html",
-                    controller: 'taskCreation'
+                    controller: 'NewGameCtrl'
                 }
             }
         });

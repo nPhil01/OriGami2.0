@@ -142,7 +142,7 @@ angular.module('starter').controller('pathController',[ '$scope','$ionicModal',
       };
           
      $scope.removeMarkers = function(){
-          $ionicHistory.goBack();
+          $scope.modal.remove();
        };
 
     }]);

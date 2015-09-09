@@ -1,4 +1,144 @@
 [
+    
+    //Game 1
+    
+    {
+        "name": "City Exploration",
+        "description": "Easy game which tests you basic navigation abilities. Complete all the activities, share your results with friends and make your parents and friends proud! ",
+        "timecompl": "20 min",
+        "difficulty": "Easy",
+        "activities": [
+            {
+                "points": [
+                    {
+                        "name": "Alex's Home",
+                        "description": "Final destination - Alex's home in Russia",
+                        "lat": 52.77560576375517,
+                        "lon": 56.081106662750244,
+                        "task": [
+                            {
+                                "type": "Question - Answer",
+                                "question": "Whats the name of Alex's city?",
+                                "answer": "Ufa"
+                            },
+                            {
+                                "type": "Georeference",
+                                "picture": "path/to/picture.jpeg",
+                                "lat": 54.77560576375517,
+                                "lon": 56.081106662750244
+                            }
+                        ]
+                    }
+                ],
+                "type": "Path Planning"
+            },
+            {
+                "points": [
+                    {
+                        "name": "Mensa",
+                        "description": "Now navigate to the mensa which lies on the eastern shore of the Aasee and Bismarckallee",
+                        "lat": 51.9751329,
+                        "lon": 7.601954,
+                        "task": [
+                            {
+                                "type": "Georeference",
+                                "picture": "path/to/picture.jpeg",
+                                "lat": 51.9751329,
+                                "long": 7.601954
+                            }
+                        ]
+                    },
+                    {
+                        "name": "IfGI",
+                        "description": "Now navigate to the IfGI which lies on the intersection of Heisenbergstrasse and Correnstrasse",
+                        "lat": 51.9691284,
+                        "lon": 7.5960377,
+                        "task": [
+                            {
+                                "type": "Georeference",
+                                "picture": "path/to/picture.jpeg",
+                                "lat": 51.9691284,
+                                "long": 7.5960377
+                            }
+                        ]
+                    }
+                ],
+                "type": "Aided Wayfinding"
+            }
+        ]
+    },
+    
+    
+    
+    // Game 2
+    {
+        "name": "City Exploration 1 ",
+        "description": "Easy game which tests you basic navigation abilities. Complete all the activities, share your results with friends and make your parents and friends proud! ",
+        "timecompl": "30 min",
+        "difficulty": "Middle",
+        "activities": [
+            {
+                "points": [
+                    {
+                        "name": "Alex's Home",
+                        "description": "Final destination - Alex's home in Russia",
+                        "lat": 52.77560576375517,
+                        "lon": 56.081106662750244,
+                        "task": [
+                            {
+                                "type": "Question - Answer",
+                                "question": "Whats the name of Alex's city?",
+                                "answer": "Ufa"
+                            },
+                            {
+                                "type": "Georeference",
+                                "picture": "path/to/picture.jpeg",
+                                "lat": 54.77560576375517,
+                                "lon": 56.081106662750244
+                            }
+                        ]
+                    }
+                ],
+                "type": "Path Planning"
+            },
+            {
+                "points": [
+                    {
+                        "name": "Mensa",
+                        "description": "Now navigate to the mensa which lies on the eastern shore of the Aasee and Bismarckallee",
+                        "lat": 51.9751329,
+                        "lon": 7.601954,
+                        "task": [
+                            {
+                                "type": "Georeference",
+                                "picture": "path/to/picture.jpeg",
+                                "lat": 51.9751329,
+                                "long": 7.601954
+                            }
+                        ]
+                    },
+                    {
+                        "name": "IfGI",
+                        "description": "Now navigate to the IfGI which lies on the intersection of Heisenbergstrasse and Correnstrasse",
+                        "lat": 51.9691284,
+                        "lon": 7.5960377,
+                        "task": [
+                            {
+                                "type": "Georeference",
+                                "picture": "path/to/picture.jpeg",
+                                "lat": 51.9691284,
+                                "long": 7.5960377
+                            }
+                        ]
+                    }
+                ],
+                "type": "Aided Wayfinding"
+            }
+        ]
+    },
+    
+    // Game 3
+    
     {
         "name": "City Exploration",
         "description": "Easy game which tests you basic navigation abilities. Complete all the activities, share your results with friends and make your parents and friends proud! ",
@@ -64,4 +204,5 @@
             }
         ]
     }
+    
 ]
