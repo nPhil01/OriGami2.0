@@ -1,4 +1,4 @@
-<ion-view align-title="center" view-title="Games">
+<ion-view cache-view="false" align-title="center" view-title="Games">
     <ion-nav-bar class="bar-positive">
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
@@ -18,7 +18,7 @@
                     </span>
                     <p>
                         <a class="subdued"> <i class="icon ion-clock"></i>  {{item.timecompl}}</a>
-                        <i class="icon ion-trash-a"  ng-click="deleteItem('{{item.name}}',item)">  Delete</i>
+                        <i class="icon ion-trash-a"  ng-click="deleteItem(item,'{{item.name}}')">  Delete</i>
                         <!-- <i class="icon ion-edit">  Edit</i> -->
                     </p>
                 </div>

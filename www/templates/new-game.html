@@ -10,7 +10,7 @@
               <button class="button icon-left ion-arrow-graph-up-right" style = "background-color:#FFEB3B" ui-sref="tab.pathplan" ng-click = "pathGame()" style="color:black;">Find destination</button>
               <button class="button icon-right ion-location"  style = "background-color:#FFEB3B" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Follow route</button>
           </div>
-          <button class="button button-fab button-fab-top-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()" ui-sref="tab.teachmenu"></button>
+          <button class="button button-fab button-fab-top-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()"></button>
           <button class="button button-fab button-fab-top-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
       </div>
       <label class="item item-input">
@@ -40,12 +40,10 @@
               <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
                <p style="font-size:2em;">Activity: {{act.type}}</p>
                <p>Number of Points: {{act.acts.length}}</p>
-              <i class="icon ion-ios-game-controller-b-outline" ui-sref="tab.tasktype"></i>
           </ion-item>
-          <ion-item class="item-accordion"
-                    ng-repeat="item in act.acts[0].tasks"
-                    ng-show="isActivityShown(act)">
-            {{item}}
+          <ion-item class="item-accordion" ng-repeat="item in act.points" ng-show="isActivityShown(act)">
+            {{item.name}} : {{item.description}}
+            <i class="icon ion-ios-game-controller-b-outline" ng-click = "addTaskPoint(act,item)" ui-sref="tab.tasktype"></i>
           </ion-item>
         </div>
       </ion-list>

@@ -1,12 +1,24 @@
 angular.module('starter.services', [])
 
 .factory('Data', function () {
+    
+     var actService = {};
+    var allGames = [];
+    
+    actService.pushGame = function (value) {
+        allGames.push(value);
+    };
+    actService.getGames = function(){
+        return allGames;
+    };
+   
+    
     var activities = [];
     var tasks = [];
-    var gameType = "";
-
-    var actService = {};
-
+    var gameType = "";  // Path planning / Aided Wayfinding 
+    var taskType = "";  // Question - Answer / Georeference
+    
+    
     actService.newAct = function (value) {
         activities.push(value);
     };
@@ -14,7 +26,7 @@ angular.module('starter.services', [])
         gameType = type;
     };
 
-    // Get all the current activities and game types (Path plan / Aid wayf)
+    // Get all the current activities, game type (Path plan / Aid wayf)
     actService.getAct = function () {
         return activities;
     };
@@ -22,21 +34,66 @@ angular.module('starter.services', [])
         return gameType;
     };
 
-    // Clean current activities and game types (Path plan / Aid wayf)
+    // Clean current activities, game types (Path plan / Aid wayf)
     actService.clearAct = function () {
         activities.splice(0, activities.length);
     };
-
     actService.clearType = function () {
         gameType = "";
     };
-
     return actService;
 })
 
+.factory ('Task',function ($rootScope, $http, $ionicLoading, $window){
+      var taskService = {};  
+      var task = {}; // Question - Answer / Georeference
+    
+    // Index of a choosen ACTIVITY and POINT. Important, because we have to know where to add a certain task
+      var currentActIndex = null;
+      var currentPointIndex = null;
+    
+    // Add relevant information to the TASK
+     taskService.addType = function(taskType){
+         task.type = taskType;
+     };
+    taskService.addPhoto = function(taskPhoto){
+         task.photo = taskPhoto;
+     };
+    taskService.addCoordinates = function(taskCoordinates){
+         task.coordinates = taskCoordinates;
+     };
+    
+    taskService.addIndexes = function(actIndex,pointIndex){
+       currentActIndex = actIndex;
+       currentPointIndex = pointIndex;
+    };
+    
+
+    
+    // Get and Clear TASK 
+    taskService.getTask = function(){
+         return task;
+     };
+    taskService.clearTask = function(){
+         task = {};
+     };
+    
+    taskService.getActIndex = function(){
+        return currentActIndex;
+    };
+    taskService.getPointIndex = function(){
+        return currentPointIndex;
+    };
+    
+    
+    return taskService;
+})
+
+
+// API for getting data from the remote server
 .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
     var base = "http://giv-origami.uni-muenster.de:8000";
-    $rootScope.show = function (text) {
+    /*$rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
             content: text ? text : 'Loading',
             animation: 'fade-in',
@@ -44,18 +101,17 @@ angular.module('starter.services', [])
             maxWidth: 200,
             showDelay: 0
         });
-    };
+    };*/
     $rootScope.hide = function () {
         $ionicLoading.hide();
     };
 
-
-    $rootScope.notify = function (text) {
+    /*$rootScope.notify = function (text) {
         $rootScope.show(text);
         $window.setTimeout(function () {
             $rootScope.hide();
         }, 1999);
-    };
+    };*/
 
     $rootScope.doRefresh = function (tab) {
         if (tab == 1)

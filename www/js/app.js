@@ -118,7 +118,7 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ionic-material', 'star
             views: {
                 'tab-home': {
                     templateUrl: "templates/tasks/task-type.html",
-                    controller: 'taskCreation'
+                    controller: 'NewGameCtrl'
                 }
             }
         })
