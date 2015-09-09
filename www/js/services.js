@@ -167,37 +167,205 @@ angular.module('starter.services', [])
 })
 
 /* loads existing games from database */
-.factory('gameLoaderService', function ($rootScope, $http, $filter) {
-    var gameLoaded = false;
-    var gameData = {};
-    var gameLoaderService = {
-        loadGame: function (name, callback) {
-            var games = $http.get('test_data/games.json')
-                .then(
-                    function (response) { // On success
-                        data = response.data;
-                        // load only those games which match selected game id
-                        selected_game = $filter('filter')(data, {
-                            "name": name
-                        }, true);
-                        if (selected_game.length == 1) {
-                            gameLoaded = true;
-                            gameData = selected_game[0];
-                            callback(gameData);
-                        } else {
-                            console.log("Error! More than one game matched");
-                        }
-                    },
-                    function (response) { //On failure
-                        console.log("HTTP Get request failed " + response.statusText);
-                    });
-        }
+.factory('GameData', function ($rootScope, $http, $filter, $q) {
+    var data = {};
+    var game = {};
+    var loaded = false;
+    data.isLoaded = function () {
+        return loaded;
     };
-    return gameLoaderService;
+    data.getNumActivities = function () {
+        if (loaded) {
+            return game.activities.length;
+        }
+        return -1;
+    };
+    data.getNumWaypoints = function (activityIndex) {
+        if (loaded) {
+            return game.activities[activityIndex].points.length;
+        }
+        return -1;
+    };
+    data.getNumTasks = function (activityIndex, waypointIndex) {
+        if (loaded) {
+            return game.activities[activityIndex].points[waypointIndex].task.length;
+        }
+        return -1;
+    };
+    data.getActivity = function (index) {
+        if (loaded) {
+            return game.activities[index];
+        }
+        return -1;
+    };
+    data.getWaypoint = function (actIndex, pointIndex) {
+        if (loaded) {
+            return game.activities[actIndex].points[pointIndex];
+        }
+        return -1;
+    };
+    data.getTask = function (actIndex, pointIndex, taskIndex) {
+        if (loaded) {
+            return game.activities[actIndex].points[pointIndex].task[taskIndex];
+        }
+        return -1;
+    };
+    data.loadGame = function (name) {
+        var defer = $q.defer();
+        var games = $http.get('test_data/games.json')
+            .then(
+                function (response) { // On success
+                    // load only those games which match selected game name
+                    var selected_game = $filter('filter')(response.data, {
+                        "name": name
+                    }, true);
+                    if (selected_game.length == 1) {
+                        loaded = true;
+                        game = selected_game[0];
+                        defer.resolve();
+                    } else {
+                        console.log("Error! More than one game matched");
+                        defer.reject("Error! More than one game matched");
+                    }
+                },
+                function (response) { //On failure
+                    console.log("Fetching game data. HTTP GET request failed - " + response);
+                    defer.reject("Unable to fetch game data. HTTP GET request failed - " + response);
+                });
+        return defer.promise;
+    };
+
+    return data;
 })
 
 /* holds current state of the game being played */
-.factory('gameStateService', function ($rootScope, $http, $filter) {
-    var gameState = {};
-    return gameState;
+.factory('GameState', function (GameData, $rootScope) {
+    var gameName = "";
+    var startTime = (new Date()).toISOString();
+    var endTime = "";
+    var gameFinished = false;
+    var activityFinished = false;
+    var allWaypointsCleared = false;
+    var tasksFinished = false;
+    var activityIndex = -1; // Index of current activity in game
+    var waypointIndex = -1; // Index of current waypoint in current activity
+    var taskIndex = -1; // Index of current task in current activity + waypoint
+
+    var resetTasks = function () {
+        taskIndex = -1;
+        tasksFinished = false;
+    };
+    var resetWaypoints = function () {
+        waypointIndex = -1;
+        allWaypointsCleared = false;
+    };
+    var resetActivities = function () {
+        activityIndex = -1;
+        activityFinished = false;
+    };
+
+    var state = {};
+
+    state.gameOver = function () {
+        return gameFinished;
+    };
+    state.setGameOver = function () {
+        gameFinished = true;
+    };
+    state.getStartTime = function () {
+        return startTime
+    };
+    state.getEndTime = function () {
+        return endTime
+    };
+    state.setEndTime = function (time) {
+        endTime = time
+    };
+    state.currentActivityCleared = function () {
+        return activityFinished;
+    };
+    state.allTasksCleared = function () {
+        return tasksFinished;
+    };
+    state.setTasksCleared = function () {
+        tasksFinished = true
+    };
+    state.allWaypointsCleared = function () {
+        return allWaypointsCleared;
+    };
+    state.getCurrentActivity = function () {
+        return activityIndex
+    };
+    state.getCurrentWaypoint = function () {
+        return waypointIndex
+    };
+    state.getCurrentTask = function () {
+        return taskIndex
+    };
+
+
+    /* Return index of next playable Activity. 
+     * If current activity is unfinished, return index of current activity
+     */
+    state.todoActivityIndex = function () {
+        if (activityFinished == true) {
+            if (activityIndex == GameData.getNumActivities() - 1) {
+                // all activities are complete, hence game over
+                gameFinished = true;
+                // broadcast $rootScope signal maybe ???
+                $rootScope.$broadcast('gameover');
+            } else {
+                // update vars to reflect we're in a new activity
+                activityIndex++;
+                // reset flags for new activity
+                activityFinished = false;
+                resetWaypoints();
+            }
+        } else {
+            if (activityIndex == -1 || allWaypointsCleared == true) {
+                activityIndex++;
+            }
+        }
+        return activityIndex;
+    };
+
+    /* Return index of next waypoint. 
+     * If current waypoint is not cleared, return index of current waypoint
+     */
+    state.todoWaypointIndex = function () {
+        if (allWaypointsCleared == true) {
+            //$rootScope.$broadcast('waypointscleared');
+            //waypointIndex = -2; // invalid index
+        } else {
+            if (waypointIndex == GameData.getNumWaypoints(activityIndex) - 1) {
+                allWaypointsCleared = true;
+                tasksFinished = false;
+                taskIndex = -1;
+                activityFinished = true;
+            } else {
+                if (waypointIndex == -1 || tasksFinished) { // increment waypoint if all tasks are finished
+                    waypointIndex++;
+                    if (tasksFinished) {
+                        resetTasks();
+                    }
+                }
+            }
+        }
+        return waypointIndex;
+    };
+
+    state.todoTaskIndex = function () {
+        if (tasksFinished == true) {
+            //$rootScope.$broadcast('allTasksClearedEvent');
+        } else {
+            if (taskIndex == GameData.getNumTasks(activityIndex, waypointIndex) - 1) {
+                tasksFinished = true;
+            } else {
+                taskIndex++;
+            }
+        }
+        return taskIndex;
+    };
+
+    return state;
 });

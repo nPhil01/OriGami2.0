@@ -38,7 +38,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     
     // Fetch all the games from the server
     $scope.games = [];
-    
+
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
             $scope.games.push(data[i]);
@@ -54,7 +54,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             "Oops something went wrong!! Please try again later");
         console.log("something was wrong");
     });
-    
     
     //Selected game
     $scope.gameSelect = function (gameName) {
@@ -80,14 +79,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 tasks: []
               };    
             points.push(point);
-          }
-          
-          // Complete Activity object
+        }
+
+        // Complete Activity object
         $scope.activities = {
                 points: points,
                 type: $scope.gamestype
             };
-          
         Data.newAct($scope.activities);
         Data.clearType();
         $scope.modal.remove();
@@ -118,7 +116,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         console.log("something was wrong");
     });
 
-    
     // Delete the entire game by clicking on the trash icon
     $scope.deleteItem = function (item,name) {
         API.deleteItem(name, $rootScope.getToken())
@@ -143,10 +140,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.pathGame = function(){
         Data.addType("Path Planning");
     };
-    $scope.aidGame = function(){
+    $scope.aidGame = function () {
         Data.addType("Aided Wayfinding");
     };
-    
+
     // List of activities and types
     $scope.navactivities = Data.getAct();
     // console.log($scope.navactivities);
@@ -224,8 +221,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     Data.clearAct();
                 });
     };
-    
-    $scope.cancelGame = function(){
+
+    $scope.cancelGame = function () {
         Data.clearAct();
         $ionicHistory.goBack();
     };
@@ -243,73 +240,125 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 })
 
-// Controller for gameplay. Wraps studentMapCtrl
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, gameLoaderService) {
+
+// controller for gameplay
+.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $location, GameData, GameState) {
     $scope.gameName = $stateParams.gameName;
-    $scope.gameData = {};
-    $scope.mapSettings = {};
-    $scope.gameLocations = {
-        //keep track of positions. waypoints[0] = START, waypoint[end] = DESTINATION
-        current: {},
-        waypoints: []
-    };
-    $scope.activityComplete = false;
+    $scope.gameLoaded = false;
 
-    /* Holds state of gameplay */
-    var GameState = function () {
-        if (!this instanceof GameState) return new GameState();
-        this.gameName = "";
-        this.startTime = (new Date()).toISOString();
-        this.endTime = "";
-        this.finished = false;
-        this.activityIndex = 0; // Index of current activity in game
-        this.taskIndex = 0; // Index of current task in current activity
+    /* only for debug purposes */
+    var debugState = function () {
+        return {
+            gameName: $scope.gameName,
+            gameloaded: $scope.gameLoaded,
+            currentActivity: GameState.getCurrentActivity(),
+            currentWaypoint: GameState.getCurrentWaypoint(),
+            currentTask: GameState.getCurrentTask(),
+            curActCleared: GameState.currentActivityCleared(),
+            allWaypointsCleared: GameState.allWaypointsCleared(),
+            allTasksCleared: GameState.allTasksCleared()
+        };
     };
 
-    gameLoaderService.loadGame($scope.gameName, function (data) {
-        $scope.gameData = data;
-        $scope.state = new GameState();
-        $scope.state.gameName = data.name;
-        $scope.$broadcast('gameLoadedEvent', data);
-
-	$ionicModal.fromTemplateUrl('gameinfo-modal.html', {
+    var initGame = function () {
+        $ionicModal.fromTemplateUrl('gameinfo-modal.html', {
+            id: 'info',
             scope: $scope,
             animation: 'slide-in-up'
-	}).then(function (modal) {
+        }).then(function (modal) {
             $scope.modal = modal;
-	    $scope.nextDestination = $scope.gameData.activities[0].points[0].name;
             $scope.modal.show();
-	});
-    });
-
-    $scope.$on('mapLoadedEvent', function () {
-        // Once the map is loaded broadcast 'playEvent' event to
-        // let mapController know that we are now in play mode
-        $scope.$broadcast('playEvent');
-    });
-
-    $scope.showAlert = function () {
-        var alertPopup = $ionicPopup.alert({
-            title: 'Goal!',
-            template: 'Congrats. You reached the destination!'
         });
-        alertPopup.then(function (res) {
-            console.log('Destination reached');
+        $scope.gameLoaded = true;
+    };
+
+    var endGame = function () {
+        $ionicModal.fromTemplateUrl('gameover-modal.html', {
+            id: 'endgame',
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+            $scope.modal.show();
         });
     };
 
-    $scope.$on('activityCompleteEvent', function () {
-        console.log('Activity complete');
-        if ($scope.activityComplete == false) {
-            $scope.showAlert();
-            $scope.activityComplete = true;
+    var handleNextActivity = function () {
+        GameState.todoActivityIndex(); // Get next pending activity
+        if (GameState.gameOver()) {
+            console.log("GAME OVER!!!");
+            endGame();
+        } else {
+            handleNextWaypoint();
+        }
+    };
+
+    var handleNextWaypoint = function () {
+        GameState.todoWaypointIndex(); // Get pending waypoint
+        if (GameState.allWaypointsCleared()) {
+            handleNextActivity();
+        } else {
+            var actIndex = GameState.getCurrentActivity();
+            var pointIndex = GameState.getCurrentWaypoint();
+            $scope.waypoint = GameData.getWaypoint(actIndex, pointIndex);
+            $scope.$broadcast('waypointLoadedEvent', $scope.waypoint);
+        }
+    };
+
+    var handleTask = function () {
+        GameState.todoTaskIndex();
+        while (!GameState.allTasksCleared()) {
+            task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
+            console.log("Doing task -", GameState.getCurrentTask(), " of ", GameData.getNumTasks(GameState.getCurrentActivity(), GameState.getCurrentWaypoint()) - 1);
+            GameState.todoTaskIndex();
+        }
+        if (GameState.allTasksCleared()) {
+            handleNextWaypoint();
+        }
+    };
+
+    /* Show message, then execute proc is supplied as argument */
+    var showPopup = function (title, msg, proc) {
+        var alertPopup = $ionicPopup.alert({
+            title: title,
+            template: msg
+        });
+        alertPopup.then(function (res) {
+            if (typeof proc !== "undefined") {
+                proc();
+            }
+        });
+    };
+
+    var gameLoadFailure = function (errString) {
+        // Game did not load for some reason at this point
+        console.log(errString);
+    };
+
+    $scope.$on('waypointReachedEvent', function (event) {
+        showPopup('Congrats!', 'You reached the destination - ' + $scope.waypoint.name, handleTask);
+    });
+
+    $scope.$on('modal.hidden', function (event, modal) {
+        // Start playing once the game info dialog is dismissed
+        if (modal.id === 'info') {
+            handleNextActivity();
+        } else if (modal.id === 'endgame') {
+            $location.path('/');
         }
     });
+
+    GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
+
 })
 
+/* - Controller for map in student mode
+ * - Only shows waypoint and emits signal when waypoint is reached
+ * - Is not concerned with GameState or the game progression logic
+ */
 .controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', 'leafletData', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, leafletData) {
 
-    $scope.gameLoaded = false;
+    $scope.waypointLoaded = false;
 
     /* Initialize view of map */
     $scope.initialize = function () {
@@ -357,18 +406,25 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 });
             }, function (err) {
                 // error
-                console.log("Location error!");
+                console.log("Geolocation error!");
                 console.log(err);
             });
     };
 
     /* Add more markers once game is loaded */
-    $scope.$on('gameLoadedEvent', function (event, data) {
-        initial_activity = data.activities[0];
+    $scope.$on('waypointLoadedEvent', function (event, waypoint) {
+        $ionicModal.fromTemplateUrl('waypointinfo-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+            $scope.waypointName = waypoint.name;
+            $scope.modal.show();
+        });
         var marker = {
-            lat: initial_activity.points[0].lat,
-            lng: initial_activity.points[0].lon,
-            message: initial_activity.points[0].name,
+            lat: waypoint.lat,
+            lng: waypoint.lon,
+            message: waypoint.name,
             focus: true
         };
         $scope.map.markers.push(marker);
@@ -377,12 +433,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             lng: marker.lng,
             name: marker.message
         };
-        $scope.gameLoaded = true;
+        $scope.waypointLoaded = true; // reset this flag
     });
+
 
     /* (Re)compute distance to destination once map moves */
     $scope.$on('leafletDirectiveMap.move', function (event, args) {
-        if ($scope.gameLoaded) {
+        if ($scope.waypointLoaded) {
             var map = args.leafletEvent.target;
             var center = map.getCenter();
             leafletData.getMap()
@@ -405,8 +462,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     //console.log(distance);
                     var threshold = 30; // if map center is within the threshold distance to destination, then the activity is complete
                     if (distance < threshold) {
-                        $rootScope.$broadcast('activityCompleteEvent');
+                        $scope.waypointLoaded = false;
+                        $scope.$emit('waypointReachedEvent');
                     }
+                }, function (err) {
+                    console.log("Could not get Leaflet map object - " + err);
                 });
         }
     });
