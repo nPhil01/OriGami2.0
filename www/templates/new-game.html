@@ -34,8 +34,8 @@
     </div>
     
     <ion-list>
-        <div ng-repeat="act in navactivities">
-          <ion-item class="item-stable item-icon-left item-icon-right assertive" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
+        <div ng-repeat="act in navactivities" style = "background-color:blue;">
+          <ion-item class="item-stable item-icon-left item-icon-right assertive activity" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
               <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
                <p style="font-size:2em;">Activity: {{act.type}}</p>
                <p>Number of Points: {{act.acts.length}}</p>

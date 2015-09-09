@@ -1,24 +1,26 @@
 angular.module('starter.services', [])
 
+.value('Server', 'giv-origami.uni-muenster.de:8000')
+
 .factory('Data', function () {
-    
-     var actService = {};
+
+    var actService = {};
     var allGames = [];
-    
+
     actService.pushGame = function (value) {
         allGames.push(value);
     };
-    actService.getGames = function(){
+    actService.getGames = function () {
         return allGames;
     };
-   
-    
+
+
     var activities = [];
     var tasks = [];
-    var gameType = "";  // Path planning / Aided Wayfinding 
-    var taskType = "";  // Question - Answer / Georeference
-    
-    
+    var gameType = ""; // Path planning / Aided Wayfinding 
+    var taskType = ""; // Question - Answer / Georeference
+
+
     actService.newAct = function (value) {
         activities.push(value);
     };
@@ -44,14 +46,14 @@ angular.module('starter.services', [])
     return actService;
 })
 
-.factory ('Task',function ($rootScope, $http, $ionicLoading, $window){
-      var taskService = {};  
-      var task = {}; // Question - Answer / Georeference
-    
+.factory('Task', function ($rootScope, $http, $ionicLoading, $window) {
+    var taskService = {};
+    var task = {}; // Question - Answer / Georeference
+
     // Index of a choosen ACTIVITY and POINT. Important, because we have to know where to add a certain task
-      var currentActIndex = null;
-      var currentPointIndex = null;
-    
+    var currentActIndex = null;
+    var currentPointIndex = null;
+
     // Add relevant information to the TASK
      taskService.addType = function(taskType){
          task.type = taskType;
@@ -69,31 +71,29 @@ angular.module('starter.services', [])
        currentPointIndex = pointIndex;
     };
     
-
-    
     // Get and Clear TASK 
-    taskService.getTask = function(){
-         return task;
-     };
-    taskService.clearTask = function(){
-         task = {};
-     };
-    
-    taskService.getActIndex = function(){
+    taskService.getTask = function () {
+        return task;
+    };
+    taskService.clearTask = function () {
+        task = {};
+    };
+
+    taskService.getActIndex = function () {
         return currentActIndex;
     };
-    taskService.getPointIndex = function(){
+    taskService.getPointIndex = function () {
         return currentPointIndex;
     };
-    
-    
+
+
     return taskService;
 })
 
 
 // API for getting data from the remote server
-.factory('API', function ($rootScope, $http, $ionicLoading, $window) {
-    var base = "http://giv-origami.uni-muenster.de:8000";
+.factory('API', function ($rootScope, $http, $ionicLoading, $window, Server) {
+    var base = "http://" + Server;
     /*$rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
             content: text ? text : 'Loading',
@@ -168,7 +168,7 @@ angular.module('starter.services', [])
 })
 
 /* loads existing games from database */
-.factory('GameData', function ($rootScope, $http, $filter, $q) {
+.factory('GameData', function ($rootScope, $http, $filter, $q, Server) {
     var data = {};
     var game = {};
     var loaded = false;
@@ -189,7 +189,7 @@ angular.module('starter.services', [])
     };
     data.getNumTasks = function (activityIndex, waypointIndex) {
         if (loaded) {
-            return game.activities[activityIndex].points[waypointIndex].task.length;
+            return game.activities[activityIndex].points[waypointIndex].tasks.length;
         }
         return -1;
     };
@@ -207,31 +207,37 @@ angular.module('starter.services', [])
     };
     data.getTask = function (actIndex, pointIndex, taskIndex) {
         if (loaded) {
-            return game.activities[actIndex].points[pointIndex].task[taskIndex];
+            return game.activities[actIndex].points[pointIndex].tasks[taskIndex];
         }
         return -1;
     };
     data.loadGame = function (name) {
         var defer = $q.defer();
-        var games = $http.get('test_data/games.json')
+        //var games = $http.get('test_data/games.json')
+        var games = $http.get('http://' + Server + '/games/item/' + name)
             .then(
                 function (response) { // On success
-                    // load only those games which match selected game name
-                    var selected_game = $filter('filter')(response.data, {
-                        "name": name
-                    }, true);
-                    if (selected_game.length == 1) {
-                        loaded = true;
-                        game = selected_game[0];
-                        defer.resolve();
-                    } else {
-                        console.log("Error! More than one game matched");
-                        defer.reject("Error! More than one game matched");
-                    }
+                    game = response.data[0];
+                    loaded = true;
+                    defer.resolve();
+                    /*
+                // load only those games which match selected game name
+			 var selected_game = $filter('filter')(response.data, {
+                         "name": name
+			 }, true);
+			 if (selected_game.length == 1) {
+                         loaded = true;
+                         game = selected_game[0];
+                         defer.resolve();
+			 } else {
+                         console.log("Error! More than one game matched");
+                         defer.reject("Error! More than one game matched");
+			 }*/
                 },
                 function (response) { //On failure
-                    console.log("Fetching game data. HTTP GET request failed - " + response);
-                    defer.reject("Unable to fetch game data. HTTP GET request failed - " + response);
+                    console.log("Fetching game data. HTTP GET request failed");
+                    console.log(response);
+                    defer.reject("Unable to fetch game data. HTTP GET request failed");
                 });
         return defer.promise;
     };

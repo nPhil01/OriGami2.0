@@ -486,7 +486,7 @@
 	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
 	text-align: center;
     font-style: normal;
-    left: 20%;
+    left: 5%;
 }
 
 .points-cont i{
@@ -495,5 +495,10 @@
 	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
 	text-align: center;
     font-style: normal;
-    right: 10%;
+    right: 5%;
+}
+
+.activity{
+    background-color: brown;
+    height: 150px;
 }
