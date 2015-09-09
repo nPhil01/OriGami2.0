@@ -2,58 +2,106 @@
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
-    
-    <!-- Information about how to play the game --> 
+
+    <!-- Information about how to play the game -->
     <script id="gameinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
                 <h1 class="title">Game Info</h1>
                 <!-- <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div> -->
             </ion-header-bar>
- 
-            <ion-content style = "height: 100%; background-color:#fec00f">
-<!-- 
-		    <h3>Your destination is <b>{{nextDestination}}</b></h3>
-                    <h4>Plan your route and start heading towards the destination. The smiley indicates whether you are headed in the right direction.</h4>
--->
-               <div class = "plan-route" style = "background-color:#3F51B5">
-                   <div class="information">
-                       <i class="ion-android-map"></i>
-                       <h1>Step 1</h1>
-                        <p>Plan your route to destination</p>
-                   </div>
-                </div>
-                
-               <div class = "plan-route" style = "background-color:#673AB7;">
-                   <div class="information">
-                      <i class="ion-android-walk"></i>
-                      <h1>Step 2</h1>
-                      <p>Start heading towards the destination</p>
-                  </div>
-            </div>
-                
-                <div class = "plan-route" >
+
+            <ion-content style="height: 100%; background-color:#fec00f">
+                <div class="plan-route" style="background-color:#3F51B5">
                     <div class="information">
-              <i class="ion-happy-outline"></i>
-              <h1>Keep in mind: </h1>
-              <p>The smiley indicates whether you are headed in the right direction</p>
-          </div>
+                        <div class="info-icon">
+                            <i class="ion-android-map"></i>
+                            <h1>Step 1</h1>
+                        </div>
+                        <p>Plan your route to destination</p>
+                    </div>
                 </div>
-            </ion-content> 
-            
+
+                <div class="plan-route" style="background-color:#673AB7;">
+                    <div class="information">
+                        <i class="ion-android-walk"></i>
+                        <h1>Step 2</h1>
+                        <p>Start heading towards the destination</p>
+                    </div>
+                </div>
+
+                <div class="plan-route">
+                    <div class="information">
+                        <i class="ion-happy-outline"></i>
+                        <h1>Keep in mind: </h1>
+                        <p>The smiley indicates whether you are headed in the right direction</p>
+                    </div>
+                </div>
+            </ion-content>
+
+            <ion-footer-bar class="bar-dark" ng-click="modal.hide()">
+                <p class="title">Start Playing!</p>
+            </ion-footer-bar>
+
         </ion-modal-view>
-    </script> 
-    
-    
+    </script>
+
+    <!-- Information about the next waypoint -->
+    <script id="waypointinfo-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar-positive">
+                <h1 class="title">Next Waypoint</h1>
+            </ion-header-bar>
+
+            <ion-content style="height: 100%; background-color:#673AB7">
+                <div class="plan-route" style="background-color:#673AB7">
+                    <div class="information">
+                        <i class="ion-android-walk"></i>
+                        <h1>{{waypoint.name}}</h1>
+                        <p> {{waypoint.description}} </p>
+                    </div>
+                </div>
+            </ion-content>
+            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+                <p class="title">OK</p>
+            </ion-footer-bar>
+
+        </ion-modal-view>
+    </script>
+
+    <!-- Game Over Modal -->
+    <script id="gameover-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar-positive">
+                <h1 class="title">Game Over!</h1>
+            </ion-header-bar>
+
+            <ion-content style="height: 100%; background-color:#673AB7">
+                <div class="plan-route" style="background-color:#673AB7">
+                    <div class="information">
+                        <i class="ion-flag"></i>
+                        <h1>Congratulations!</h1>
+                        <p> You have successfully completed the game </p>
+                    </div>
+                </div>
+            </ion-content>
+            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+                <p class="title">OK</p>
+            </ion-footer-bar>
+
+        </ion-modal-view>
+    </script>
+
     <ion-content scroll=false>
         <div class="map-container" ng-controller="StudentMapCtrl">
             <div id="map">
                 <leaflet defaults="map.defaults" center="map.center" markers="map.markers" event-broadcast="map.events" ng-if="map"></leaflet>
             </div>
             <div id="smiley" class="smiley">
-                <canvas class="smiley" smiley style="border:0px solid"></canvas>
+                <canvas class="smiley" smiley></canvas>
             </div>
             <button class="button button-fab button-fab-bottom-right next button-calm icon ion-settings waves-effect waves-button waves-light" ui-sref="tab.teachmenu"></button>
         </div>
     </ion-content>
+
 </ion-view>
