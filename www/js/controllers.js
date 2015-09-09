@@ -147,8 +147,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         API.getOne(item)
             .success(function (data, status, headers, config) {
                 $scope.editedGame = data.slice()[0];
-            console.log($scope.editedGame);
-            $scope.navactivities = $scope.editedActivity.activities;
+                $scope.navactivities = $scope.editedActivity.activities;
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
                     "Oops something went wrong!! Please try again later");
@@ -266,13 +265,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         
         //Clear the scope and get back to the new game creation menu
         $scope.task = {};
+        Task.clearTask();
         $scope.currentActIndex = null;
         $scope.currentPointIndex = null;
         $ionicHistory.goBack();
+        Task.clearTask();
     };
     
     $scope.cancelGRTask = function(){
         $scope.task = {};
+        Task.clearTask();
         $scope.currentActIndex = null;
         $scope.currentPointIndex = null;
         $ionicHistory.goBack();

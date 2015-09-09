@@ -480,13 +480,36 @@
     width: 100%;
 }
 
-.points-cont h2{
+.points-cont .location-icon i{
+    letter-spacing: 0.04em;
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+}
+.points-cont .location-icon{
+    position: absolute;
+    left: 2%;
+    font-size:1.1em;
+}
+.points-cont .new-task{
+    position: absolute;
+    right: 15%;
+    font-size:1.1em;
+}
+.points-cont .all-tasks{
+    position: absolute;
+    right: 5%;
+    font-size:1.1em;
+}
+
+.points-cont p{
     position: absolute;
     letter-spacing: 0.04em;
 	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
 	text-align: center;
     font-style: normal;
-    left: 5%;
+    left: 25%;
+    font-size:1.2em;
 }
 
 .points-cont i{
@@ -500,5 +523,8 @@
 
 .activity{
     background-color: brown;
-    height: 150px;
+    height:90px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
 }

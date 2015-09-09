@@ -34,16 +34,24 @@
     </div>
     
     <ion-list>
-        <div ng-repeat="act in navactivities" style = "background-color:blue;">
+        <div ng-repeat="act in navactivities">
           <ion-item class="item-stable item-icon-left item-icon-right assertive activity" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
               <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
-               <p style="font-size:2em;">Activity: {{act.type}}</p>
-               <p>Number of Points: {{act.acts.length}}</p>
+               <p style="font-size:2em; height: 50%;">Activity: {{act.type}}</p>
+               <p>Number of Points: {{act.points.length}}</p>
           </ion-item>
           <ion-item class="item-accordion" ng-repeat="item in act.points" ng-show="isActivityShown(act)">
               <div class="points-cont">
-                  <h2>{{item.name}}</h2>
-                   <i class="icon ion-plus-circled">Add Task</i>
+                  <div class = "location-icon">
+                      <i class="location-icon icon ion-location"> {{item.name}}</i>
+                  </div>
+                   <p>Number of Tasks: {{item.tasks.length}}</p>
+                  <div class="new-task">
+                      <i class="icon ion-plus-circled" ng-click ="addTaskPoint(act,item)" ui-sref = "tab.tasktype">  New</i>
+                  </div>
+                  <div class = "all-tasks">
+                      <i class="icon ion-ios-list-outline" ui-sref = "tab.tasktype"> All</i>
+                  </div>
               </div>
           </ion-item>
         </div>
