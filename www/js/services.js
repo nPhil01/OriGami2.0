@@ -55,22 +55,22 @@ angular.module('starter.services', [])
     var currentPointIndex = null;
 
     // Add relevant information to the TASK
-     taskService.addType = function(taskType){
-         task.type = taskType;
-     };
-    taskService.addPhoto = function(taskPhoto){
-         task.photo = taskPhoto;
-     };
-    taskService.addCoordinates = function(lat,lng){
-         task.lat = lat;
-         task.lng = lng;
-     };
-    
-    taskService.addIndexes = function(actIndex,pointIndex){
-       currentActIndex = actIndex;
-       currentPointIndex = pointIndex;
+    taskService.addType = function (taskType) {
+        task.type = taskType;
     };
-    
+    taskService.addPhoto = function (taskPhoto) {
+        task.photo = taskPhoto;
+    };
+    taskService.addCoordinates = function (lat, lng) {
+        task.lat = lat;
+        task.lng = lng;
+    };
+
+    taskService.addIndexes = function (actIndex, pointIndex) {
+        currentActIndex = actIndex;
+        currentPointIndex = pointIndex;
+    };
+
     // Get and Clear TASK 
     taskService.getTask = function () {
         return task;
@@ -177,19 +177,31 @@ angular.module('starter.services', [])
     };
     data.getNumActivities = function () {
         if (loaded) {
-            return game.activities.length;
+            if ('activities' in game) {
+                return game.activities.length;
+            }
+            return 0;
         }
         return -1;
     };
     data.getNumWaypoints = function (activityIndex) {
         if (loaded) {
-            return game.activities[activityIndex].points.length;
+            if (typeof game.activities[activityIndex] === 'undefined') {
+                return 0;
+            }
+            if ('points' in game.activities[activityIndex]) {
+                return game.activities[activityIndex].points.length;
+            }
+            return 0;
         }
         return -1;
     };
     data.getNumTasks = function (activityIndex, waypointIndex) {
         if (loaded) {
-            return game.activities[activityIndex].points[waypointIndex].tasks.length;
+            if ('tasks' in game.activities[activityIndex].points[waypointIndex]) {
+                return game.activities[activityIndex].points[waypointIndex].tasks.length;
+            }
+            return 0;
         }
         return -1;
     };
@@ -273,6 +285,17 @@ angular.module('starter.services', [])
 
     var state = {};
 
+    state.ERR_NO_ACTIVITIES = -2;
+
+    state.resetAll = function () {
+        resetTasks();
+        resetWaypoints();
+        resetActivities();
+        gameFinished = false;
+        gameName = "";
+        startTime = (new Date()).toISOString();
+        endTime = "";
+    };
     state.gameOver = function () {
         return gameFinished;
     };
@@ -315,6 +338,10 @@ angular.module('starter.services', [])
      * If current activity is unfinished, return index of current activity
      */
     state.todoActivityIndex = function () {
+        if (GameData.getNumActivities() == 0) {
+            gameFinished = true;
+            return state.ERR_NO_ACTIVITIES;
+        }
         if (activityFinished == true) {
             if (activityIndex == GameData.getNumActivities() - 1) {
                 // all activities are complete, hence game over
