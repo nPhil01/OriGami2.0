@@ -101,6 +101,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 .controller('TeacherCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window) {
     // List of all available games fetched from the server
     $scope.list = [];
+    $scope.editedGame = {};
+    $scope.deleteGame = {};
+    
+    $scope.createGame = function(){
+        $scope.modal.remove();
+    };
+    
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
             $scope.list.push(data[i]);
@@ -141,25 +148,58 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
          });
     
     $scope.editItem = function(item){
-        $scope.editedGame = [];
         $scope.navactivities = [];
-        
-        API.getOne(item)
+        API.getOne(item.name)
             .success(function (data, status, headers, config) {
-                $scope.editedGame = data.slice()[0];
-                $scope.navactivities = $scope.editedActivity.activities;
+                 $scope.deleteGame = data.slice()[0];
+            console.log($scope.deleteGame);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
                     "Oops something went wrong!! Please try again later");
                 alert("fail");
             });
-        
-        $scope.modal.show();
+         $scope.editedGame = $scope.list[$scope.list.indexOf(item)];
+         $scope.navactivities = $scope.editedGame.activities;
+         $scope.modal.show();
       };
     
-    $scope.closeModal = function(){
+    
+ $scope.toggleActivity = function(activity) {
+    activity.show = !activity.show;
+  };
+  $scope.isActivityShown = function(activity) {
+    return activity.show;
+  };
+  $scope.closeModal = function(){
          $scope.modal.hide();
     };
+    
+  $scope.saveEditedGame = function(){
+      /*First delete the existing game, then save new instance.
+           Not a very elegant solution, but i want to sleep already.*/
+      
+      console.log(JSON.stringify($scope.deleteGame) ==  JSON.stringify($scope.editedGame));
+      API.deleteItem($scope.deleteGame.name, $rootScope.getToken())
+            .success(function (data, status, headers, config) {
+                $rootScope.hide();
+                 $scope.list.splice($scope.list.indexOf($scope.deleteGame), 1);
+            }).error(function (data, status, headers, config) {
+                $rootScope.notify(
+                    "Oops something went wrong!! Please try again later");
+                alert("fail");
+            });
+      
+        API.saveItem($scope.editedGame)
+                .success(function (data, status, headers, config) {
+                   $scope.list.push($scope.editedGame);
+                    $scope.modal.hide();
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.notify("Oops something went wrong!! Please try again later");
+                });
+  };
+    
 })
 
 
@@ -193,6 +233,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
       };
     
      $scope.currentLocation = function(){
+         $scope.ifgi = "/www/img/ifgi.jpg";
           $cordovaGeolocation
             .getCurrentPosition()
             .then(function (position) {
@@ -212,10 +253,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     
     
     $scope.pathGame = function(){
-        Data.addType("Path Planning");
+        Data.addType("Find destination");
     };
     $scope.aidGame = function () {
-        Data.addType("Aided Wayfinding");
+        Data.addType("Follow route");
     };
 
     // List of activities and types

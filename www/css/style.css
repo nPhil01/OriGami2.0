@@ -521,10 +521,74 @@
     right: 5%;
 }
 
-.activity{
+
+
+/* List with all the created activities in two windows: EDIT and NEW ------------------- */
+.activity-edit{
     background-color: brown;
     height:90px;
     border-style: solid;
     border-width: 5px;
     border-color: black;
 }
+
+.activity-edit p{
+    letter-spacing: 0.04em;
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    color: white;
+}
+.activity-new{
+    background-color: brown;
+    height:90px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+}
+
+.activity-new p{
+    letter-spacing: 0.04em;
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    color: white;
+}
+
+
+
+
+/*   Page with Languages --------------------------- */
+
+
+.lang-tab{
+    height:30%;
+    background-color: #3F51B5;
+    letter-spacing: 0.04em;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+	text-align: center;
+    font-style: normal;
+    display: block;
+    color: #fafafa;
+    position:relative;
+}
+.lang-tab .information{
+   position: relative;
+    top:20%;
+}
+.lang-tab i {
+    font-size:5em;
+}
+
+.lang-tab h1{
+    font-size: 2em;
+     text-align: center;
+     color: white;
+}
+.lang-tab p{
+     font-size: 1.5em;
+     text-align: center;
+    color: white;
+}
+

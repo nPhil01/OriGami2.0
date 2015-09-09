@@ -47,6 +47,14 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ionic-material', 'star
                 }
             }
         })
+    .state('tab.languages', {
+            url: '/languages',
+            views: {
+                'languages-tab': {
+                    templateUrl: 'templates/languages.html'
+                }
+            }
+        })
         .state('tab.home', {
             url: '/home',
             views: {

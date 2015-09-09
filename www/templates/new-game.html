@@ -29,13 +29,10 @@
         <input type="text" ng-model = "newgame.difficulty" placeholder="How difficult this game is?" required>
       </label>
     
-    <div class="createdAct">
-        
-    </div>
     
     <ion-list>
         <div ng-repeat="act in navactivities">
-          <ion-item class="item-stable item-icon-left item-icon-right assertive activity" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
+          <ion-item class="item-positive item-icon-left item-icon-right assertive activity-new" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
               <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
                <p style="font-size:2em; height: 50%;">Activity: {{act.type}}</p>
                <p>Number of Points: {{act.points.length}}</p>

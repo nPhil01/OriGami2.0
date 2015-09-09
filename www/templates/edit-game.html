@@ -1,25 +1,56 @@
 <ion-modal-view>
-  <ion-header-bar class="">
+  <ion-header-bar class="bar-positive">
 
-    <h1 class="title">Add Waypoint</h1>
-
-    <div class="buttons">
-      <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
-    </div>
-
+      <h1 class="title">Add Waypoint</h1>
   </ion-header-bar>
 
-  <ion-content class="padding">
+  <ion-content class="padding" style = "background-color:#80DEEA">
 
     <form name="Form" class = "form-background">
-
-      <div class="list">
-
-      </div>
-
+        <label class="item item-input input-info">
+        <span class="input-label">Game Title</span>
+        <input type="text" ng-model="editedGame.name">
+      </label>
+      <label class="item item-input input-info">
+        <span class="input-label">Game Description</span>
+        <input type="text"  ng-model = "editedGame.description">
+      </label>
+      <label class="item item-input input-info">
+        <span class="input-label">Time of completion</span>
+        <input type="text"  ng-model = "editedGame.timecompl">
+      </label>
+      <label class="item item-input input-info">
+        <span class="input-label">Difficulty</span>
+        <input type="text"  ng-model = "editedGame.difficulty">
+      </label>
+        
+        <!-- <ion-list>
+        <div ng-repeat="act in navactivities">
+          <ion-item class="item-balanced item-icon-left item-icon-right assertive activity-edit" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
+              <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
+               <p style="font-size:2em; height: 50%;">Activity: {{act.type}}</p>
+               <p>Number of Points: {{act.points.length}}</p>
+          </ion-item>
+          <ion-item class="item-accordion" ng-repeat="item in act.points" ng-show="isActivityShown(act)">
+              <div class="points-cont">
+                  <div class = "location-icon">
+                      <i class="location-icon icon ion-location"> {{item.name}}</i>
+                  </div>
+                   <p>Number of Tasks: {{item.tasks.length}}</p>
+                  <div class="new-task">
+                      <i class="icon ion-plus-circled" ng-click ="addTaskPoint(act,item)" ui-sref = "tab.tasktype">  New</i>
+                  </div>
+                  <div class = "all-tasks">
+                      <i class="icon ion-ios-list-outline" ui-sref = "tab.tasktype"> All</i>
+                  </div>
+              </div>
+          </ion-item>
+        </div>
+      </ion-list> -->
+        
       <div class="padding">
-          <button class="button button-block button-balanced" ng-click="saveWaypoint()">Save</button>
-          <button class="button button-block button-balanced" ng-click="closeModal()">Back</button>     
+          <button id="fab" class="button button-positive icon ion-android-done button-fab button-fab-bottom-right" ng-click="saveEditedGame()">
+              <button id="fab" class="button button-positive icon ion-reply button-fab button-fab-bottom-left" ng-click="closeModal()">   
       </div>
 
     </form>
