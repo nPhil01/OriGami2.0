@@ -293,7 +293,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.submitGRTask = function () {
-        Task.addPhoto("/www/img/ifgi.jpg");
+        Task.addPhoto("./img/ifgi.jpg");
 
         Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
 
