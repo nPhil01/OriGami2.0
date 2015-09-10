@@ -22,7 +22,7 @@
 }
 .person-type .player .type-picture .info{
    height: 100%;
-    left: 30%;
+    left: 32%;
     top:35%;
     position: absolute;
     letter-spacing: 0.04em;
@@ -42,7 +42,7 @@
     font-family: 'Roboto', sans-serif;
 }
 .person-type .player .type-picture .next{
-    right: 5%;
+    left: 5%;
     bottom: 5%;
     position: absolute;
 }
@@ -87,7 +87,7 @@
 }
 
 .person-type .teacher .type-picture .next{
-    left: 5%;
+    right: 5%;
     bottom: 5%;
     position: absolute;
 }
@@ -96,22 +96,20 @@
 
 .game-backg{
     height: 180px;
-    background-image: url("/www/img/navigation.jpg");
+    background-image: url("../img/navigation.jpg");
     background-size: cover;
     display: block;
     position: relative;
-    
-    
 }
 
 .game-modal{
-     background-image: url("/www/img/1.png");
+     background-image: url("../img/1.png");
      background-size: cover;
     height: 100%;
 }
 
 .game-backg h2{
-    font-size: 2em;
+    font-size: 2.5em;
      text-align: center;
      color: white;
     left:5%;
@@ -122,6 +120,8 @@
      text-align: center;
     color: white;
     left:5%;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+  font-style: normal;
 }
 
 .game-type{
