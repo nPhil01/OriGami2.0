@@ -115,6 +115,28 @@
         </ion-modal-view>
     </script>
 
+    <!-- Georefencing Game Modal -->
+    <script id="georef-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar-positive">
+                <h1 class="title">Error!</h1>
+            </ion-header-bar>
+
+            <ion-content style="height: 100%; background-color:#673AB7">
+                <div class="plan-route" style="background-color:#673AB7">
+                    <div class="information">
+                        <i class="ion-images"></i>
+                        <h1>Picture</h1>
+                        <p>Where was the above picture taken? Mark it on the map.</p>
+                    </div>
+                </div>
+            </ion-content>
+            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+                <p class="title">OK</p>
+            </ion-footer-bar>
+        </ion-modal-view>
+    </script>
+
     <ion-content scroll=false>
         <div class="map-container" ng-controller="StudentMapCtrl">
             <div id="map">

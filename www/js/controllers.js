@@ -437,14 +437,25 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var handleTask = function () {
         GameState.todoTaskIndex();
-        while (!GameState.allTasksCleared()) {
-            task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
-            console.log("Doing task -", GameState.getCurrentTask(), " of ", GameData.getNumTasks(GameState.getCurrentActivity(), GameState.getCurrentWaypoint()) - 1);
-            GameState.todoTaskIndex();
-        }
         if (GameState.allTasksCleared()) {
             handleNextWaypoint();
+        } else {
+            $scope.task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
+            //console.log("Doing task -", GameState.getCurrentTask(), " of ", GameData.getNumTasks(GameState.getCurrentActivity(), GameState.getCurrentWaypoint()) - 1);
+            if ($scope.task.type == 'GeoReference') {
+                performGeoReferencingTask($scope.task);
+            } else {
+                // perform other kinds of tasks here
+                handleTask();
+            }
         }
+    };
+
+    var performGeoReferencingTask = function () {
+        var lat = $scope.task.coordinates.lat;
+        var lon = $scope.task.coordinates.lon;
+        var img = $scope.task.photo;
+        createModal('georef-modal.html', 'georef');
     };
 
     /* Show message, then execute proc is supplied as argument */
@@ -477,7 +488,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $location.path('/');
         } else if (modal.id === 'error') {
             $location.path('/');
+        } else if (modal.id === 'georef') {
+            $scope.$broadcast('georefEvent', $scope.task);
         }
+    });
+
+    $scope.$on('geoRefMarkedEvent', function (event, distance) {
+        showPopup('Result', 'The location you marked was ' + distance + "m away from the original location");
+        handleTask();
     });
 
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
@@ -491,6 +509,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 .controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', 'leafletData', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, leafletData) {
 
     $scope.waypointLoaded = false;
+    $scope.allowEdit = false;
 
     /* Initialize view of map */
     $scope.initialize = function () {
@@ -503,7 +522,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             markers: [],
             events: {
                 map: {
-                    enable: ['move'],
+                    enable: ['contextmenu', 'move'],
                     logic: 'emit'
                 }
             },
@@ -599,6 +618,63 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 }, function (err) {
                     console.log("Could not get Leaflet map object - " + err);
                 });
+        }
+    });
+
+    var GeoRefPoint = function () {
+        if (!(this instanceof GeoRefPoint)) return new GeoRefPoint();
+        this.lat = "";
+        this.lng = "";
+        this.name = "";
+    };
+
+    $scope.$on('leafletDirectiveMap.contextmenu', function (event, locationEvent) {
+        if ($scope.allowEdit) {
+            leafletData.getMap()
+                .then(function (map) {
+                    $scope.newGeoRefPoint = new GeoRefPoint();
+                    $scope.newGeoRefPoint.lat = locationEvent.leafletEvent.latlng.lat;
+                    $scope.newGeoRefPoint.lng = locationEvent.leafletEvent.latlng.lng;
+
+                    var marker = {
+                        lat: $scope.newGeoRefPoint.lat,
+                        lng: $scope.newGeoRefPoint.lng,
+                        message: "Your marked location",
+                        focus: true
+                    };
+                    var marker2 = {
+                        lat: $scope.georef.lat,
+                        lng: $scope.georef.lng,
+                        message: "Original location",
+                        focus: true
+                    };
+                    $scope.map.markers.push(marker);
+                    $scope.map.markers.push(marker2);
+
+                    var origLocation = L.latLng($scope.georef.lat, $scope.georef.lng);
+                    var markedLocation = L.latLng($scope.newGeoRefPoint.lat, $scope.newGeoRefPoint.lng);
+                    var distance = origLocation.distanceTo(markedLocation);
+
+                    $scope.allowEdit = false;
+                    $scope.$emit('geoRefMarkedEvent', distance);
+                });
+        };
+    });
+
+    $scope.$on('georefEvent', function (event, args) {
+        $scope.allowEdit = true;
+        $scope.georef = {};
+
+        /* Dummy values. Remove after georeferecing task editing has been implemented*/
+        if (typeof args.coordinates.lat === "undefined") {
+            $scope.georef.lat = 51.9649;
+            $scope.georef.lng = 7.601;
+            args.coordinates.lat = 51.94;
+            args.coordinates.lng = 7.60;
+        } else {
+            /*********************************************************/
+            $scope.georef.lat = args.coordinates.lat;
+            $scope.georef.lng = args.coordinates.lng;
         }
     });
 
