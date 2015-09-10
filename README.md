@@ -15,12 +15,15 @@ OriGami is the geospatial learning game for kids. Consist of two parts:
 ### REST API 
 
 * http://server-name : port/games - get all available games (GET)
-* http://server-name : port/games/item/:name - get only one game (GET)
+* http://server-name : port/games/item/*game_name* - get only one game (GET)
 * http://server-name : port/games/item - add a new game (POST)
-* http://server-name : port/games/item/:name - delete one game (DELETE)
+* http://server-name : port/games/item/*game_name* - delete one game (DELETE)
 
 ### Version
 2.0.0
+
+### Attributions
+Map Marker Icons by Johan H. W. Basberg from the Noun Project (Creative Commons)
 
 License
 ----
