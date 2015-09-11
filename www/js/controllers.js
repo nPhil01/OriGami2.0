@@ -591,6 +591,27 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.waypointLoaded = true; // reset this flag
     });
 
+    /* Get bearing in degrees to destination */
+    $scope.getBearing = function (orig, dest) {
+        Number.prototype.toRadians = function () {
+            return this * Math.PI / 180;
+        };
+        Number.prototype.toDegrees = function () {
+            return this * 180 / Math.PI;
+        };
+
+        var lat1_radian = orig.lat.toRadians();
+        var lng1_radian = orig.lng.toRadians();
+        var lat2_radian = dest.lat.toRadians();
+        var lng2_radian = dest.lng.toRadians();
+        var lat_delta = (lat2_radian - lat1_radian).toRadians();
+        var lng_delta = (lng2_radian - lng1_radian).toRadians();
+        var y = Math.sin(lng2_radian - lng1_radian) * Math.cos(lat2_radian);
+        var x = Math.cos(lat1_radian) * Math.sin(lat2_radian) - Math.sin(lat1_radian) * Math.cos(lat2_radian) * Math.cos(lng2_radian - lng1_radian);
+        var bearing = Math.atan2(y, x).toDegrees();
+        $scope.bearing = bearing;
+    };
+
 
     /* (Re)compute distance to destination once map moves */
     $scope.$on('leafletDirectiveMap.move', function (event, args) {
@@ -607,6 +628,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         //console.log("Setting initial distance to ", distance);
                     }
                     $scope.currentDistance = distance;
+                    $scope.getBearing(center, dest);
+
                     if (typeof $scope.drawSmiley !== "undefined") {
                         var maxDistance = parseFloat($scope.initialDistance) * 2;
                         // normalize distance to stop frowning once distance exceeds twice the initial distance to destination
@@ -679,7 +702,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $scope.allowEdit = false;
                     $timeout(function () {
                         $scope.$emit('geoRefMarkedEvent', distance);
-                    }, 2000);
+                    }, 1000);
                     //$scope.map.markers.pop();
                     //$scope.map.markers.pop();
                 });
