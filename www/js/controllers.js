@@ -540,6 +540,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.$emit('mapLoadedEvent');
     };
 
+    $scope.updatePlayerPosMarker = function (position) {
+        $scope.map.markers.PlayerPos.lat = position.lat;
+        $scope.map.markers.PlayerPos.lng = position.lng;
+    };
+
+
     /* Center map on user's current position */
     $scope.locate = function () {
         $cordovaGeolocation
@@ -548,7 +554,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $scope.map.center.lat = position.coords.latitude;
                 $scope.map.center.lng = position.coords.longitude;
                 $scope.map.center.zoom = 15;
-                $scope.map.markers.push({
+                $scope.map.markers.PlayerPos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                     message: "You Are Here",
@@ -558,7 +564,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         iconSize: [48, 48],
                         iconAnchor: [24, 48]
                     }
-                });
+                };
             }, function (err) {
                 // error
                 console.log("Geolocation error!");
@@ -612,7 +618,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.bearing = bearing;
     };
 
-
     /* (Re)compute distance to destination once map moves */
     $scope.$on('leafletDirectiveMap.move', function (event, args) {
         if ($scope.waypointLoaded) {
@@ -629,6 +634,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     }
                     $scope.currentDistance = distance;
                     $scope.getBearing(center, dest);
+
+                    $scope.updatePlayerPosMarker(center);
 
                     if (typeof $scope.drawSmiley !== "undefined") {
                         var maxDistance = parseFloat($scope.initialDistance) * 2;
