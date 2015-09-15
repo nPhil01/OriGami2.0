@@ -519,7 +519,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 maxZoom: 18,
                 zoomControlPosition: 'bottomleft'
             },
-            markers: [],
+            markers: {},
             events: {
                 map: {
                     enable: ['contextmenu', 'move'],
@@ -541,8 +541,23 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.updatePlayerPosMarker = function (position) {
-        $scope.map.markers.PlayerPos.lat = position.lat;
-        $scope.map.markers.PlayerPos.lng = position.lng;
+        if (typeof $scope.map.markers.PlayerPos === "undefined") {
+            var marker = {
+                lat: position.lat,
+                lng: position.lng,
+                message: "You are here",
+                draggable: false,
+                icon: {
+                    iconUrl: './img/icons/Youarehere.png',
+                    iconSize: [48, 48],
+                    iconAnchor: [24, 48]
+                }
+            };
+            $scope.map.markers.PlayerPos = marker;
+        } else {
+            $scope.map.markers.PlayerPos.lat = position.lat;
+            $scope.map.markers.PlayerPos.lng = position.lng;
+        }
     };
 
 
@@ -588,7 +603,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             message: waypoint.name,
             focus: true
         };
-        $scope.map.markers.push(marker);
+        $scope.map.markers.NextWaypoint = marker;
         $scope.destination = {
             lat: marker.lat,
             lng: marker.lng,
@@ -634,7 +649,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     }
                     $scope.currentDistance = distance;
                     $scope.getBearing(center, dest);
-
                     $scope.updatePlayerPosMarker(center);
 
                     if (typeof $scope.drawSmiley !== "undefined") {
@@ -648,7 +662,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     var threshold = 30; // if map center is within the threshold distance to destination, then the activity is complete
                     if (distance < threshold) {
                         $scope.waypointLoaded = false;
-                        $scope.map.markers.pop();
+                        delete $scope.map.markers.NextWaypoint;
                         $scope.$emit('waypointReachedEvent');
                     }
                 }, function (err) {
@@ -694,8 +708,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                             iconAnchor: [12, 38]
                         }
                     };
-                    $scope.map.markers.push(marker);
-                    $scope.map.markers.push(marker2);
+                    $scope.map.markers.playerPhotoMark = marker;
+                    $scope.map.markers.origPhotoMark = marker2;
                     var origLocation = L.latLng($scope.georef.lat, $scope.georef.lng);
                     var markedLocation = L.latLng($scope.newGeoRefPoint.lat, $scope.newGeoRefPoint.lng);
                     var distance = parseInt(origLocation.distanceTo(markedLocation));
