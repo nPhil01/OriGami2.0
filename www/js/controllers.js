@@ -21,12 +21,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 //template: 'Navigators follow a trail to the destination. Less cognitive effort.'
         });
     };
-       //Get back in the history
+    //Get back in the history
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
-    
-    
+
+
     //--------------------------------------------------------------
 
     //test games
@@ -104,20 +104,20 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 })
 
-.controller('TeacherCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window,$ionicHistory) {
+.controller('TeacherCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window, $ionicHistory) {
     // List of all available games fetched from the server
     $scope.list = [];
     $scope.editedGame = {};
     $scope.deleteGame = {};
-    
-    $scope.createGame = function(){
+
+    $scope.createGame = function () {
         $scope.modal.remove();
     };
-    
-        $scope.cancelGame = function () {
+
+    $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
-    
+
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
             $scope.list.push(data[i]);
@@ -151,65 +151,65 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     // EDIT GAME PART ----------------------------------
     $ionicModal.fromTemplateUrl('templates/edit-game.html', {
-           scope: $scope,
-            animation: 'slide-in-up'
-          }).then(function(modal) {
-            $scope.modal = modal;
-         });
-    
-    $scope.editItem = function(item){
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.modal = modal;
+    });
+
+    $scope.editItem = function (item) {
         $scope.navactivities = [];
         API.getOne(item.name)
             .success(function (data, status, headers, config) {
-                 $scope.deleteGame = data.slice()[0];
-            console.log($scope.deleteGame);
+                $scope.deleteGame = data.slice()[0];
+                console.log($scope.deleteGame);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
                     "Oops something went wrong!! Please try again later");
                 alert("fail");
             });
-         $scope.editedGame = $scope.list[$scope.list.indexOf(item)];
-         $scope.navactivities = $scope.editedGame.activities;
-         $scope.modal.show();
-      };
-    
-    
- $scope.toggleActivity = function(activity) {
-    activity.show = !activity.show;
-  };
-  $scope.isActivityShown = function(activity) {
-    return activity.show;
-  };
-  $scope.closeModal = function(){
-         $scope.modal.hide();
+        $scope.editedGame = $scope.list[$scope.list.indexOf(item)];
+        $scope.navactivities = $scope.editedGame.activities;
+        $scope.modal.show();
     };
-    
-  $scope.saveEditedGame = function(){
-      /*First delete the existing game, then save new instance.
-           Not a very elegant solution, but i want to sleep already.*/
-      
-      console.log(JSON.stringify($scope.deleteGame) ==  JSON.stringify($scope.editedGame));
-      API.deleteItem($scope.deleteGame.name, $rootScope.getToken())
+
+
+    $scope.toggleActivity = function (activity) {
+        activity.show = !activity.show;
+    };
+    $scope.isActivityShown = function (activity) {
+        return activity.show;
+    };
+    $scope.closeModal = function () {
+        $scope.modal.hide();
+    };
+
+    $scope.saveEditedGame = function () {
+        /*First delete the existing game, then save new instance.
+             Not a very elegant solution, but i want to sleep already.*/
+
+        console.log(JSON.stringify($scope.deleteGame) == JSON.stringify($scope.editedGame));
+        API.deleteItem($scope.deleteGame.name, $rootScope.getToken())
             .success(function (data, status, headers, config) {
                 $rootScope.hide();
-                 $scope.list.splice($scope.list.indexOf($scope.deleteGame), 1);
+                $scope.list.splice($scope.list.indexOf($scope.deleteGame), 1);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
                     "Oops something went wrong!! Please try again later");
                 alert("fail");
             });
-      
+
         API.saveItem($scope.editedGame)
-                .success(function (data, status, headers, config) {
-                   $scope.list.push($scope.editedGame);
-                    $scope.modal.hide();
-                })
-                .error(function (data, status, headers, config) {
-                    $rootScope.hide();
-                    $rootScope.notify("Oops something went wrong!! Please try again later");
-                });
-  };
-    
+            .success(function (data, status, headers, config) {
+                $scope.list.push($scope.editedGame);
+                $scope.modal.hide();
+            })
+            .error(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+            });
+    };
+
 })
 
 
@@ -239,12 +239,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 enable: ['context'],
                 logic: 'emit'
             }
-          },
-      };
-    
-     $scope.currentLocation = function(){
-         $scope.ifgi = "/www/img/ifgi.jpg";
-          $cordovaGeolocation
+        },
+    };
+
+    $scope.currentLocation = function () {
+        $scope.ifgi = "/www/img/ifgi.jpg";
+        $cordovaGeolocation
             .getCurrentPosition()
             .then(function (position) {
                 $scope.map.center.lat = position.coords.latitude;
@@ -258,11 +258,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 console.log("Geolocation error!");
                 console.log(err);
             });
-     };
-        
-    
-    
-    $scope.pathGame = function(){
+    };
+
+
+
+    $scope.pathGame = function () {
         Data.addType("Find destination");
     };
     $scope.aidGame = function () {
@@ -343,7 +343,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         };
 
         API.saveItem($scope.completeGame)
-            .success(function (data, status, headers, config)
+            .success(function (data, status, headers, config) {
                 $rootScope.hide();
                 $rootScope.doRefresh(1);
                 $ionicHistory.goBack();
@@ -374,7 +374,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Data.addTaskType("GeoReference");
     };
 })
-
 
 // controller for gameplay
 .controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState) {
@@ -414,6 +413,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var endGame = function () {
         createModal('gameover-modal.html', 'endgame');
+        $scope.$broadcast('gameOverEvent');
     };
 
     var abortGame = function (message) {
@@ -531,10 +531,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 maxZoom: 19,
                 zoomControlPosition: 'bottomleft'
             },
-            markers: [],
+            markers: {},
             events: {
                 map: {
-                    enable: ['contextmenu', 'move'],
+                    enable: ['contextmenu', 'move', 'zoomend'],
                     logic: 'emit'
                 }
             },
@@ -545,13 +545,32 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             }
         };
 
-
         $scope.geoLocButtonColor = "button-calm";
         $scope.getRealTimePos = false;
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
         $scope.locate();
         $scope.$emit('mapLoadedEvent');
+    };
+
+    $scope.updatePlayerPosMarker = function (position) {
+        if (typeof $scope.map.markers.PlayerPos === "undefined") {
+            var marker = {
+                lat: position.lat,
+                lng: position.lng,
+                message: "You are here",
+                draggable: false,
+                icon: {
+                    iconUrl: './img/icons/Youarehere.png',
+                    iconSize: [48, 48],
+                    iconAnchor: [24, 48]
+                }
+            };
+            $scope.map.markers.PlayerPos = marker;
+        } else {
+            $scope.map.markers.PlayerPos.lat = position.lat;
+            $scope.map.markers.PlayerPos.lng = position.lng;
+        }
     };
 
     /* Center map on user's current position */
@@ -561,12 +580,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             .then(function (position) {
                 $scope.map.center.lat = position.coords.latitude;
                 $scope.map.center.lng = position.coords.longitude;
-                $scope.map.center.zoom = 15;
-                $scope.map.markers.push({
+                //$scope.map.center.zoom = 15;
+                $scope.updatePlayerPosMarker({
                     lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                    message: "You Are Here",
-                    draggable: false
+                    lng: position.coords.longitude
                 });
             }, function (err) {
                 // error
@@ -591,7 +608,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             message: waypoint.name,
             focus: true
         };
-        $scope.map.markers.push(marker);
+        $scope.map.markers.NextWaypoint = marker;
         $scope.destination = {
             lat: marker.lat,
             lng: marker.lng,
@@ -600,6 +617,26 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.waypointLoaded = true; // reset this flag
     });
 
+    /* Get bearing in degrees to destination */
+    $scope.getBearing = function (orig, dest) {
+        Number.prototype.toRadians = function () {
+            return this * Math.PI / 180;
+        };
+        Number.prototype.toDegrees = function () {
+            return this * 180 / Math.PI;
+        };
+
+        var lat1_radian = orig.lat.toRadians();
+        var lng1_radian = orig.lng.toRadians();
+        var lat2_radian = dest.lat.toRadians();
+        var lng2_radian = dest.lng.toRadians();
+        var lat_delta = (lat2_radian - lat1_radian).toRadians();
+        var lng_delta = (lng2_radian - lng1_radian).toRadians();
+        var y = Math.sin(lng2_radian - lng1_radian) * Math.cos(lat2_radian);
+        var x = Math.cos(lat1_radian) * Math.sin(lat2_radian) - Math.sin(lat1_radian) * Math.cos(lat2_radian) * Math.cos(lng2_radian - lng1_radian);
+        var bearing = Math.atan2(y, x).toDegrees();
+        $scope.bearing = bearing;
+    };
 
     /* (Re)compute distance to destination once map moves */
     $scope.$on('leafletDirectiveMap.move', function (event, args) {
@@ -616,6 +653,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         //console.log("Setting initial distance to ", distance);
                     }
                     $scope.currentDistance = distance;
+                    $scope.getBearing(center, dest);
+
+                    /* Don't place marker on map center if geolocation tracking is on. This is handled separately */
+                    if (!$scope.getRealTimePos) {
+                        $scope.updatePlayerPosMarker(center);
+                    }
+
                     if (typeof $scope.drawSmiley !== "undefined") {
                         var maxDistance = parseFloat($scope.initialDistance) * 2;
                         // normalize distance to stop frowning once distance exceeds twice the initial distance to destination
@@ -627,6 +671,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     var threshold = 30; // if map center is within the threshold distance to destination, then the activity is complete
                     if (distance < threshold) {
                         $scope.waypointLoaded = false;
+                        delete $scope.map.markers.NextWaypoint;
                         $scope.$emit('waypointReachedEvent');
                     }
                 }, function (err) {
@@ -661,24 +706,44 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     var marker = {
                         lat: $scope.newGeoRefPoint.lat,
                         lng: $scope.newGeoRefPoint.lng,
-                        message: "Your marked location",
-                        focus: true
+                        message: "Marked photograph location",
+                        focus: true,
+                        icon: {
+                            iconUrl: './img/icons/PhotoMarker2.png',
+                            iconSize: [24, 38],
+                            iconAnchor: [12, 38]
+                        }
                     };
                     var marker2 = {
                         lat: $scope.georef.lat,
                         lng: $scope.georef.lng,
-                        message: "Original location",
-                        focus: true
+                        message: "Original photograph location",
+                        focus: true,
+                        icon: {
+                            iconUrl: './img/icons/PhotoMarker1.png',
+                            iconSize: [24, 38],
+                            iconAnchor: [12, 38]
+                        }
                     };
-                    $scope.map.markers.push(marker);
-                    $scope.map.markers.push(marker2);
+                    $scope.map.markers.playerPhotoMark = marker;
+                    $scope.map.markers.origPhotoMark = marker2;
 
                     var origLocation = L.latLng($scope.georef.lat, $scope.georef.lng);
                     var markedLocation = L.latLng($scope.newGeoRefPoint.lat, $scope.newGeoRefPoint.lng);
-                    var distance = origLocation.distanceTo(markedLocation);
+                    var distance = parseInt(origLocation.distanceTo(markedLocation));
+
+                    $scope.map.center = {
+                        lat: $scope.georef.lat,
+                        lng: $scope.georef.lng,
+                        zoom: $scope.map.center.zoom
+                    };
 
                     $scope.allowEdit = false;
-                    $scope.$emit('geoRefMarkedEvent', distance);
+                    $timeout(function () {
+                        $scope.$emit('geoRefMarkedEvent', distance);
+                    }, 1000);
+                    //$scope.map.markers.pop();
+                    //$scope.map.markers.pop();
                 });
         };
     });
