@@ -521,7 +521,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.map = {
             defaults: {
                 tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                maxZoom: 18,
+                maxZoom: 19,
                 zoomControlPosition: 'bottomleft'
             },
             markers: {},
@@ -534,7 +534,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             center: {
                 lat: 0,
                 lng: 0,
-                zoom: 12
+                zoom: 18
             }
         };
 
