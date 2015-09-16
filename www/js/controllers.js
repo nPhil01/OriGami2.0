@@ -494,6 +494,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     });
 
+    $scope.$on('$destroy', function () {
+        $scope.modal.remove();
+    });
+
     $scope.$on('geoRefMarkedEvent', function (event, distance) {
         showPopup('Result', 'The location you marked was ' + distance + "m away from the original location");
         handleTask();
@@ -534,7 +538,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             }
         };
 
-        //$scope.goTo(0);
         $scope.geoLocButtonColor = "button-calm";
         $scope.getRealTimePos = false;
         $scope.initialDistance = 500;
