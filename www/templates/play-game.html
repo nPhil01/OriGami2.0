@@ -8,7 +8,6 @@
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
                 <h1 class="title">Game Info</h1>
-                <!-- <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div> -->
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#fec00f">
@@ -39,7 +38,7 @@
                 </div>
             </ion-content>
 
-            <ion-footer-bar class="bar-dark" ng-click="modal.hide()">
+            <ion-footer-bar class="bar-dark" ng-click="modal.remove()">
                 <p class="title">Start Playing!</p>
             </ion-footer-bar>
 
@@ -62,7 +61,7 @@
                     </div>
                 </div>
             </ion-content>
-            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
                 <p class="title">OK</p>
             </ion-footer-bar>
 
@@ -85,7 +84,7 @@
                     </div>
                 </div>
             </ion-content>
-            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
                 <p class="title">OK</p>
             </ion-footer-bar>
 
@@ -108,7 +107,7 @@
                     </div>
                 </div>
             </ion-content>
-            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
                 <p class="title">OK</p>
             </ion-footer-bar>
 
@@ -125,13 +124,14 @@
             <ion-content style="height: 100%; background-color:#673AB7">
                 <div class="plan-route" style="background-color:#673AB7">
                     <div class="information">
-                        <i class="ion-images"></i>
+                        <!--<i class="ion-images"></i> -->
+                        <img src="{{geoRefPhoto}}">
                         <h1>Picture</h1>
                         <p>Where was the above picture taken? Mark it on the map.</p>
                     </div>
                 </div>
             </ion-content>
-            <ion-footer-bar class="bar-positive" ng-click="modal.hide()">
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
                 <p class="title">OK</p>
             </ion-footer-bar>
         </ion-modal-view>
@@ -144,7 +144,7 @@
             </div>
             <div id="smiley" class="smiley">
                 <canvas class="smiley" smiley></canvas>
-                <img class="bearing" src="./img/bearing.png" alt="ARROW" style="transform: rotate({{bearing}}deg)"> </img>
+                <img class="bearing" src="./img/bearing.png" alt="ARROW" style="transform: rotate({{bearing}}deg)">
             </div>
             <!-- <button class="button button-fab button-fab-bottom-right next button-calm icon ion-settings waves-effect waves-button waves-light" ui-sref="tab.teachmenu"></button> -->
             <button class="button button-fab button-fab-bottom-right next {{geoLocButtonColor}} icon ion-android-locate waves-effect waves-button waves-light" ng-click="toggleGeoLocation()"></button>

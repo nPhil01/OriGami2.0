@@ -21,8 +21,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 //template: 'Navigators follow a trail to the destination. Less cognitive effort.'
         });
     };
-    
-    //Get back in the history
+       //Get back in the history
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
@@ -344,7 +343,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         };
 
         API.saveItem($scope.completeGame)
-            .success(function (data, status, headers, config) {
+            .success(function (data, status, headers, config)
                 $rootScope.hide();
                 $rootScope.doRefresh(1);
                 $ionicHistory.goBack();
@@ -463,9 +462,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     var performGeoReferencingTask = function () {
-        var lat = $scope.task.coordinates.lat;
-        var lon = $scope.task.coordinates.lon;
-        var img = $scope.task.photo;
+        $scope.geoRefPhoto = $scope.task.photo;
         createModal('georef-modal.html', 'georef');
     };
 
@@ -504,6 +501,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     });
 
+    $scope.$on('$destroy', function () {
+        $scope.modal.remove();
+    });
+
     $scope.$on('geoRefMarkedEvent', function (event, distance) {
         showPopup('Result', 'The location you marked was ' + distance + "m away from the original location");
         handleTask();
@@ -527,7 +528,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.map = {
             defaults: {
                 tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                maxZoom: 18,
+                maxZoom: 19,
                 zoomControlPosition: 'bottomleft'
             },
             markers: [],
@@ -540,11 +541,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             center: {
                 lat: 0,
                 lng: 0,
-                zoom: 12
+                zoom: 18
             }
         };
 
-        //$scope.goTo(0);
+
+        $scope.geoLocButtonColor = "button-calm";
+        $scope.getRealTimePos = false;
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
         $scope.locate();
@@ -677,15 +680,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.georef = {};
 
         /* Dummy values. Remove after georeferecing task editing has been implemented*/
-        if (typeof args.coordinates.lat === "undefined") {
+        if (typeof args.lat === "undefined") {
             $scope.georef.lat = 51.9649;
             $scope.georef.lng = 7.601;
-            args.coordinates.lat = 51.94;
-            args.coordinates.lng = 7.60;
+            args.lat = 51.94;
+            args.lng = 7.60;
         } else {
             /*********************************************************/
-            $scope.georef.lat = args.coordinates.lat;
-            $scope.georef.lng = args.coordinates.lng;
+            $scope.georef.lat = args.lat;
+            $scope.georef.lng = args.lng;
         }
     });
 
