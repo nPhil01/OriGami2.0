@@ -404,6 +404,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var endGame = function () {
         createModal('gameover-modal.html', 'endgame');
+        $scope.$broadcast('gameOverEvent');
     };
 
     var abortGame = function (message) {
@@ -522,7 +523,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             markers: {},
             events: {
                 map: {
-                    enable: ['contextmenu', 'move'],
+                    enable: ['contextmenu', 'move', 'zoomend'],
                     logic: 'emit'
                 }
             },
@@ -534,6 +535,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         };
 
         //$scope.goTo(0);
+        $scope.geoLocButtonColor = "button-calm";
+        $scope.getRealTimePos = false;
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
         $scope.locate();
@@ -568,18 +571,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             .then(function (position) {
                 $scope.map.center.lat = position.coords.latitude;
                 $scope.map.center.lng = position.coords.longitude;
-                $scope.map.center.zoom = 15;
-                $scope.map.markers.PlayerPos = {
+                //$scope.map.center.zoom = 15;
+                $scope.updatePlayerPosMarker({
                     lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                    message: "You Are Here",
-                    draggable: false,
-                    icon: {
-                        iconUrl: './img/icons/Youarehere.png',
-                        iconSize: [48, 48],
-                        iconAnchor: [24, 48]
-                    }
-                };
+                    lng: position.coords.longitude
+                });
             }, function (err) {
                 // error
                 console.log("Geolocation error!");
@@ -649,7 +645,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     }
                     $scope.currentDistance = distance;
                     $scope.getBearing(center, dest);
-                    $scope.updatePlayerPosMarker(center);
+
+                    /* Don't place marker on map center if geolocation tracking is on. This is handled separately */
+                    if (!$scope.getRealTimePos) {
+                        $scope.updatePlayerPosMarker(center);
+                    }
 
                     if (typeof $scope.drawSmiley !== "undefined") {
                         var maxDistance = parseFloat($scope.initialDistance) * 2;
@@ -668,6 +668,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 }, function (err) {
                     console.log("Could not get Leaflet map object - " + err);
                 });
+        }
+    });
+
+    $scope.$on('leafletDirectiveMap.zoomend', function (event, args) {
+        if ($scope.getRealTimePos) {
+            $scope.toggleGeoLocation();
+            $scope.locate();
+            $scope.toggleGeoLocation();
         }
     });
 
@@ -744,6 +752,56 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             /*********************************************************/
             $scope.georef.lat = args.coordinates.lat;
             $scope.georef.lng = args.coordinates.lng;
+        }
+    });
+
+    $scope.trackPosition = function () {
+        var watchOptions = {
+            frequency: 1000,
+            timeout: 10000,
+            enableHighAccuracy: true // may cause errors if true
+        };
+        $scope.trackWatch = $cordovaGeolocation.watchPosition(watchOptions);
+        $scope.trackWatch.then(
+            null,
+            function (err) {
+                console.log("Error occurred when watching position");
+                console.log(err);
+            },
+            function (position) {
+                $scope.map.center.lat = position.coords.latitude;
+                $scope.map.center.lng = position.coords.longitude;
+                $scope.updatePlayerPosMarker({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+            });
+    };
+
+    $scope.toggleGeoLocation = function () {
+        if ($scope.getRealTimePos == false) {
+            $scope.getRealTimePos = true;
+            leafletData.getMap()
+                .then(function (map) {
+                    map.dragging.disable();
+                });
+            $scope.geoLocButtonColor = "button-balanced";
+            $scope.trackPosition();
+        } else {
+            $scope.getRealTimePos = false;
+            leafletData.getMap()
+                .then(function (map) {
+                    map.dragging.enable();
+                });
+            $scope.geoLocButtonColor = "button-calm";
+            $scope.trackWatch.clearWatch();
+        }
+    };
+
+    $scope.$on('gameOverEvent', function (event) {
+        if ($scope.getRealTimePos == true) {
+            // Turn off geolocation watch and reenable map drag
+            $scope.toggleGeoLocation();
         }
     });
 
