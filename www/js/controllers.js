@@ -377,7 +377,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 // controller for gameplay
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $location, GameData, GameState) {
+.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
 
@@ -518,7 +518,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
  * - Only shows waypoint and emits signal when waypoint is reached
  * - Is not concerned with GameState or the game progression logic
  */
-.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', 'leafletData', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, leafletData) {
+.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', 'leafletData', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, $timeout, leafletData) {
 
     $scope.waypointLoaded = false;
     $scope.allowEdit = false;
@@ -635,6 +635,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     });
 
+    $scope.$on('leafletDirectiveMap.zoomend', function (event, args) {
+        if ($scope.getRealTimePos) {
+            $scope.toggleGeoLocation(false);
+            $scope.locate();
+            $scope.toggleGeoLocation(false);
+        }
+    });
+
     var GeoRefPoint = function () {
         if (!(this instanceof GeoRefPoint)) return new GeoRefPoint();
         this.lat = "";
@@ -689,6 +697,69 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             /*********************************************************/
             $scope.georef.lat = args.lat;
             $scope.georef.lng = args.lng;
+        }
+    });
+
+    $scope.trackPosition = function () {
+        var watchOptions = {
+            frequency: 1000,
+            timeout: 10000,
+            enableHighAccuracy: true // may cause errors if true
+        };
+        $scope.trackWatch = $cordovaGeolocation.watchPosition(watchOptions);
+        $scope.trackWatch.then(
+            null,
+            function (err) {
+                $ionicLoading.show({
+                    template: 'Error occurred when geolocating position',
+                    noBackdrop: true,
+                    duration: 1000
+                });
+                console.log("Error occurred when watching position");
+                console.log(err);
+            },
+            function (position) {
+                $scope.map.center.lat = position.coords.latitude;
+                $scope.map.center.lng = position.coords.longitude;
+                $scope.updatePlayerPosMarker({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+            });
+    };
+
+    $scope.toggleGeoLocation = function (showInfo) {
+        if ($scope.getRealTimePos == false) {
+            $scope.getRealTimePos = true;
+
+            if (showInfo) {
+                $ionicLoading.show({
+                    template: 'Now using Geolocation! Map panning disabled',
+                    noBackdrop: true,
+                    duration: 2000
+                });
+            }
+            leafletData.getMap()
+                .then(function (map) {
+                    map.dragging.disable();
+                });
+            $scope.geoLocButtonColor = "button-balanced";
+            $scope.trackPosition();
+        } else {
+            $scope.getRealTimePos = false;
+            leafletData.getMap()
+                .then(function (map) {
+                    map.dragging.enable();
+                });
+            $scope.geoLocButtonColor = "button-calm";
+            $scope.trackWatch.clearWatch();
+        }
+    };
+
+    $scope.$on('gameOverEvent', function (event) {
+        if ($scope.getRealTimePos == true) {
+            // Turn off geolocation watch and reenable map drag
+            $scope.toggleGeoLocation(false);
         }
     });
 
