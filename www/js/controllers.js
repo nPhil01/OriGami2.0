@@ -453,9 +453,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     var performGeoReferencingTask = function () {
-        var lat = $scope.task.coordinates.lat;
-        var lon = $scope.task.coordinates.lon;
-        var img = $scope.task.photo;
+        $scope.geoRefPhoto = $scope.task.photo;
         createModal('georef-modal.html', 'georef');
     };
 
@@ -746,15 +744,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.georef = {};
 
         /* Dummy values. Remove after georeferecing task editing has been implemented*/
-        if (typeof args.coordinates.lat === "undefined") {
+        if (typeof args.lat === "undefined") {
             $scope.georef.lat = 51.9649;
             $scope.georef.lng = 7.601;
-            args.coordinates.lat = 51.94;
-            args.coordinates.lng = 7.60;
+            args.lat = 51.94;
+            args.lng = 7.60;
         } else {
             /*********************************************************/
-            $scope.georef.lat = args.coordinates.lat;
-            $scope.georef.lng = args.coordinates.lng;
+            $scope.georef.lat = args.lat;
+            $scope.georef.lng = args.lng;
         }
     });
 

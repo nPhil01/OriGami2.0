@@ -124,7 +124,8 @@
             <ion-content style="height: 100%; background-color:#673AB7">
                 <div class="plan-route" style="background-color:#673AB7">
                     <div class="information">
-                        <i class="ion-images"></i>
+                        <!--<i class="ion-images"></i> -->
+                        <img src="{{geoRefPhoto}}">
                         <h1>Picture</h1>
                         <p>Where was the above picture taken? Mark it on the map.</p>
                     </div>
@@ -143,7 +144,7 @@
             </div>
             <div id="smiley" class="smiley">
                 <canvas class="smiley" smiley></canvas>
-                <img class="bearing" src="./img/bearing.png" alt="ARROW" style="transform: rotate({{bearing}}deg)"> </img>
+                <img class="bearing" src="./img/bearing.png" alt="ARROW" style="transform: rotate({{bearing}}deg)">
             </div>
             <!-- <button class="button button-fab button-fab-bottom-right next button-calm icon ion-settings waves-effect waves-button waves-light" ui-sref="tab.teachmenu"></button> -->
             <button class="button button-fab button-fab-bottom-right next {{geoLocButtonColor}} icon ion-android-locate waves-effect waves-button waves-light" ng-click="toggleGeoLocation()"></button>
