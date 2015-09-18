@@ -22,7 +22,7 @@ ionic plugin add org.apache.cordova.geolocation
 ```
 * Add platform
 ```sh
-ionic add platform android
+ionic platform add android
 ```
 * Build
 ```sh
