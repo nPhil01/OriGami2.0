@@ -13,6 +13,9 @@ OriGami is the geospatial learning game for kids. Consist of two parts:
 * Task - Involves a spatial competency requiring particpant's action at a given location. The locations are predefined.
 
 ### Build Instructions
+
+Prerequisites: Nodejs
+
 Install the [Ionic framework](http://ionicframework.com/getting-started/) and clone this repository locally. In your project directory, use the following commands to build a package for your platform.
 #### for Android
 * Add the following cordova plugins
