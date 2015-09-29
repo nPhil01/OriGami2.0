@@ -6,12 +6,12 @@
           <h2>New Game</h2>
           <div class="game-type">
               <button class="button icon-left ion-arrow-graph-up-right" style = "background-color:#FFEB3B" ui-sref="tab.pathplan" ng-click = "pathGame()" style="color:black;width:50px;">Find destination</button>
-              <button class="button icon-right ion-location"  style = "background-color:#FFEB3B" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Follow route</button>
+              <button class="button icon-right ion-location"  style = "background-color:#2196F3" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Follow route</button>
           </div>
           <button class="button button-fab button-fab-top-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()"></button>
           <button class="button button-fab button-fab-top-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
       </div>
-      <label class="item item-input input-info">
+      <label class="item item-input input-info" ng-class = "border">
         <span class="input-label">Game Title</span>
         <input type="text" ng-model = "newgame.title" placeholder="Game Title" required>
       </label>

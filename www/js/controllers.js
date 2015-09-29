@@ -138,11 +138,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         API.deleteItem(name, $rootScope.getToken())
             .success(function (data, status, headers, config) {
                 $rootScope.hide();
-
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
                     "Oops something went wrong!! Please try again later");
-                alert("fail");
+                console.log("fail");
             });
         $scope.list.splice($scope.list.indexOf(item), 1);
     };
@@ -302,6 +301,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Task.addType("GeoReference");
     };
 
+    
+    
+    // ADD PHOTO CREATION HERE
     $scope.submitGRTask = function () {
         Task.addPhoto("./img/ifgi.jpg");
 
@@ -334,6 +336,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     // Two main buttons - one, which submits the complete game to the server and one, which cancels the entire progress of creation
     $scope.submitGame = function () {
+      if ($scope.newgame.title != null){ // Check if the title is not empty 
+         $scope.border = "black";
         $scope.completeGame = {
             name: $scope.newgame.title,
             description: $scope.newgame.description,
@@ -355,6 +359,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $ionicHistory.goBack();
                 Data.clearAct();
             });
+        } else {
+            $scope.border = "red";
+        }
     };
 
     $scope.cancelGame = function () {

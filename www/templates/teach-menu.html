@@ -2,7 +2,7 @@
     <ion-nav-bar class="bar-positive">
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
-  <ion-content style = "background-color:#80DEEA">
+  <ion-content style = "background-color:#80DEEA; ">
       <!-- Here are games, which were created before-->
       <!-- The only difference is that teacher can change settings of the game and create new games -->
       
@@ -32,9 +32,7 @@
          </span>
       </div>
     </div>
-          <button id="fab" class="button button-positive icon ion-plus button-fab button-fab-bottom-right" ng-click = "createGame()" ui-sref="tab.newgame">
-              <button class="button button-fab button-fab-bottom-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
-      </div>
+          <button id="fab" class="button button-positive icon ion-plus button-fab " ng-click = "createGame()" ui-sref="tab.newgame" style = "position: absolute; bottom:2%; right: 2%;">
+              <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()" style = "position: fixed; bottom: 2%; left: 2%;"></button>
   </ion-content>
-</div>
 </ion-view>
