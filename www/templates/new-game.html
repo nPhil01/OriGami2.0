@@ -5,8 +5,13 @@
       <div class = "game-backg">
           <h2>New Game</h2>
           <div class="game-type">
-              <button class="button icon-left ion-arrow-graph-up-right" style = "background-color:#FFEB3B" ui-sref="tab.pathplan" ng-click = "pathGame()" style="color:black;width:50px;">Find destination</button>
-              <button class="button icon-right ion-location"  style = "background-color:#2196F3" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Follow route</button>
+              
+              <button class="button button-fab button-balanced icon ion-arrow-graph-up-right" ui-sref="tab.pathplan" ng-click = "pathGame()"></button>
+              <button class="button button-fab button-balanced icon ion-location" ui-sref="tab.aidnavig" ng-click = "aidGame()"></button>
+              
+            <!--  <button class="button icon-left ion-arrow-graph-up-right" style = "background-color:#FFEB3B" ui-sref="tab.pathplan" ng-click = "pathGame()" style="color:black;width:50px;">Find destination</button>
+              <button class="button icon-right ion-location"  style = "background-color:#2196F3" ui-sref="tab.aidnavig" ng-click = "aidGame()" style="color:black;">Follow route</button>   -->
+              
           </div>
           <button class="button button-fab button-fab-top-right button-positive icon ion-checkmark-round waves-effect waves-button waves-light" ng-click= "submitGame()"></button>
           <button class="button button-fab button-fab-top-left button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()"></button>
@@ -23,10 +28,27 @@
         <span class="input-label">Time of completion</span>
         <input type="text" ng-model = "newgame.time" placeholder="How long will it take to finish the game?" required>
       </label>
-      <label class="item item-input input-info">
-        <span class="input-label">Difficulty</span>
-        <input type="text" ng-model = "newgame.difficulty" placeholder="How difficult this game is?" required>
-      </label>
+    <div class="item item-input input-info">
+         <span class="input-label">Difficulty</span>
+          <span class="rating" id="stars">
+               <a ng-click = "rateGame(0)">
+                  <i class = {{diff[0]}} style="font-size:2em;color:#FFEB3B;"></i>
+                </a>
+              <a ng-click = "rateGame(1)">
+                  <i class = {{diff[1]}} style="font-size:2em;color:#FFEB3B;"></i>
+                </a>
+              <a ng-click = "rateGame(2)">
+                  <i class = {{diff[2]}} style="font-size:2em;color:#FFEB3B;"></i>
+                </a>
+              <a ng-click = "rateGame(3)">
+                  <i class = {{diff[3]}} style="font-size:2em;color:#FFEB3B;"></i>
+                </a>
+              <a ng-click = "rateGame(4)">
+                  <i class = {{diff[4]}} style="font-size:2em;color:#FFEB3B;"></i>
+               </a>
+          </span>
+    </div>
+       <!-- <input type="text" ng-model = "newgame.difficulty" placeholder="How difficult this game is?" required> -->
     
     
     <ion-list>

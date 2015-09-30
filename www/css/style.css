@@ -413,15 +413,20 @@
 }
 
 .georef .georef_step1 img{
-    heigh: 40%;
-    width: 80%;
-    left:10%;
+    heigh: 300px;
+    width: 300px;
+    left:30%;
     top:20%;
     position: absolute;
 }
 
 .georef .georef_step1 button{
-    left:30%;
+    left:20%;
+    top:5%;
+    position: absolute;
+}
+.georef .georef_step1 .getpict{
+    left:50%;
     top:5%;
     position: absolute;
 }

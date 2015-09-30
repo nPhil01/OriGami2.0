@@ -213,8 +213,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
-    $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams) {
+.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams','$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
+    $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera) {
     $scope.newgame = {}; //General description of the game
 
     // Current location of GeoReference Task Creation
@@ -242,7 +242,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.currentLocation = function () {
-        $scope.ifgi = "/www/img/ifgi.jpg";
         $cordovaGeolocation
             .getCurrentPosition()
             .then(function (position) {
@@ -258,9 +257,55 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 console.log(err);
             });
     };
+    
 
-
-
+    // PHOTO TASK
+    
+     $scope.imgURI = $scope.photoGame;
+    
+     $scope.takePicture = function() {
+        var options = { 
+            quality : 75, 
+            destinationType : Camera.DestinationType.DATA_URL, 
+            sourceType : Camera.PictureSourceType.CAMERA, 
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 100,
+            targetHeight: 100,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: true
+        };
+ 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            $scope.currentLocation();
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
+    };
+    
+    $scope.choosePhoto = function () {
+                  var options = {
+                    quality: 75,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 100,
+                    targetHeight: 100,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false
+                };
+   
+                   $cordovaCamera.getPicture(options).then(function (imageData) {
+                        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                        $scope.currentLocation();
+                    }, function (err) {
+                        // An error occured. Show a message to the user
+                    });
+                };
+    
+    
     $scope.pathGame = function () {
         Data.addType("Find destination");
     };
@@ -301,11 +346,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Task.addType("GeoReference");
     };
 
-    
-    
-    // ADD PHOTO CREATION HERE
     $scope.submitGRTask = function () {
-        Task.addPhoto("./img/ifgi.jpg");
+        Task.addPhoto($scope.imgURI);
 
         Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
 
@@ -367,6 +409,20 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.cancelGame = function () {
         Data.clearAct();
         $ionicHistory.goBack();
+    };
+    
+    
+     // Rate difficulty of the game in stars
+    $scope.diff = [];
+    $scope.newgame.difficulty = 0;
+    $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"})
+    
+     $scope.rateGame = function (difficulty) {
+         $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"})
+         for (var i = 0; i <= difficulty; i++){
+             $scope.diff[i] = "ion-ios-star";
+         }
+         $scope.newgame.difficulty = difficulty + 1;
     };
 }])
 
