@@ -442,6 +442,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 .controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
+    var congratsMessages = ['Good job!', 'Well done!', 'Nice going!', 'Cool!', 'Way to go!'];
 
     /* only for debug purposes */
     var debugState = function () {
@@ -525,6 +526,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     var performGeoReferencingTask = function () {
+        $scope.showInfo = true;
+        $scope.subHeaderInfo = "Mark location on map";
         $scope.geoRefPhoto = $scope.task.photo;
         createModal('georef-modal.html', 'georef');
     };
@@ -548,7 +551,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.$on('waypointReachedEvent', function (event) {
-        showPopup('Congrats!', 'You reached the destination - ' + $scope.waypoint.name, handleTask);
+        //showPopup('Congrats!', 'You reached the destination - ' + $scope.waypoint.name, handleTask);
+        $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
+        createModal('waypoint-reached-modal.html', 'waypoint');
     });
 
     $scope.$on('modal.hidden', function (event, modal) {
@@ -561,6 +566,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $location.path('/');
         } else if (modal.id === 'georef') {
             $scope.$broadcast('georefEvent', $scope.task);
+        } else if (modal.id === 'georefResult') {
+            handleTask();
+        } else if (modal.id === 'waypoint') {
+            handleTask();
         }
     });
 
@@ -569,8 +578,18 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     });
 
     $scope.$on('geoRefMarkedEvent', function (event, distance) {
-        showPopup('Result', 'The location you marked was ' + distance + "m away from the original location");
-        handleTask();
+        //showPopup('Result', 'The location you marked was ' + distance + "m away from the original location");
+        $scope.georefDistance = distance;
+        $scope.showInfo = false;
+        $scope.subHeaderInfo = "";
+
+        if (distance < 20) {
+            $scope.georefSmiley = 'ion-happy-outline';
+        } else {
+            $scope.georefSmiley = 'ion-sad-outline';
+        }
+        createModal('georef-result-modal.html', 'georefResult');
+        //handleTask();
     });
 
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
@@ -595,6 +614,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 zoomControlPosition: 'bottomleft'
             },
             markers: {},
+            paths: {},
             events: {
                 map: {
                     enable: ['contextmenu', 'move', 'zoomend'],
@@ -612,6 +632,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.getRealTimePos = false;
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
+        $scope.thresholdDistance = 30;
         $scope.locate();
         $scope.$emit('mapLoadedEvent');
     };
@@ -730,9 +751,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         var normalizedDistance = (parseFloat($scope.currentDistance) > maxDistance) ? maxDistance : parseFloat($scope.currentDistance);
                         $scope.drawSmiley($scope.canvas, $scope.canvasContext, normalizedDistance);
                     }
-                    //console.log(distance);
-                    var threshold = 30; // if map center is within the threshold distance to destination, then the activity is complete
-                    if (distance < threshold) {
+                    // If map center is within the threshold distance to destination, then the activity is complete
+                    if (distance < $scope.thresholdDistance) {
                         $scope.waypointLoaded = false;
                         delete $scope.map.markers.NextWaypoint;
                         $scope.$emit('waypointReachedEvent');
@@ -795,6 +815,17 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     var markedLocation = L.latLng($scope.newGeoRefPoint.lat, $scope.newGeoRefPoint.lng);
                     var distance = parseInt(origLocation.distanceTo(markedLocation));
 
+                    var path = {
+                        type: "polyline",
+                        color: 'red',
+                        weight: 5,
+                        latlngs: [origLocation, markedLocation]
+                    };
+
+                    $scope.map.paths = {
+                        'georefTaskPath': path
+                    };
+
                     $scope.map.center = {
                         lat: $scope.georef.lat,
                         lng: $scope.georef.lng,
@@ -802,9 +833,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     };
 
                     $scope.allowEdit = false;
+                    /* Draw and show path between original and marked locations for 2 seconds. Then show modal*/
                     $timeout(function () {
+                        delete $scope.map.paths.georefTaskPath;
+                        delete $scope.map.markers.playerPhotoMark;
+                        delete $scope.map.markers.origPhotoMark;
                         $scope.$emit('geoRefMarkedEvent', distance);
-                    }, 1000);
+                    }, 2000);
                     //$scope.map.markers.pop();
                     //$scope.map.markers.pop();
                 });
@@ -872,6 +907,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     map.dragging.disable();
                 });
             $scope.geoLocButtonColor = "button-balanced";
+            $scope.thresholdDistance = 10;
             $scope.trackPosition();
         } else {
             $scope.getRealTimePos = false;
@@ -879,6 +915,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 .then(function (map) {
                     map.dragging.enable();
                 });
+            $scope.thresholdDistance = 30;
             $scope.geoLocButtonColor = "button-calm";
             $scope.trackWatch.clearWatch();
         }

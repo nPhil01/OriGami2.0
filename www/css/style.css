@@ -1,153 +1,134 @@
-/* NEW HOME PAGE ---------------------------------------- */ 
+/* NEW HOME PAGE ---------------------------------------- */
+
 .person-type {
-    background-color:#80DEEA; 
+    background-color: #80DEEA;
     height: 100%;
     position: relative;
 }
-
-.person-type .player{
+.person-type .player {
     background-color: #3F51B5;
     height: 50%;
     position: relative;
 }
-
-.person-type .player .type-picture{
-   height: 100%;
-   position: relative;
+.person-type .player .type-picture {
+    height: 100%;
+    position: relative;
 }
-.person-type .player .type-picture img{
-   top: 35%;
+.person-type .player .type-picture img {
+    top: 35%;
     left: 5%;
     position: absolute;
 }
-.person-type .player .type-picture .info{
-   height: 100%;
+.person-type .player .type-picture .info {
+    height: 100%;
     left: 32%;
-    top:35%;
+    top: 35%;
     position: absolute;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
 }
-.person-type .player .type-picture .info h2{
+.person-type .player .type-picture .info h2 {
     color: white;
     font-family: 'RobotoDraft', sans-serif;
 }
-
-.person-type .player .type-picture .info p{
+.person-type .player .type-picture .info p {
     color: white;
     font-family: 'Roboto', sans-serif;
 }
-.person-type .player .type-picture .next{
+.person-type .player .type-picture .next {
     left: 5%;
     bottom: 5%;
     position: absolute;
 }
-
-
-
-
-.person-type .teacher{
+.person-type .teacher {
     height: 50%;
     background-color: #FF5752;
 }
-.person-type .teacher .type-picture{
-   height: 100%;
-   position: relative;
+.person-type .teacher .type-picture {
+    height: 100%;
+    position: relative;
 }
-.person-type .teacher .type-picture img{
+.person-type .teacher .type-picture img {
     top: 25%;
     right: 5%;
     position: absolute;
 }
-.person-type .teacher .type-picture .info{
-   height: 100%;
+.person-type .teacher .type-picture .info {
+    height: 100%;
     width: 60%;
     left: 5%;
     top: 25%;
     position: absolute;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
 }
-.person-type .teacher .type-picture .info h2{
+.person-type .teacher .type-picture .info h2 {
     color: white;
     font-family: 'RobotoDraft', sans-serif;
 }
-
-.person-type .teacher .type-picture .info p{
+.person-type .teacher .type-picture .info p {
     color: white;
     font-family: 'Roboto', sans-serif;
 }
-
-.person-type .teacher .type-picture .next{
+.person-type .teacher .type-picture .next {
     right: 5%;
     bottom: 5%;
     position: absolute;
 }
-
-
-
-.game-backg{
+.game-backg {
     height: 180px;
     background-image: url("../img/navigation.jpg");
     background-size: cover;
     display: block;
     position: relative;
 }
-
-.game-modal{
-     background-image: url("../img/1.png");
-     background-size: cover;
+.game-modal {
+    background-image: url("../img/1.png");
+    background-size: cover;
     height: 100%;
 }
-
-.game-backg h2{
+.game-backg h2 {
     font-size: 2.5em;
-     text-align: center;
-     color: white;
-    left:5%;
-    
-}
-.game-backg p{
-     font-size: 1.5em;
-     text-align: center;
+    text-align: center;
     color: white;
-    left:5%;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-  font-style: normal;
+    left: 5%;
 }
-
-.game-type{
+.game-backg p {
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
+    left: 5%;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-style: normal;
+}
+.game-type {
     position: absolute;
     bottom: 10%;
     left: 15%;
     display: flex;
     margin: auto;
 }
-
-.game-type button{
+.game-type button {
     margin-left: 10px;
 }
-
 .scroll {
-  min-height: 100%;
+    min-height: 100%;
 }
-
-.scroll, .angular-leaflet-map {
-  height: 100%;
+.scroll,
+.angular-leaflet-map {
+    height: 100%;
 }
-
 .leaflet-bottom {
-  bottom : 10px;
+    bottom: 10px;
 }
-
 .games-cont .fab.button-fab-bottom-right {
     top: auto;
     right: 16px;
@@ -157,36 +138,33 @@
 }
 
 /* Collapsed list */
+
 .list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-  transition: 0.09s all linear;
+    line-height: 38px;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
-  line-height: 0px;
+    line-height: 0px;
 }
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
-  display: block !important;
+    display: block !important;
 }
-
-
-.createdAct{
+.createdAct {
     margin-bottom: 20px;
 }
 
 /* Tasks creation */
-.tasks{
+
+.tasks {
     position: absolute;
     bottom: 10%;
     left: 15%;
     display: flex;
 }
-.tasks .fab.button-fab{
-    
-}
-
+.tasks .fab.button-fab {}
 .map-container {
     position: relative;
     width: 100%;
@@ -213,200 +191,191 @@
 }
 
 /* "Play Game" part ------------------ */
-.game-desc span{
+
+.game-desc span {
     font-size: 1.0em;
 }
-.game-desc h2,.game-desc p, .game-desc p a, .game-desc{
-    color: black; 
-   font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-  font-style: normal;
+.game-desc h2,
+.game-desc p,
+.game-desc p a,
+.game-desc {
+    color: black;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-style: normal;
 }
-.game-desc h2{
+.game-desc h2 {
     font-size: 2em;
 }
-.game-desc p{
+.game-desc p {
     font-size: 1em;
 }
 
-
 /*Info tab */
 
-.info-tab{
-    height:40%;
+.info-tab {
+    height: 40%;
     background-color: #3F51B5;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
     color: #fafafa;
-    position:relative;
+    position: relative;
 }
-.info-tab .information{
-   position: relative;
-    top:20%;
+.info-tab .information {
+    position: relative;
+    top: 20%;
 }
 .info-tab i {
-    font-size:5em;
+    font-size: 5em;
 }
-
-.info-tab h1{
+.info-tab h1 {
     font-size: 2em;
-     text-align: center;
-     color: white;
+    text-align: center;
+    color: white;
 }
-.info-tab p{
-     font-size: 1.5em;
-     text-align: center;
+.info-tab p {
+    font-size: 1.5em;
+    text-align: center;
     color: white;
 }
 
 .info-tab h2{
     font-size: 2.5em;
-     text-align: center;
+    text-align: center;
     color: white;
 }
 
-
-
 /* Modal window with explanation of the game rules */
-.plan-route{
-    height:30%;
+
+.plan-route {
+    height: 30%;
     background-color: #3F51B5;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
     color: #fafafa;
-    position:relative;
+    position: relative;
     background-color: #fec00f;
 }
-.plan-route .information{
-   position: relative;
+.plan-route .information {
+    position: relative;
 }
 .plan-route i {
-    font-size:5em;
+    font-size: 5em;
 }
-
-.plan-route h1{
+.plan-route h1 {
     font-size: 2em;
-     text-align: center;
-     color: white;
+    text-align: center;
+    color: white;
 }
-.plan-route p{
-     font-size: 1.5em;
-     text-align: center;
+.plan-route p {
+    font-size: 1.5em;
+    text-align: center;
     color: white;
 }
 
-
-/* Page where user chooses task types ---------------------------------------- */ 
+/* Page where user chooses task types ---------------------------------------- */
 
 .task-type {
-    background-color:#80DEEA; 
+    background-color: #80DEEA;
     height: 100%;
     position: relative;
 }
-
-.task-type .type1{
+.task-type .type1 {
     background-color: #673AB7;
     height: 50%;
     position: relative;
 }
-
-.task-type .type1 .type-picture{
-   height: 100%;
-   position: relative;
+.task-type .type1 .type-picture {
+    height: 100%;
+    position: relative;
 }
-.task-type .type1 .type-picture img{
-   top: 35%;
+.task-type .type1 .type-picture img {
+    top: 35%;
     left: 5%;
     position: absolute;
 }
-.task-type .type1 .type-picture .info{
-   height: 100%;
+.task-type .type1 .type-picture .info {
+    height: 100%;
     left: 30%;
-    top:35%;
+    top: 35%;
     position: absolute;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
 }
-.task-type .type1 .type-picture .info h2{
+.task-type .type1 .type-picture .info h2 {
     color: white;
     font-family: 'RobotoDraft', sans-serif;
 }
-
-.task-type .type1 .type-picture .info p{
+.task-type .type1 .type-picture .info p {
     color: white;
     font-family: 'Roboto', sans-serif;
 }
-.task-type .type1 .type-picture .next{
+.task-type .type1 .type-picture .next {
     right: 5%;
     bottom: 5%;
     position: absolute;
 }
-
-
-
-
-.task-type .type2{
+.task-type .type2 {
     height: 50%;
     background-color: #fec00f;
 }
-.task-type .type2 .type-picture{
-   height: 100%;
-   position: relative;
+.task-type .type2 .type-picture {
+    height: 100%;
+    position: relative;
 }
-.task-type .type2 .type-picture img{
+.task-type .type2 .type-picture img {
     top: 25%;
     left: 5%;
     position: absolute;
 }
-.task-type .type2 .type-picture .info{
-   height: 100%;
+.task-type .type2 .type-picture .info {
+    height: 100%;
     left: 30%;
-    top:25%;
+    top: 25%;
     position: absolute;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
 }
-.task-type .type2 .type-picture .info h2{
+.task-type .type2 .type-picture .info h2 {
     color: black;
     font-family: 'RobotoDraft', sans-serif;
 }
-
-.task-type .type2 .type-picture .info p{
+.task-type .type2 .type-picture .info p {
     color: black;
     font-family: 'Roboto', sans-serif;
 }
-
-.task-type .type2 .type-picture .next{
+.task-type .type2 .type-picture .next {
     right: 5%;
     bottom: 5%;
     position: absolute;
 }
 
-
 /* Georefence task creation -------------------------- */
-.georef{
+
+.georef {
     height: 100%;
-    width:100%;
+    width: 100%;
     position: relative;
 }
 
 /* step 1*/
-.georef .georef_step1{
+
+.georef .georef_step1 {
     height: 60%;
     width: 100%;
     position: relative;
@@ -432,185 +401,165 @@
 }
 
 /* step 2 */
-.georef .georef_step2{
-    left:10%;
+
+.georef .georef_step2 {
+    left: 10%;
     height: 30%;
     width: 80%;
     position: relative;
 }
-
-.georef .georef_step2 label{
+.georef .georef_step2 label {
     top: 10%;
-    height:70%;
+    height: 70%;
     width: 95%;
 }
-.georef .georef_step2 label input{
+.georef .georef_step2 label input {
     top: 10%;
-    height:70%;
+    height: 70%;
     width: 100%;
 }
 
 /* step 3 */
-.georef .georef_step3{
+
+.georef .georef_step3 {
     height: 10%;
     width: 100%;
     position: relative;
 }
-
-
-.dev-phase{
-     height: 100%;
+.dev-phase {
+    height: 100%;
     width: 60%;
     left: 25%;
     top: 25%;
     position: absolute;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
 }
-
-
-
-.form-background{
+.form-background {
     position: relative;
     height: 100%;
     width: 100%;
     background-image: url("/www/img/april.jpg");
     background-size: cover;
 }
-
-
-.input-info{
-     letter-spacing: 0.04em;
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: left;
+.input-info {
+    letter-spacing: 0.04em;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: left;
     font-style: normal;
 }
 
-
 /* List with all created points and task for each point ------------------*/
-.points-cont{
+
+.points-cont {
     position: relative;
     height: 100%;
     width: 100%;
 }
-
-.points-cont .location-icon i{
+.points-cont .location-icon i {
     letter-spacing: 0.04em;
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
 }
-.points-cont .location-icon{
+.points-cont .location-icon {
     position: absolute;
     left: 2%;
-    font-size:1.1em;
+    font-size: 1.1em;
 }
-.points-cont .new-task{
+.points-cont .new-task {
     position: absolute;
     right: 15%;
-    font-size:1.1em;
+    font-size: 1.1em;
 }
-.points-cont .all-tasks{
+.points-cont .all-tasks {
     position: absolute;
     right: 2%;
-    font-size:1.1em;
+    font-size: 1.1em;
 }
-
-.points-cont p{
+.points-cont p {
     position: absolute;
     letter-spacing: 0.04em;
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     left: 25%;
-    font-size:1.2em;
+    font-size: 1.2em;
 }
-
-.points-cont i{
+.points-cont i {
     position: absolute;
     letter-spacing: 0.04em;
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     right: 5%;
 }
 
-
-
 /* List with all the created activities in two windows: EDIT and NEW ------------------- */
-.activity-edit{
+
+.activity-edit {
     background-color: brown;
-    height:90px;
+    height: 90px;
     border-style: solid;
     border-width: 5px;
     border-color: black;
 }
-
-.activity-edit p{
+.activity-edit p {
     letter-spacing: 0.04em;
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     color: white;
 }
-.activity-new{
+.activity-new {
     background-color: brown;
-    height:90px;
+    height: 90px;
     border-style: solid;
     border-width: 5px;
     border-color: black;
 }
-
-.activity-new p{
+.activity-new p {
     letter-spacing: 0.04em;
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     color: white;
 }
-
-
-
 
 /*   Page with Languages --------------------------- */
 
-
-.lang-tab{
-    height:30%;
+.lang-tab {
+    height: 30%;
     background-color: #3F51B5;
     letter-spacing: 0.04em;
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-	font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-	text-align: center;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
     font-style: normal;
     display: block;
     color: #fafafa;
-    position:relative;
+    position: relative;
 }
-.lang-tab .information{
-   position: relative;
-    top:20%;
+.lang-tab .information {
+    position: relative;
+    top: 20%;
 }
 .lang-tab i {
-    font-size:5em;
+    font-size: 5em;
 }
-
-.lang-tab h1{
+.lang-tab h1 {
     font-size: 2em;
-     text-align: center;
-     color: white;
-}
-.lang-tab p{
-     font-size: 1.5em;
-     text-align: center;
+    text-align: center;
     color: white;
 }
-
-
-
+.lang-tab p {
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
+}
 
 /* Border line of game title */
 
@@ -622,6 +571,9 @@
     border:none;
 }
 
-
-
+.feedback-icon {
+    font-size: 8em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
 
