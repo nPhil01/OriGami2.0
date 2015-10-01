@@ -274,11 +274,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.example = "";
     
     $scope.myfile = {};
-    $scope.isWeb = (ionic.Platform.platform() == "win32");
-    $scope.isAndroid = (ionic.Platform.platform() != "win32");
+    $scope.isAndroid = ionic.Platform.isAndroid();
+    //$scope.isWeb = (ionic.Platform.platform() == "win32");
+    $scope.isWeb = !$scope.isAndroid;
     
-     $scope.takePicture = function() {
-       if (ionic.Platform.platform() != "win32"){ // If the platform is Android than we take a picture
+    $scope.takePicture = function() {
+       if ($scope.isAndroid){ // If the platform is Android than we take a picture
          var options = { 
             quality : 75, 
             destinationType : Camera.DestinationType.DATA_URL, 
