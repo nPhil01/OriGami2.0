@@ -48,8 +48,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
             $scope.games.push(data[i]);
+            $scope.games[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
         }
-
+        console.log($scope.games);
         if ($scope.games.length == 0) {
             $scope.noData = true;
         } else {
@@ -113,15 +114,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.createGame = function () {
         $scope.modal.remove();
     };
-
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
-
+    
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
             $scope.list.push(data[i]);
+            $scope.list[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
         }
+        console.log($scope.list);
         if ($scope.list.length == 0) {
             $scope.noData = true;
         } else {
@@ -132,7 +134,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             "Oops something went wrong!! Please try again later");
         console.log("something was wrong");
     });
-
+    
+    
     // Delete the entire game by clicking on the trash icon
     $scope.deleteItem = function (item, name) {
         API.deleteItem(name, $rootScope.getToken())
@@ -215,8 +218,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 // Controller which controls new GAME creation
 .controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams','$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
     $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera) {
+    
     $scope.newgame = {}; //General description of the game
-
+    $scope.isAndroid = false;  // Platform : Android or Web
+    
+    $scope.example = "";
+    $scope.myfile = {};
+    
+    
     // Current location of GeoReference Task Creation
     $scope.map = {
         center: {
@@ -261,10 +270,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     // PHOTO TASK
     
-     $scope.imgURI = $scope.photoGame;
+   // $scope.imgURI = null;
+    $scope.example = "";
+    
+    $scope.myfile = {};
+    $scope.isWeb = (ionic.Platform.platform() == "win32");
+    $scope.isAndroid = (ionic.Platform.platform() != "win32");
     
      $scope.takePicture = function() {
-        var options = { 
+       if (ionic.Platform.platform() != "win32"){ // If the platform is Android than we take a picture
+         var options = { 
             quality : 75, 
             destinationType : Camera.DestinationType.DATA_URL, 
             sourceType : Camera.PictureSourceType.CAMERA, 
@@ -281,8 +296,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.currentLocation();
         }, function(err) {
             // An error occured. Show a message to the user
-        });
+        }); 
+       } else {   // If platform is Web than we are able to upload from the local storage
+             $scope.currentLocation();
+         }
     };
+    
     
     $scope.choosePhoto = function () {
                   var options = {
@@ -338,7 +357,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Task.addIndexes($scope.navactivities.indexOf(act), pointIndex);
     };
 
-    //Addition of a TASK to a ACTIVITY POINT
+    //Addition of a TASK to an ACTIVITY POINT
     $scope.addQAtask = function () {
         Task.addType("QuestionAnswer");
     };
@@ -346,9 +365,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Task.addType("GeoReference");
     };
 
-    $scope.submitGRTask = function () {
+    //Submit task when running of Windows
+    $scope.submitGRTask = function (uploadedPhoto) { 
+        $scope.imgURI = "data:image/jpeg;base64," + uploadedPhoto.base64;
+        
         Task.addPhoto($scope.imgURI);
-
         Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
 
         $scope.task = Task.getTask();
@@ -366,9 +387,33 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicHistory.goBack();
         Task.clearTask();
     };
+    
+    // Submit task for Android device
+    $scope.submitGRTaskAndroid = function () { 
+        Task.addPhoto($scope.imgURI);
+        Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
+
+        $scope.task = Task.getTask();
+        $scope.currentActIndex = Task.getActIndex();
+        $scope.currentPointIndex = Task.getPointIndex();
+
+        //Add created task to the choosen activity point
+        $scope.navactivities[$scope.currentActIndex].points[$scope.currentPointIndex].tasks.push($scope.task);
+
+        //Clear the scope and get back to the new game creation menu
+        $scope.task = {};
+        Task.clearTask();
+        $scope.currentActIndex = null;
+        $scope.currentPointIndex = null;
+        $ionicHistory.goBack();
+        Task.clearTask();
+    };
+    
 
     $scope.cancelGRTask = function () {
         $scope.task = {};
+        $scope.imgURI = null;
+        
         Task.clearTask();
         $scope.currentActIndex = null;
         $scope.currentPointIndex = null;

@@ -1,3 +1,5 @@
+
+
 /* NEW HOME PAGE ---------------------------------------- */
 
 .person-type {
@@ -366,6 +368,21 @@
 }
 
 /* Georefence task creation -------------------------- */
+.photoPC{
+    position: absolute;
+    left:40%;
+    display: block;
+}
+
+.photoPC h2{
+    letter-spacing: 0.04em;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    color: black;
+    font-family: 'RobotoDraft', sans-serif;
+    font-size: 25;
+}
+
 
 .georef {
     height: 100%;
@@ -374,6 +391,7 @@
 }
 
 /* step 1*/
+
 
 .georef .georef_step1 {
     height: 60%;
@@ -384,8 +402,8 @@
 .georef .georef_step1 img{
     heigh: 300px;
     width: 300px;
-    left:30%;
-    top:20%;
+    left:40%;
+    top:25%;
     position: absolute;
 }
 

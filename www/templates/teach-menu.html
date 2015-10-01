@@ -10,7 +10,15 @@
                 <div class="item item-avatar game-desc">
                     <img src="./img/navigation.png">
                     <h2>{{item.name}}</h2>
-                    <p>Difficulty: {{item.difficulty}}</p>
+                    <div style = "display:inline-flex;">
+                        <span class="input-label">Difficulty: </span>
+                  <i class = {{item.diff[0]}} style="font-size:2em;color:#03A9F4;"></i>
+                  <i class = {{item.diff[1]}} style="font-size:2em;color:#03A9F4;"></i>
+                  <i class = {{item.diff[2]}} style="font-size:2em;color:#2196F3;"></i>
+                  <i class = {{item.diff[3]}} style="font-size:2em;color:#2196F3;"></i>
+                  <i class = {{item.diff[4]}} style="font-size:2em;color:#2196F3;"></i>
+                    </div>
+          </span>
                 </div>
                 <div class="item item-body game-desc">
                    <span>
