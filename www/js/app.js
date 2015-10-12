@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','naif.base64','leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova'])
+angular.module('starter', ['ionic','naif.base64','pascalprecht.translate','leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,6 +22,13 @@ angular.module('starter', ['ionic','naif.base64','leaflet-directive', 'ionic-mat
             }
         });
     })
+.config(function($stateProvider, $urlRouterProvider, $translateProvider){
+    for(lang in translations){
+		$translateProvider.translations(lang, translations[lang]);
+	}
+
+	$translateProvider.preferredLanguage('en');
+})
 
 .config(function ($stateProvider, $urlRouterProvider) {
 

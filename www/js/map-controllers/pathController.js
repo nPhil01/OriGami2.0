@@ -1,4 +1,3 @@
-
 angular.module('starter').controller('pathController',[ '$scope','$ionicModal', 
     function(
       $scope,
