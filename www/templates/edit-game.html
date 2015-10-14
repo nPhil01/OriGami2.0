@@ -1,26 +1,26 @@
 <ion-modal-view>
   <ion-header-bar class="bar-positive">
 
-      <h1 class="title">Edit Game</h1>
+      <h1 class="title">{{'edit_game' | translate}}</h1>
   </ion-header-bar>
 
   <ion-content class="padding" style = "background-color:#80DEEA">
 
     <form name="Form" class = "form-background">
         <label class="item item-input input-info">
-        <span class="input-label">Game Title</span>
+        <span class="input-label">{{'game_title' | translate}}</span>
         <input type="text" ng-model="editedGame.name">
       </label>
       <label class="item item-input input-info">
-        <span class="input-label">Game Description</span>
+        <span class="input-label">{{'game_description' | translate}}</span>
         <input type="text"  ng-model = "editedGame.description">
       </label>
       <label class="item item-input input-info">
-        <span class="input-label">Time of completion</span>
+        <span class="input-label">{{'time_compl' | translate}}</span>
         <input type="text"  ng-model = "editedGame.timecompl">
       </label>
       <label class="item item-input input-info">
-        <span class="input-label">Difficulty</span>
+        <span class="input-label">{{'difficulty' | translate}}</span>
         <input type="text"  ng-model = "editedGame.difficulty">
       </label>
         

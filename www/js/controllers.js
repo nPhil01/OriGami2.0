@@ -3,21 +3,21 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 .controller('HomeCtrl', function ($scope) {})
 
 .controller('GamesCtrl', function ($rootScope, $scope, $http, $location,
-    $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory) {
+    $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory, $translate) {
 
     // Info Popups --------------------------------------
     $scope.showPathInfo = function () {
         var alertPopup = $ionicPopup.alert({
-            title: 'Find destination',
+            title:  $translate.instant('find_destination'),
             /* template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'*/
-            template: 'Put longer tap on map to add point'
+            template: $translate.instant('put_longer_tap')
         });
     };
 
     $scope.showAidInfo = function () {
         var alertPopup = $ionicPopup.alert({
-            title: 'Follow route',
-            template: 'Put longer tap on map to add point'
+            title: $translate.instant('follow_route'),
+            template: $translate.instant('put_longer_tap')
                 //template: 'Navigators follow a trail to the destination. Less cognitive effort.'
         });
     };
@@ -58,8 +58,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     }).error(function (data, status, headers, config) {
         $rootScope.notify(
-            "Oops something went wrong!! Please try again later");
-        console.log("something was wrong");
+            $translate.instant('oops_wrong'));
+        console.log($translate.instant('oops_wrong'));
     });
 
     //Selected game
@@ -105,7 +105,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 })
 
-.controller('TeacherCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window, $ionicHistory) {
+.controller('TeacherCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window, $ionicHistory, $translate) {
     // List of all available games fetched from the server
     $scope.list = [];
     $scope.editedGame = {};
@@ -131,8 +131,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     }).error(function (data, status, headers, config) {
         $rootScope.notify(
-            "Oops something went wrong!! Please try again later");
-        console.log("something was wrong");
+            $translate.instant('oops_wrong'));
     });
     
     
@@ -143,8 +142,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $rootScope.hide();
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
-                    "Oops something went wrong!! Please try again later");
-                console.log("fail");
+                    $translate.instant('oops_wrong'));
             });
         $scope.list.splice($scope.list.indexOf(item), 1);
     };
@@ -167,8 +165,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 console.log($scope.deleteGame);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
-                    "Oops something went wrong!! Please try again later");
-                alert("fail");
+                    $translate.instant('oops_wrong'));
             });
         $scope.editedGame = $scope.list[$scope.list.indexOf(item)];
         $scope.navactivities = $scope.editedGame.activities;
@@ -197,8 +194,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $scope.list.splice($scope.list.indexOf($scope.deleteGame), 1);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
-                    "Oops something went wrong!! Please try again later");
-                alert("fail");
+                   $translate.instant('oops_wrong'));
             });
 
         API.saveItem($scope.editedGame)
@@ -208,7 +204,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             })
             .error(function (data, status, headers, config) {
                 $rootScope.hide();
-                $rootScope.notify("Oops something went wrong!! Please try again later");
+                 $translate.instant('oops_wrong');
             });
     };
 
@@ -217,7 +213,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 // Controller which controls new GAME creation
 .controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams','$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
-    $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera) {
+    $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera,$translate) {
     
     $scope.newgame = {}; //General description of the game
     $scope.isAndroid = false;  // Platform : Android or Web
@@ -257,7 +253,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $scope.map.center.lat = position.coords.latitude;
                 $scope.map.center.lng = position.coords.longitude;
                 $scope.map.center.zoom = 15;
-                $scope.map.center.message = "Photo was taken from here";
+                $scope.map.center.message = $translate.instant('oops_wrong');
                 $scope.map.markers.push($scope.map.center);
 
             }, function (err) {
@@ -534,7 +530,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     var handleNextActivity = function () {
         var index = GameState.todoActivityIndex(); // Get next pending activity
         if (index == GameState.ERR_NO_ACTIVITIES) {
-            abortGame("The selected game has no activities to play. How about playing another game?");
+            abortGame($translate.instant('selected_game'));
         } else if (GameState.gameOver()) {
             console.log("GAME OVER!!!");
             endGame();
@@ -920,11 +916,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             null,
             function (err) {
                 $ionicLoading.show({
-                    template: 'Error occurred when geolocating position',
+                    template: $translate.instant('error_geolocat'),
                     noBackdrop: true,
                     duration: 1000
                 });
-                console.log("Error occurred when watching position");
+                console.log($translate.instant('error_watching'));
                 console.log(err);
             },
             function (position) {
@@ -943,7 +939,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
             if (showInfo) {
                 $ionicLoading.show({
-                    template: 'Now using Geolocation! Map panning disabled',
+                    template: $translate.instant('now_using_geo'),
                     noBackdrop: true,
                     duration: 2000
                 });

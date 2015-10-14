@@ -1,10 +1,10 @@
 <ion-modal-view>
   <ion-header-bar class="">
 
-    <h1 class="title">Add Several Points</h1>
+    <h1 class="title">{{'add_points' | translate}}</h1>
 
     <div class="buttons">
-      <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+      <button class="button button-clear" ng-click="modal.hide()">{{'cancel' | translate}}</button>
     </div>
 
   </ion-header-bar>
@@ -16,11 +16,11 @@
       <div class="list">
 
         <label class="item item-input">
-          <span class="input-label">Name</span>
+          <span class="input-label">{{'name' | translate}}</span>
           <input type="text" ng-model="newWaypoint.name" placeholder="" ng-minlength="1" ng-maxlength="10" required></label>
          <label class="item item-input"> 
-          <span class="input-label">Instructions</span>
-          <input type="text" ng-model="newWaypoint.description" placeholder="Name of destination" ng-minlength="1" ng-maxlength="1000" required>
+          <span class="input-label">{{'instructions' | translate}}</span>
+          <input type="text" ng-model="newWaypoint.description" placeholder="{{'name_destination' | translate}}" ng-minlength="1" ng-maxlength="1000" required>
         </label>
 
         <div class="item tabs tabs-secondary tabs-icon-left">
@@ -34,8 +34,8 @@
       </div>
 
       <div class="padding">
-          <button class="button button-block button-balanced" ng-click="saveAidPoint()">Save</button>
-          <button class="button button-block button-balanced" ng-click="closeModal()">Back</button>     
+          <button class="button button-block button-balanced" ng-click="saveAidPoint()">{{'save' | translate}}</button>
+          <button class="button button-block button-balanced" ng-click="closeModal()">{{'back' | translate}}</button>     
       </div>
 
     </form>

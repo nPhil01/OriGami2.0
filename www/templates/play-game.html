@@ -7,7 +7,7 @@
     <script id="gameinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
-                <h1 class="title">Game Info</h1>
+                <h1 class="title">{{'game_info' | translate}}</h1>
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#fec00f">
@@ -15,31 +15,31 @@
                     <div class="information">
                         <div class="info-icon">
                             <i class="ion-android-map"></i>
-                            <h1>Step 1</h1>
+                            <h1>{{'step' | translate}} 1</h1>
                         </div>
-                        <p>Plan your route to destination</p>
+                        <p>{{'plan_route' | translate}}</p>
                     </div>
                 </div>
 
                 <div class="plan-route" style="background-color:#673AB7;">
                     <div class="information">
                         <i class="ion-android-walk"></i>
-                        <h1>Step 2</h1>
-                        <p>Start heading towards the destination</p>
+                        <h1>{{'step' | translate}} 2</h1>
+                        <p>{{'start_heading' | translate}}</p>
                     </div>
                 </div>
 
                 <div class="plan-route">
                     <div class="information">
                         <i class="ion-happy-outline"></i>
-                        <h1>Keep in mind: </h1>
-                        <p>The smiley indicates whether you are headed in the right direction</p>
+                        <h1>{{'keep_mind' | translate}} </h1>
+                        <p>{{'smiley_indicates' | translate}}</p>
                     </div>
                 </div>
             </ion-content>
 
             <ion-footer-bar class="bar-dark" ng-click="modal.remove()">
-                <p class="title">Start Playing!</p>
+                <p class="title">{{'start_playing' | translate}}</p>
             </ion-footer-bar>
 
         </ion-modal-view>
@@ -49,7 +49,7 @@
     <script id="waypointinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
-                <h1 class="title">Next Waypoint</h1>
+                <h1 class="title">{{'next_point' | translate}}</h1>
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#673AB7">
@@ -98,15 +98,15 @@
     <script id="gameover-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
-                <h1 class="title">Game Over!</h1>
+                <h1 class="title">{{'game_over' | translate}}</h1>
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#673AB7">
                 <div class="plan-route" style="background-color:#673AB7">
                     <div class="information">
                         <i class="ion-flag"></i>
-                        <h1>Congratulations!</h1>
-                        <p> You have successfully completed the game </p>
+                        <h1>{{'congrat' | translate}}</h1>
+                        <p> {{'you_completed' | translate}} </p>
                     </div>
                 </div>
             </ion-content>
@@ -121,14 +121,14 @@
     <script id="error-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
-                <h1 class="title">Error!</h1>
+                <h1 class="title">{{'error' | translate}}</h1>
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#673AB7">
                 <div class="plan-route" style="background-color:#673AB7">
                     <div class="information">
                         <i class="ion-alert-circled"></i>
-                        <h1>Error!</h1>
+                        <h1>{{'error' | translate}}</h1>
                         <p> {{errorMsg}} </p>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
     <script id="georef-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
-                <h1 class="title">Geo-Referencing</h1>
+                <h1 class="title">{{'geo_refer' | translate}}</h1>
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#673AB7">
@@ -152,8 +152,8 @@
                     <div class="information">
                         <!--<i class="ion-images"></i> -->
                         <img src="{{geoRefPhoto}}">
-                        <h1>Picture</h1>
-                        <p>Where was the above picture taken? Mark it on the map.</p>
+                        <h1>{{'picture' | translate}}</h1>
+                        <p>{{'picture_taken' | translate}}</p>
                     </div>
                 </div>
             </ion-content>
@@ -167,7 +167,7 @@
     <script id="georef-result-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar-positive">
-                <h1 class="title">Geo-Referencing</h1>
+                <h1 class="title">{{'geo_refer' | translate}}</h1>
             </ion-header-bar>
 
             <ion-content style="height: 100%; background-color:#673AB7">
