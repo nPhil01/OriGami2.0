@@ -60,10 +60,10 @@ var translations = {
 	"de": {
 		"appinfo": "Sprachen"
 	},
-    "prt": {
+    "esp": {
         "appinfo": "Línguas"
     },
-    "esp":{
+    "prt":{
         "appinfo": "Línguas",
         "start_header_stud": "OriGami para Alunos",
         "start_info_stud": "Aprende Geografia através da pesquisa de lugares no mapa, melhorando as tuas notas, vivendo experiências inesquecíveis... e deixando os teus pais realmente orgulhosos!",
