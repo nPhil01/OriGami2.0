@@ -5,32 +5,33 @@
   <ion-content style = "background-color:#80DEEA; height: 100%;">
       <div class = "lang-tab">
           <div class="information">
-              <i class="icon ion-chatbubble"></i>
-              <h1>Choose the Language</h1>
+              <ng-md-icon icon = "{{icon}}" style = "fill: white;" size = "70"></ng-md-icon>
+              <h1 style = "font-size: 28px;">Choose the Language</h1>
+              <h1 style = "font-size: 15px;">Current language: <b>{{currentLanguage}}</b></h1>
           </div>
       </div>
       
       <div class="list animate-fade-slide-in-right" style = "background-color:#80DEEA; height:100%; position:relative;">
           <a style = "position:absolute;left:15%;top:10%;width:50%;height:50%;" ng-click = "changeLanguage('de')">
               <img src = "./img/icons/Germany.png">
-              <h2>German</h2>
+              
           </a>
           <a style = "position:absolute;right:15%;top:10%;" ng-click = "changeLanguage('prt')">
               <img src = "./img/icons/Portugal.png">
-              <h2>Portuguese</h2>
+          
           </a>
-          <a style = "position:absolute;left:15%;top:30%;" ng-click = "changeLanguage('esp')">
+          <a style = "position:absolute;left:15%;top:40%;" ng-click = "changeLanguage('esp')">
               <img src = "./img/icons/Spain.png">
-              <h2>Spanish</h2>
+            
           </a>
-          <a div style = "position:absolute;right:15%;top:30%;" ng-click = "changeLanguage('en')">
+          <a div style = "position:absolute;right:15%;top:40%;" ng-click = "changeLanguage('en')">
               <img src = "./img/icons/United-Kingdom.png">
-              <h2>English</h2>
+              
           </a>
           
-          <a div style = "position:absolute;right:46%;top:20%;" ng-click = "changeLanguage('cat')">
-              <img src = "./img/icons/United-Kingdom.png">
-              <h2>Català</h2>
+          <a div style = "position:absolute;right:41%;top:25%;" ng-click = "changeLanguage('cat')">
+              <img src = "./img/icons/Spain.png">
+             
           </a>
           
       </div>
