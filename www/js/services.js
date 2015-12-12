@@ -2,6 +2,25 @@ angular.module('starter.services', [])
 
 .value('Server', 'giv-origami.uni-muenster.de:8000')
 
+.factory('Edit', function() {
+    var editedGame = {};
+    var game = {};
+    
+    editedGame.pushGame = function(value){
+        game = value;
+    };
+    
+    editedGame.getGame = function(){
+      return game;  
+    };
+    
+    editedGame.resetGame = function(){
+        game = null;
+    };
+    
+    return editedGame;    
+}) 
+
 .factory('Data', function () {
 
     var actService = {};

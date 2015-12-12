@@ -1,0 +1,16 @@
+/* Game edition */
+
+.edit{
+   background-color: #80DEEA;
+    height: 100%;
+    position: relative;
+}
+
+.edit .edit-header{
+    position: relative;
+    text-align: center;
+}
+
+.edit .edit-body{
+    display: flex;
+}

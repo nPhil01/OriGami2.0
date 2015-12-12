@@ -1,46 +1,49 @@
 <ion-view cache-view="false" align-title="center" view-title="Games">
     <ion-nav-bar class="bar-positive">
-    <ion-nav-back-button></ion-nav-back-button>
-  </ion-nav-bar>
-  <ion-content style = "background-color:#80DEEA; ">
-      <!-- Here are games, which were created before-->
-      <!-- The only difference is that teacher can change settings of the game and create new games -->
-      
-       <div class="list card"  style = "background-color:#FFEB3B" ng-repeat="item in list">
-                <div class="item item-avatar game-desc">
-                    <img src="./img/navigation.png">
-                    <h2>{{item.name}}</h2>
-                    <div style = "display:inline-flex;">
-                        <span class="input-label">{{'difficulty' | translate}}: </span>
-                  <i class = {{item.diff[0]}} style="font-size:2em;color:#03A9F4;"></i>
-                  <i class = {{item.diff[1]}} style="font-size:2em;color:#03A9F4;"></i>
-                  <i class = {{item.diff[2]}} style="font-size:2em;color:#2196F3;"></i>
-                  <i class = {{item.diff[3]}} style="font-size:2em;color:#2196F3;"></i>
-                  <i class = {{item.diff[4]}} style="font-size:2em;color:#2196F3;"></i>
-                    </div>
-          </span>
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content style="background-color:#80DEEA; ">
+
+
+        <!-- Here are games, which were created before-->
+        <!-- The only difference is that teacher can change settings of the game and create new games -->
+        <div class="list card" style="background-color:#FFEB3B" ng-repeat="item in list">
+            <div class="item item-avatar game-desc">
+                <img src="./img/navigation.png">
+                <h2>{{item.name}}</h2>
+                <div style="display:inline-flex;">
+                    <span class="input-label">{{'difficulty' | translate}}: </span>
+                    <i class={ {item.diff[0]}} style="font-size:2em;color:#03A9F4;"></i>
+                    <i class={ {item.diff[1]}} style="font-size:2em;color:#03A9F4;"></i>
+                    <i class={ {item.diff[2]}} style="font-size:2em;color:#2196F3;"></i>
+                    <i class={ {item.diff[3]}} style="font-size:2em;color:#2196F3;"></i>
+                    <i class={ {item.diff[4]}} style="font-size:2em;color:#2196F3;"></i>
                 </div>
-                <div class="item item-body game-desc">
-                   <span>
+                </span>
+            </div>
+            <div class="item item-body game-desc">
+                <span>
                        {{item.description}}
                     </span>
-                    <p>
-                        <a class="subdued"> <i class="icon ion-clock"></i>  {{item.timecompl}}</a>
-                        <i class="icon ion-trash-a" ng-click="deleteItem(item,'{{item.name}}')">  Delete</i>
-                        <i class="icon ion-edit" ng-click = "editItem(item)">{{'edit' | translate}}</i>
-                    </p>
-                </div>
+                <p>
+                    <a class="subdued"> <i class="icon ion-clock"></i> {{item.timecompl}}</a>
+                    <i class="icon ion-trash-a" ng-click="deleteItem(item,'{{item.name}}')">  Delete</i>
+                   <!-- <i class="icon ion-edit" ng-click="editItem(item)" ui-sref="tab.newgame">{{'edit' | translate}}</i> 
+                    <i class="icon ion-edit"  ui-sref="tab.editgame({gameId: item._id})" ng-click = "editItem(item)">{{'edit' | translate}}</i>  -->
+                    <i class="icon ion-edit" ui-sref="tab.newgame" ng-click = "editItem(item)">{{'edit' | translate}}</i>
+                </p>
             </div>
-           
-           
-   <div class="card" >
-      <div class="item item-text-wrap" ng-show="noData">
-         <span>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap" ng-show="noData">
+                <span>
             There are no games created at the moment.
          </span>
-      </div>
-    </div>
-          <button id="fab" class="button button-positive icon ion-plus button-fab " ng-click = "createGame()" ui-sref="tab.newgame" style = "position: absolute; bottom:2%; right: 2%;">
-              <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click = "cancelGame()" style = "position: absolute; bottom: 2%; left: 2%;"></button>
-  </ion-content>
+            </div>
+        </div>
+    
+        <button id="fab" class="button button-positive icon ion-plus button-fab " ng-click="createGame()" ui-sref="tab.newgame" style="position: absolute; bottom:2%; right: 2%;">
+            <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click="cancelGame()" style="position: absolute; bottom: 2%; left: 2%;"></button>
+    </ion-content>
 </ion-view>

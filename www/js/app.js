@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','naif.base64','ngMdIcons','pascalprecht.translate','leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova'])
+angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 'leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,13 +22,13 @@ angular.module('starter', ['ionic','naif.base64','ngMdIcons','pascalprecht.trans
             }
         });
     })
-.config(function($stateProvider, $urlRouterProvider, $translateProvider){
-    for(lang in translations){
-		$translateProvider.translations(lang, translations[lang]);
-	}
+    .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+        for (lang in translations) {
+            $translateProvider.translations(lang, translations[lang]);
+        }
 
-	$translateProvider.preferredLanguage('en');
-})
+        $translateProvider.preferredLanguage('en');
+    })
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -54,7 +54,7 @@ angular.module('starter', ['ionic','naif.base64','ngMdIcons','pascalprecht.trans
                 }
             }
         })
-    .state('tab.languages', {
+        .state('tab.languages', {
             url: '/languages',
             views: {
                 'languages-tab': {
@@ -86,6 +86,15 @@ angular.module('starter', ['ionic','naif.base64','ngMdIcons','pascalprecht.trans
             views: {
                 'tab-home': {
                     templateUrl: 'templates/teach-menu.html',
+                    controller: 'TeacherCtrl'
+                }
+            }
+        })
+        .state('tab.editgame', {
+            url: '/editgame/:gameId',
+            views: {
+                'tab-home': {
+                    templateUrl: 'templates/game-edition.html',
                     controller: 'TeacherCtrl'
                 }
             }
@@ -137,8 +146,8 @@ angular.module('starter', ['ionic','naif.base64','ngMdIcons','pascalprecht.trans
                 }
             }
         })
-    // States, responsible for TASK creation (Either 
-    .state('tab.georef', {
+        // States, responsible for TASK creation
+        .state('tab.georef', {
             url: "/georef",
             views: {
                 'tab-home': {
@@ -147,7 +156,7 @@ angular.module('starter', ['ionic','naif.base64','ngMdIcons','pascalprecht.trans
                 }
             }
         })
-    .state('tab.quest', {
+        .state('tab.quest', {
             url: "/quest",
             views: {
                 'tab-home': {

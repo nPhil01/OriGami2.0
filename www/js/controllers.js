@@ -50,7 +50,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.games.push(data[i]);
             $scope.games[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
         }
-        console.log($scope.games);
+        
         if ($scope.games.length == 0) {
             $scope.noData = true;
         } else {
@@ -105,14 +105,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 })
 
-.controller('TeacherCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window, $ionicHistory, $translate) {
+.controller('TeacherCtrl', function ($rootScope, $scope, API, Edit, $timeout, $ionicModal, $window, $ionicHistory, $translate) {
     // List of all available games fetched from the server
     $scope.list = [];
     $scope.editedGame = {};
     $scope.deleteGame = {};
 
     $scope.createGame = function () {
-        $scope.modal.remove();
+       // $scope.modal.remove();
+        Edit.resetGame();
     };
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
@@ -123,7 +124,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.list.push(data[i]);
             $scope.list[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
         }
-        console.log($scope.list);
         if ($scope.list.length == 0) {
             $scope.noData = true;
         } else {
@@ -150,26 +150,29 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
     // EDIT GAME PART ----------------------------------
-    $ionicModal.fromTemplateUrl('templates/edit-game.html', {
+  /*  $ionicModal.fromTemplateUrl('templates/edit-game.html', {
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function (modal) {
         $scope.modal = modal;
     });
 
+    */
+    
     $scope.editItem = function (item) {
         $scope.navactivities = [];
         API.getOne(item.name)
             .success(function (data, status, headers, config) {
                 $scope.deleteGame = data.slice()[0];
-                console.log($scope.deleteGame);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
-                    $translate.instant('oops_wrong'));
+                $translate.instant('oops_wrong'));
             });
+        
         $scope.editedGame = $scope.list[$scope.list.indexOf(item)];
         $scope.navactivities = $scope.editedGame.activities;
-        $scope.modal.show();
+        
+       Edit.pushGame($scope.editedGame);
     };
 
 
@@ -212,10 +215,40 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams','$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
-    $ionicModal, API, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera,$translate) {
+.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data','Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams','$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
+    $ionicModal, API, Edit, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera,$translate) {
     
+    /* Game Parameters ----- */
+    $scope.currentAction = "New Game";
     $scope.newgame = {}; //General description of the game
+    $scope.navactivities = []; // List of activities and types
+    $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"});
+
+    $scope.newgame.difficulty = 0;
+    
+   // Rate difficulty of the game in stars
+     $scope.rateGame = function (difficulty) {
+         for (var i = 0; i <= difficulty; i++){
+             $scope.diff[i] = "ion-ios-star";
+         }
+       $scope.newgame.difficulty = difficulty + 1;
+    };
+    
+  // Check, whether we are CREATING or EDITING new game
+     if (Edit.getGame() != null){
+        $scope.currentAction = "Edit Game";
+          $scope.newgame = {
+            title: Edit.getGame().name,
+            description: Edit.getGame().description,
+            time: Edit.getGame().timecompl,
+            difficulty: Edit.getGame().difficulty
+         };
+          $scope.navactivities = Edit.getGame().activities;
+          $scope.rateGame(Edit.getGame().difficulty - 1);
+    } else {
+         $scope.navactivities = Data.getAct();
+    }
+    
     $scope.isAndroid = false;  // Platform : Android or Web
     
     $scope.example = "";
@@ -329,9 +362,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Data.addType("Follow route");
     };
 
-    // List of activities and types
-    $scope.navactivities = Data.getAct();
-    // console.log($scope.navactivities);
 
     //Collapsed list with tasks for each activity
     $scope.toggleActivity = function (activity) {
@@ -452,20 +482,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Data.clearAct();
         $ionicHistory.goBack();
     };
-    
-    
-     // Rate difficulty of the game in stars
-    $scope.diff = [];
-    $scope.newgame.difficulty = 0;
-    $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"})
-    
-     $scope.rateGame = function (difficulty) {
-         $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"})
-         for (var i = 0; i <= difficulty; i++){
-             $scope.diff[i] = "ion-ios-star";
-         }
-         $scope.newgame.difficulty = difficulty + 1;
-    };
+
 }])
 
 
