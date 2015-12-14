@@ -1,16 +1,47 @@
-<ion-view view-title="App information">
-    <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button></ion-nav-back-button>
-    </ion-nav-bar>
-    <ion-content style="background-color:#80DEEA; height: 100%;">
-        <div class="row">
-            <div class="col">
-                <label class="item item-input text">
-                    <textarea placeholder="" rows="1" ng-Required="true" name="description"></textarea>
+<ion-view view-title="Question-Answer Game" style="background-color:#FF9800; height: 100%; padding: 0; margin:0; ">
+    <ion-content>
+        <div class="quest-tab">
+            <div class="information">
+                <i class="icon ion-help"></i>
+                <h2>Question</h2>
+                <h1 style="font-size:15px;"></h1>
+                <div class="question">
+                    <textarea rows="4"> </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="answers">
+            <div class="answer">
+                <label class="item item-input item-floating-label">
+                    <input type="text" placeholder="Answer 1">
+                    <i class="icon ion-checkmark-round"></i>
+                </label>
+            </div>
+
+            <div class="answer">
+                <label class="item item-input item-floating-label">
+                    <input type="text" placeholder="Answer 2">
+                    <i class="icon ion-close-round"></i>
+                </label>
+            </div>
+
+            <div class="answer">
+                <label class="item item-input item-floating-label">
+                    <input type="text" placeholder="Answer 3">
+                    <i class="icon ion-close-round"></i>
+                </label>
+            </div>
+
+            <div class="answer">
+                <label class="item item-input item-floating-label">
+                    <input type="text" placeholder="Answer 4">
+                    <i class="icon ion-close-round"></i>
                 </label>
             </div>
         </div>
-        
-        
+
+        <button id="fab" class="button button-positive icon ion-plus button-fab " ng-click="createGame()" ui-sref="tab.newgame" style="position: absolute; bottom:5%; right: 2%;">
+            <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click="cancelGame()" style="position: absolute; bottom: 5%; left: 2%;"></button>
     </ion-content>
 </ion-view>

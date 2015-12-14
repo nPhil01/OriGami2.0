@@ -282,88 +282,62 @@
 }
 
 /* Page where user chooses task types ---------------------------------------- */
-
 .task-type {
     background-color: #80DEEA;
+    display: block;
     height: 100%;
-    position: relative;
 }
 .task-type .type1 {
-    background-color: #673AB7;
+    background-color: #3F51B5;
     height: 50%;
+}
+.task-type .type1 .content {
     position: relative;
+    top:15%;
 }
-.task-type .type1 .type-picture {
-    height: 100%;
-    position: relative;
+.task-type .type1 .content img {
+     position: relative;
+    top:20%;
+     display: block;
+    margin: 0 auto;
 }
-.task-type .type1 .type-picture img {
-    top: 35%;
-    left: 5%;
-    position: absolute;
-}
-.task-type .type1 .type-picture .info {
-    height: 100%;
-    left: 30%;
-    top: 35%;
-    position: absolute;
-    letter-spacing: 0.04em;
-    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-    text-align: center;
-    font-style: normal;
-    display: block;
-}
-.task-type .type1 .type-picture .info h2 {
+.task-type .type1 .content h2 {
     color: white;
+    text-align: center;
+    margin-left: auto; margin-right: auto; 
     font-family: 'RobotoDraft', sans-serif;
 }
-.task-type .type1 .type-picture .info p {
+.task-type .type1 .content p {
     color: white;
+    text-align: center;
+    margin-left: auto; margin-right: auto; 
     font-family: 'Roboto', sans-serif;
 }
-.task-type .type1 .type-picture .next {
-    right: 5%;
-    bottom: 5%;
-    position: absolute;
-}
+
+
 .task-type .type2 {
+    background-color: #4CAF50;
     height: 50%;
-    background-color: #fec00f;
 }
-.task-type .type2 .type-picture {
-    height: 100%;
+.task-type .type2 .content {
     position: relative;
+    top: 15%;
 }
-.task-type .type2 .type-picture img {
-    top: 25%;
-    left: 5%;
-    position: absolute;
+.task-type .type2 .content  img {
+     display: block;
+    margin: 0 auto;
 }
-.task-type .type2 .type-picture .info {
-    height: 100%;
-    left: 30%;
-    top: 25%;
-    position: absolute;
-    letter-spacing: 0.04em;
-    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+.task-type .type2 .content h2 {
+    color: white;
     text-align: center;
-    font-style: normal;
-    display: block;
-}
-.task-type .type2 .type-picture .info h2 {
-    color: black;
+    margin-left: auto; margin-right: auto; 
     font-family: 'RobotoDraft', sans-serif;
 }
-.task-type .type2 .type-picture .info p {
-    color: black;
+.task-type .type2 .content p {
+    color: white;
+    text-align: center;
+    margin-left: auto; margin-right: auto; 
     font-family: 'Roboto', sans-serif;
-}
-.task-type .type2 .type-picture .next {
-    right: 5%;
-    bottom: 5%;
-    position: absolute;
 }
 
 /* Georefence task creation -------------------------- */

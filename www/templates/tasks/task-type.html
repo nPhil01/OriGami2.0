@@ -1,42 +1,24 @@
-<ion-view view-title="Start Menu">
-    <ion-nav-bar align-title = "right" class="bar-positive">
-    <ion-nav-back-button></ion-nav-back-button>
-  </ion-nav-bar>
-  <ion-content style = "background-color:#80DEEA">
-    <div class = "task-type">
-        
-        <a ng-click = "addQAtask()" ui-sref="tab.quest">
-            <div class="type1">
-            <div class="type-picture">
-                <img src = "./img/icons/Checklist.png"/>
-                <div class="info">
-                     <h2>Question - Answer Game</h2>
-                     <p>{{'ask_students' | translate}}</p>
+<ion-view view-title="Choose Game Type" style="background-color:#90CAF9; height: 100%; padding: 0; margin:0; ">
+    <ion-content style="background-color:#80DEEA">
+        <div class="task-type">
+
+            <div ng-click="addQAtask()" ui-sref="tab.quest" class="type1">
+                <div class = "content">
+                    <img src="./img/icons/Chat-2.png" />
+                    <h2>Question - Answer Game</h2>
+                    <p>{{'ask_students' | translate}}</p>
                 </div>
-                <!-- <button class="button button-fab next button-calm icon ion-plus waves-effect waves-button waves-light" 
-                       ng-click = "addQAtask()"  ui-sref="tab.quest"></button>  -->
             </div>
-        </div>
-        </a>
-        
-        <a  ng-click = "addGRtask()" ui-sref="tab.georef">
-             <div  class="type2">
-             <div class="type-picture">
-                <img src = "./img/icons/Map.png"/>
-                <div class="info">
-                     <h2>GeoReference Game</h2>
-                     <p>{{'take_picture' | translate}}</p>
+
+            <div ng-click="addGRtask()" ui-sref="tab.georef" class="type2">
+                 <div class = "content">
+                    <img src="./img/icons/Map.png" />
+                    <h2>GeoReference Game</h2>
+                    <p>{{'take_picture' | translate}}</p>
                 </div>
-                <!-- <button class="button button-fab next button-calm icon ion-plus waves-effect waves-button waves-light"
- style = "position: absolute; bottom:2%; right: 2%;" ng-click = "addGRtask()" ui-sref="tab.georef"></button>  -->
             </div>
+
+            <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ui-sref="tab.newgame" style="position: absolute; bottom: 3%; left: 2%;"></button>
         </div>
-        </a>
-        
-         <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ui-sref="tab.newgame" style = "position: absolute; bottom: 2%; left: 2%;"></button>  
-        
-        
-    </div>
-  </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

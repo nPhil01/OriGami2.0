@@ -1,16 +1,72 @@
-/* Game edition */
-
-.edit{
-   background-color: #80DEEA;
-    height: 100%;
-    position: relative;
-}
-
-.edit .edit-header{
-    position: relative;
+/* Question-Answer Game type */
+.quest-tab {
+    height: 50%;
+    background-color: #03A9F4;
+    letter-spacing: 0.04em;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
     text-align: center;
+    font-style: normal;
+    display: block;
+    color: #fafafa;
+}
+.quest-tab .information {
+    position: relative;
+    top: 10%;
+}
+.quest-tab i {
+    font-size: 7em;
+}
+.quest-tab h1 {
+    font-size: 2em;
+    text-align: center;
+    color: white;
+}
+.quest-tab p {
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
 }
 
-.edit .edit-body{
-    display: flex;
+.quest-tab h2{
+    font-size: 2.5em;
+    text-align: center;
+    color: white;
+}
+
+.question {width: 70%; height: 100%;  margin-left: auto; margin-right: auto;  background: #BBDEFB; }
+.question textarea {
+    width: 100%; height: 100%; background: #FF9800; 
+    cols: 50;
+    letter-spacing: 0.04em;
+    font-size: 20px;
+    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    text-align: center;
+    font-style: normal;
+    display: block;
+}
+
+/* Answers */
+.answers{
+    position: relative;
+    top:3%;
+}
+
+.answer label{
+    background-color: #03A9F4;
+    width: 65%; 
+    margin-left: auto;
+    margin-right: auto;
+    display:flex;
+}
+
+.answer label input {
+    font-size: 15px;
+    color:white;
+}
+.answer label i {
+     color: #FFC107;
+     font-size: 2em;
+    position: relative;
+    right: 4%;
 }
