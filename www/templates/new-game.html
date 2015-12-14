@@ -52,7 +52,7 @@
         <div ng-repeat="act in navactivities">
           <ion-item class="item-positive item-icon-left item-icon-right assertive activity-new" ng-click="toggleActivity(act)" ng-class="{active: isActivityShown(act)}">
               <i class="icon" ng-class="isActivityShown(act) ? 'ion-minus' : 'ion-plus'"></i>
-               <p style="font-size:2em; height: 50%;">Activity: {{act.type}}</p>
+               <p style="font-size:2em; height: 50%;">{{act.type}}</p>
                <p>{{'number_points' | translate}}: {{act.points.length}}</p>
           </ion-item>
           <ion-item class="item-accordion" ng-repeat="item in act.points" ng-show="isActivityShown(act)">

@@ -8,7 +8,7 @@
 }
 .person-type .player {
     background-color: #3F51B5;
-    height: 50%;
+    height: 45%;
     position: relative;
 }
 .person-type .player .type-picture {
@@ -46,7 +46,7 @@
     position: absolute;
 }
 .person-type .teacher {
-    height: 50%;
+    height: 55%;
     background-color: #FF5752;
 }
 .person-type .teacher .type-picture {

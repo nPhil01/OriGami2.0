@@ -120,6 +120,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
     
     API.getAll().success(function (data, status, headers, config) {
+        console.log(data);
         for (var i = 0; i < data.length; i++) {
             $scope.list.push(data[i]);
             $scope.list[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
@@ -190,7 +191,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         /*First delete the existing game, then save new instance.
              Not a very elegant solution, but i want to sleep already.*/
 
-        console.log(JSON.stringify($scope.deleteGame) == JSON.stringify($scope.editedGame));
+      //  console.log(JSON.stringify($scope.deleteGame) == JSON.stringify($scope.editedGame));
         API.deleteItem($scope.deleteGame.name, $rootScope.getToken())
             .success(function (data, status, headers, config) {
                 $rootScope.hide();
@@ -228,6 +229,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     
    // Rate difficulty of the game in stars
      $scope.rateGame = function (difficulty) {
+          $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"});
          for (var i = 0; i <= difficulty; i++){
              $scope.diff[i] = "ion-ios-star";
          }
@@ -243,11 +245,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             time: Edit.getGame().timecompl,
             difficulty: Edit.getGame().difficulty
          };
-          $scope.navactivities = Edit.getGame().activities;
+         for(var i = 0; i < Edit.getGame().activities.length; i++){
+             Data.newAct( Edit.getGame().activities[i]);
+         }
           $scope.rateGame(Edit.getGame().difficulty - 1);
-    } else {
-         $scope.navactivities = Data.getAct();
-    }
+    } 
+    
+    
+    $scope.navactivities = Data.getAct();
     
     $scope.isAndroid = false;  // Platform : Android or Web
     
@@ -392,7 +397,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Task.addType("GeoReference");
     };
 
-    //Submit task when running of Windows
+    //Submit task when running on Windows
     $scope.submitGRTask = function (uploadedPhoto) { 
         $scope.imgURI = "data:image/jpeg;base64," + uploadedPhoto.base64;
         
@@ -446,12 +451,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.currentPointIndex = null;
         $ionicHistory.goBack();
     };
-
-
+    
+    
     // Two main buttons - one, which submits the complete game to the server and one, which cancels the entire progress of creation
     $scope.submitGame = function () {
       if ($scope.newgame.title != null){ // Check if the title is not empty 
          $scope.border = "black";
+          
         $scope.completeGame = {
             name: $scope.newgame.title,
             description: $scope.newgame.description,
@@ -459,12 +465,19 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             difficulty: $scope.newgame.difficulty,
             activities: $scope.navactivities
         };
-
+          
+     if(Edit.getGame() != null){
+          API.deleteItem(Edit.getGame().name, $rootScope.getToken())
+            .success(function (data, status, headers, config) {
+                $rootScope.hide();
+                //$scope.list.splice($scope.list.indexOf($scope.completeGame), 1);
+                
         API.saveItem($scope.completeGame)
             .success(function (data, status, headers, config) {
                 $rootScope.hide();
                 $rootScope.doRefresh(1);
                 $ionicHistory.goBack();
+            console.log("game is saved");
                 Data.clearAct();
             })
             .error(function (data, status, headers, config) {
@@ -473,6 +486,29 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $ionicHistory.goBack();
                 Data.clearAct();
             });
+              
+            }).error(function (data, status, headers, config) {
+                $rootScope.notify(
+                   $translate.instant('oops_wrong'));
+        });
+     } else {
+         
+          API.saveItem($scope.completeGame)
+            .success(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.doRefresh(1);
+                $ionicHistory.goBack();
+            console.log("game is saved");
+                Data.clearAct();
+            })
+            .error(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+                $ionicHistory.goBack();
+                Data.clearAct();
+            });
+     }    
+                    
         } else {
             $scope.border = "red";
         }
