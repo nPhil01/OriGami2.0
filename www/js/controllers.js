@@ -8,7 +8,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     // Info Popups --------------------------------------
     $scope.showPathInfo = function () {
         var alertPopup = $ionicPopup.alert({
-            title:  $translate.instant('find_destination'),
+            title: $translate.instant('find_destination'),
             /* template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'*/
             template: $translate.instant('put_longer_tap')
         });
@@ -48,9 +48,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     API.getAll().success(function (data, status, headers, config) {
         for (var i = 0; i < data.length; i++) {
             $scope.games.push(data[i]);
-            $scope.games[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
+            $scope.games[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function () {
+                return "ion-ios-star"
+            });
         }
-        
+
         if ($scope.games.length == 0) {
             $scope.noData = true;
         } else {
@@ -110,20 +112,22 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.list = [];
     $scope.editedGame = {};
     $scope.deleteGame = {};
+    $scope.animation = false;
 
     $scope.createGame = function () {
-       // $scope.modal.remove();
+        // $scope.modal.remove();
         Edit.resetGame();
     };
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
-    
+
     API.getAll().success(function (data, status, headers, config) {
-        console.log(data);
         for (var i = 0; i < data.length; i++) {
             $scope.list.push(data[i]);
-            $scope.list[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function(){return "ion-ios-star"});
+            $scope.list[i].diff = Array.apply(null, Array(data[i].difficulty)).map(function () {
+                return "ion-ios-star"
+            });
         }
         if ($scope.list.length == 0) {
             $scope.noData = true;
@@ -134,8 +138,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $rootScope.notify(
             $translate.instant('oops_wrong'));
     });
-    
-    
+
+
     // Delete the entire game by clicking on the trash icon
     $scope.deleteItem = function (item, name) {
         API.deleteItem(name, $rootScope.getToken())
@@ -150,30 +154,21 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 
-    // EDIT GAME PART ----------------------------------
-  /*  $ionicModal.fromTemplateUrl('templates/edit-game.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function (modal) {
-        $scope.modal = modal;
-    });
-
-    */
-    
     $scope.editItem = function (item) {
         $scope.navactivities = [];
+
         API.getOne(item.name)
             .success(function (data, status, headers, config) {
                 $scope.deleteGame = data.slice()[0];
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
-                $translate.instant('oops_wrong'));
+                    $translate.instant('oops_wrong'));
             });
-        
+
         $scope.editedGame = $scope.list[$scope.list.indexOf(item)];
         $scope.navactivities = $scope.editedGame.activities;
-        
-       Edit.pushGame($scope.editedGame);
+
+        Edit.pushGame($scope.editedGame);
     };
 
 
@@ -191,14 +186,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         /*First delete the existing game, then save new instance.
              Not a very elegant solution, but i want to sleep already.*/
 
-      //  console.log(JSON.stringify($scope.deleteGame) == JSON.stringify($scope.editedGame));
+        //  console.log(JSON.stringify($scope.deleteGame) == JSON.stringify($scope.editedGame));
         API.deleteItem($scope.deleteGame.name, $rootScope.getToken())
             .success(function (data, status, headers, config) {
                 $rootScope.hide();
                 $scope.list.splice($scope.list.indexOf($scope.deleteGame), 1);
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
-                   $translate.instant('oops_wrong'));
+                    $translate.instant('oops_wrong'));
             });
 
         API.saveItem($scope.editedGame)
@@ -208,7 +203,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             })
             .error(function (data, status, headers, config) {
                 $rootScope.hide();
-                 $translate.instant('oops_wrong');
+                $translate.instant('oops_wrong');
             });
     };
 
@@ -216,50 +211,52 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data','Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams','$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
-    $ionicModal, API, Edit, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams,$cordovaCamera,$translate) {
-    
+.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams', '$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
+    $ionicModal, API, Edit, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams, $cordovaCamera, $translate) {
+
     /* Game Parameters ----- */
     $scope.currentAction = "New Game";
     $scope.newgame = {}; //General description of the game
     $scope.navactivities = []; // List of activities and types
-    $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"});
+    $scope.diff = Array.apply(null, Array(5)).map(function () {
+        return "ion-ios-star-outline"
+    });
 
     $scope.newgame.difficulty = 0;
-    
-   // Rate difficulty of the game in stars
-     $scope.rateGame = function (difficulty) {
-          $scope.diff = Array.apply(null, Array(5)).map(function(){return "ion-ios-star-outline"});
-         for (var i = 0; i <= difficulty; i++){
-             $scope.diff[i] = "ion-ios-star";
-         }
-       $scope.newgame.difficulty = difficulty + 1;
+
+    // Rate difficulty of the game in stars
+    $scope.rateGame = function (difficulty) {
+        $scope.diff = Array.apply(null, Array(5)).map(function () {
+            return "ion-ios-star-outline"
+        });
+        for (var i = 0; i <= difficulty; i++) {
+            $scope.diff[i] = "ion-ios-star";
+        }
+        $scope.newgame.difficulty = difficulty + 1;
     };
-    
-  // Check, whether we are CREATING or EDITING new game
-     if (Edit.getGame() != null){
+
+    // Check, whether we are CREATING or EDITING new game
+    if (Edit.getGame() != null) {
         $scope.currentAction = "Edit Game";
-          $scope.newgame = {
+        $scope.newgame = {
             title: Edit.getGame().name,
             description: Edit.getGame().description,
             time: Edit.getGame().timecompl,
             difficulty: Edit.getGame().difficulty
-         };
-         for(var i = 0; i < Edit.getGame().activities.length; i++){
-             Data.newAct( Edit.getGame().activities[i]);
-         }
-          $scope.rateGame(Edit.getGame().difficulty - 1);
-    } 
-    
-    
-    $scope.navactivities = Data.getAct();
-    
-    $scope.isAndroid = false;  // Platform : Android or Web
-    
+        };
+
+        $scope.navactivities = Edit.getGame().activities;
+        $scope.rateGame(Edit.getGame().difficulty - 1);
+    } else {
+        $scope.navactivities = Data.getAct();
+    }
+
+    $scope.isAndroid = false; // Platform : Android or Web
+
     $scope.example = "";
     $scope.myfile = {};
-    
-    
+
+
     // Current location of GeoReference Task Creation
     $scope.map = {
         center: {
@@ -300,66 +297,66 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 console.log(err);
             });
     };
-    
+
 
     // PHOTO TASK
-    
-   // $scope.imgURI = null;
+
+    // $scope.imgURI = null;
     $scope.example = "";
-    
+
     $scope.myfile = {};
     $scope.isAndroid = ionic.Platform.isAndroid();
     //$scope.isWeb = (ionic.Platform.platform() == "win32");
     $scope.isWeb = !$scope.isAndroid;
-    
-    $scope.takePicture = function() {
-       if ($scope.isAndroid){ // If the platform is Android than we take a picture
-         var options = { 
-            quality : 75, 
-            destinationType : Camera.DestinationType.DATA_URL, 
-            sourceType : Camera.PictureSourceType.CAMERA, 
-            allowEdit : true,
+
+    $scope.takePicture = function () {
+        if ($scope.isAndroid) { // If the platform is Android than we take a picture
+            var options = {
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 100,
+                targetHeight: 100,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: true
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                $scope.currentLocation();
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        } else { // If platform is Web than we are able to upload from the local storage
+            $scope.currentLocation();
+        }
+    };
+
+
+    $scope.choosePhoto = function () {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            allowEdit: true,
             encodingType: Camera.EncodingType.JPEG,
             targetWidth: 100,
             targetHeight: 100,
             popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: true
+            saveToPhotoAlbum: false
         };
- 
-        $cordovaCamera.getPicture(options).then(function(imageData) {
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
             $scope.currentLocation();
-        }, function(err) {
+        }, function (err) {
             // An error occured. Show a message to the user
-        }); 
-       } else {   // If platform is Web than we are able to upload from the local storage
-             $scope.currentLocation();
-         }
+        });
     };
-    
-    
-    $scope.choosePhoto = function () {
-                  var options = {
-                    quality: 75,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    allowEdit: true,
-                    encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 100,
-                    targetHeight: 100,
-                    popoverOptions: CameraPopoverOptions,
-                    saveToPhotoAlbum: false
-                };
-   
-                   $cordovaCamera.getPicture(options).then(function (imageData) {
-                        $scope.imgURI = "data:image/jpeg;base64," + imageData;
-                        $scope.currentLocation();
-                    }, function (err) {
-                        // An error occured. Show a message to the user
-                    });
-                };
-    
-    
+
+
     $scope.pathGame = function () {
         Data.addType("Find destination");
     };
@@ -391,16 +388,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     //Addition of a TASK to an ACTIVITY POINT
     $scope.addQAtask = function () {
-        Task.addType("QuestionAnswer");
+        Task.addType("QA");
     };
     $scope.addGRtask = function () {
         Task.addType("GeoReference");
     };
 
     //Submit task when running on Windows
-    $scope.submitGRTask = function (uploadedPhoto) { 
+    $scope.submitGRTask = function (uploadedPhoto) {
         $scope.imgURI = "data:image/jpeg;base64," + uploadedPhoto.base64;
-        
+
         Task.addPhoto($scope.imgURI);
         Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
 
@@ -419,9 +416,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicHistory.goBack();
         Task.clearTask();
     };
-    
+
     // Submit task for Android device
-    $scope.submitGRTaskAndroid = function () { 
+    $scope.submitGRTaskAndroid = function () {
         Task.addPhoto($scope.imgURI);
         Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
 
@@ -440,75 +437,100 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicHistory.goBack();
         Task.clearTask();
     };
-    
+
+
+    /* QUESTION TASK -------------------------------*/
+    $scope.qaGame = {};
+
+    $scope.submitQATask = function () {
+        Task.addQA($scope.qaGame);
+
+        $scope.task = Task.getTask();
+        $scope.currentActIndex = Task.getActIndex();
+        $scope.currentPointIndex = Task.getPointIndex();
+
+        //Add created task to the choosen activity point
+        $scope.navactivities[$scope.currentActIndex].points[$scope.currentPointIndex].tasks.push($scope.task);
+        //Clear the scope and get back to the new game creation menu
+        $scope.task = {};
+        Task.clearTask();
+        $scope.currentActIndex = null;
+        $scope.currentPointIndex = null;
+        $scope.qaGame = {}; // Clear the game
+        $ionicHistory.goBack();
+
+        console.log($scope.navactivities);
+    };
+
+
+
 
     $scope.cancelGRTask = function () {
         $scope.task = {};
         $scope.imgURI = null;
-        
+
         Task.clearTask();
         $scope.currentActIndex = null;
         $scope.currentPointIndex = null;
         $ionicHistory.goBack();
     };
-    
-    
+
+
     // Two main buttons - one, which submits the complete game to the server and one, which cancels the entire progress of creation
     $scope.submitGame = function () {
-      if ($scope.newgame.title != null){ // Check if the title is not empty 
-         $scope.border = "black";
-          
-        $scope.completeGame = {
-            name: $scope.newgame.title,
-            description: $scope.newgame.description,
-            timecompl: $scope.newgame.time,
-            difficulty: $scope.newgame.difficulty,
-            activities: $scope.navactivities
-        };
-          
-     if(Edit.getGame() != null){
-          API.deleteItem(Edit.getGame().name, $rootScope.getToken())
-            .success(function (data, status, headers, config) {
-                $rootScope.hide();
-                //$scope.list.splice($scope.list.indexOf($scope.completeGame), 1);
-                
-        API.saveItem($scope.completeGame)
-            .success(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.doRefresh(1);
-                $ionicHistory.goBack();
-            console.log("game is saved");
-                Data.clearAct();
-            })
-            .error(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.notify("Oops something went wrong!! Please try again later");
-                $ionicHistory.goBack();
-                Data.clearAct();
-            });
-              
-            }).error(function (data, status, headers, config) {
-                $rootScope.notify(
-                   $translate.instant('oops_wrong'));
-        });
-     } else {
-         
-          API.saveItem($scope.completeGame)
-            .success(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.doRefresh(1);
-                $ionicHistory.goBack();
-            console.log("game is saved");
-                Data.clearAct();
-            })
-            .error(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.notify("Oops something went wrong!! Please try again later");
-                $ionicHistory.goBack();
-                Data.clearAct();
-            });
-     }    
-                    
+        if ($scope.newgame.title != null) { // Check if the title is not empty 
+            $scope.border = "black";
+
+            $scope.completeGame = {
+                name: $scope.newgame.title,
+                description: $scope.newgame.description,
+                timecompl: $scope.newgame.time,
+                difficulty: $scope.newgame.difficulty,
+                activities: $scope.navactivities
+            };
+
+            if (Edit.getGame() != null) {
+                API.deleteItem(Edit.getGame().name, $rootScope.getToken())
+                    .success(function (data, status, headers, config) {
+                        $rootScope.hide();
+                        //$scope.list.splice($scope.list.indexOf($scope.completeGame), 1);
+
+                        API.saveItem($scope.completeGame)
+                            .success(function (data, status, headers, config) {
+                                $rootScope.hide();
+                                $rootScope.doRefresh(1);
+                                $ionicHistory.goBack();
+                                console.log("game is saved");
+                                Data.clearAct();
+                            })
+                            .error(function (data, status, headers, config) {
+                                $rootScope.hide();
+                                $rootScope.notify("Oops something went wrong!! Please try again later");
+                                $ionicHistory.goBack();
+                                Data.clearAct();
+                            });
+
+                    }).error(function (data, status, headers, config) {
+                        $rootScope.notify(
+                            $translate.instant('oops_wrong'));
+                    });
+            } else {
+
+                API.saveItem($scope.completeGame)
+                    .success(function (data, status, headers, config) {
+                        $rootScope.hide();
+                        $rootScope.doRefresh(1);
+                        $ionicHistory.goBack();
+                        Data.clearAct();
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.hide();
+                        $rootScope.notify("Oops something went wrong!! Please try again later");
+                        $ionicHistory.goBack();
+                        Data.clearAct();
+                    });
+            }
+
         } else {
             $scope.border = "red";
         }
@@ -526,7 +548,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 .controller('taskCreation', function ($rootScope, $scope, $http, $location, $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory) {
     //Type of the TASK
     $scope.addQAtask = function () {
-        Data.addTaskType("Question - Answer");
+        Data.addTaskType("QA");
     };
     $scope.addGRtask = function () {
         Data.addTaskType("GeoReference");
@@ -537,7 +559,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 .controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
-    var congratsMessages = ['Good job!', 'Well done!', 'Nice going!', 'Cool!', 'Way to go!'];
+    var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
+
 
     /* only for debug purposes */
     var debugState = function () {
@@ -610,15 +633,17 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             handleNextWaypoint();
         } else {
             $scope.task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
-            //console.log("Doing task -", GameState.getCurrentTask(), " of ", GameData.getNumTasks(GameState.getCurrentActivity(), GameState.getCurrentWaypoint()) - 1);
             if ($scope.task.type == 'GeoReference') {
                 performGeoReferencingTask($scope.task);
+            } else if ($scope.task.type == 'QA') {
+                performQATask($scope.task);
             } else {
                 // perform other kinds of tasks here
                 handleTask();
             }
         }
     };
+
 
     var performGeoReferencingTask = function () {
         $scope.showInfo = true;
@@ -627,6 +652,64 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         createModal('georef-modal.html', 'georef');
     };
 
+
+    var performQATask = function (task) {
+      //$scope.showInfo = true;
+      createModal('qa-modal.html', 'qa');
+
+      $scope.answerPicked = false;
+      $scope.rightAnswer = $scope.task.answers[0]; //Index of the right element in a schaffled array
+      $scope.choosedAnswer = "";
+      $scope.clicked = [false,false,false,false];
+        
+      $scope.chooseAnswer = function (answer, index) {
+          $scope.choosedAnswer = answer;
+          $scope.answerPicked = true;
+          $scope.clicked = [false,false,false,false];
+          $scope.clicked[index] = true;
+      };
+
+      //Shuffle the array to fill the answer boxes randomly
+      var currentIndex = 4,
+          temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+
+          currentIndex -= 1;
+
+          // And swap it with the current element.
+          temporaryValue = $scope.task.answers[currentIndex];
+          $scope.task.answers[currentIndex] = $scope.task.answers[randomIndex];
+          $scope.task.answers[randomIndex] = temporaryValue;
+      }
+        
+      $scope.checkAnswer = function () {
+          $scope.answer = true;  // true - right; false - wrong;
+          
+          if ($scope.choosedAnswer == $scope.rightAnswer){
+              $scope.answerResult = "Correct Answer!";
+              $scope.answer = true;
+              $scope.icon = "ion-android-happy";
+          } else{
+              $scope.answer = false;
+              $scope.answerResult = "Sorry, next time will be better! ";
+              $scope.rightAnswer = "The right answer was: " + $scope.rightAnswer;
+              $scope.icon = "ion-android-sad";
+          }
+          $scope.$broadcast('qaTaskCompleted', $scope.task);
+      };
+  };
+    
+    
+    $scope.$on('qaTaskCompleted', function (event) {
+        $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
+        createModal('qa-result-modal.html', 'georefResult');
+    });
+    
     /* Show message, then execute proc is supplied as argument */
     var showPopup = function (title, msg, proc) {
         var alertPopup = $ionicPopup.alert({
@@ -646,7 +729,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.$on('waypointReachedEvent', function (event) {
-        //showPopup('Congrats!', 'You reached the destination - ' + $scope.waypoint.name, handleTask);
         $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
         createModal('waypoint-reached-modal.html', 'waypoint');
     });
@@ -661,7 +743,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $location.path('/');
         } else if (modal.id === 'georef') {
             $scope.$broadcast('georefEvent', $scope.task);
+        } else if (modal.id === 'qa') {
+            $scope.$broadcast('qaEvent', $scope.task);
         } else if (modal.id === 'georefResult') {
+            handleTask();
+        }  else if (modal.id === 'qaResult') {
             handleTask();
         } else if (modal.id === 'waypoint') {
             handleTask();
@@ -684,12 +770,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.georefSmiley = 'ion-sad-outline';
         }
         createModal('georef-result-modal.html', 'georefResult');
-        //handleTask();
     });
 
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
-
 })
+
+
 
 /* - Controller for map in student mode
  * - Only shows waypoint and emits signal when waypoint is reached

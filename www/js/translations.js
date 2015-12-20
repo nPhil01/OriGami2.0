@@ -27,7 +27,7 @@ var translations = {
         "next_point":"Next Waypoint",
         "game_over":"Game Over!",
         "congrat":"Congratulations!",
-        "you_completed":"You have successfully completed the game",
+        "you_completed":"You finished the game! ",
         "error":"Error!",
         "geo_refer":"Geo-Referencing",
         "picture":"Picture",

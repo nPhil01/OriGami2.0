@@ -58,12 +58,16 @@ angular.module('starter.services', [])
     // Clean current activities, game types (Path plan / Aid wayf)
     actService.clearAct = function () {
         activities.splice(0, activities.length);
+        activities = [];
+        allGames = [];
     };
     actService.clearType = function () {
         gameType = "";
     };
     return actService;
 })
+
+
 
 .factory('Task', function ($rootScope, $http, $ionicLoading, $window) {
     var taskService = {};
@@ -73,10 +77,12 @@ angular.module('starter.services', [])
     var currentActIndex = null;
     var currentPointIndex = null;
 
-    // Add relevant information to the TASK
+    // Add relevant information to the PHOTO TASK
     taskService.addType = function (taskType) {
         task.type = taskType;
     };
+    
+      // Add relevant information to the PHOTO TASK
     taskService.addPhoto = function (taskPhoto) {
         task.photo = taskPhoto;
     };
@@ -84,7 +90,13 @@ angular.module('starter.services', [])
         task.lat = lat;
         task.lng = lng;
     };
-
+     // Add relevant information to the QUESTION - ANSWER TASK
+    taskService.addQA = function (qaGame){
+        task.question = qaGame.question;
+        task.answers = qaGame.answers;
+    }
+    
+    
     taskService.addIndexes = function (actIndex, pointIndex) {
         currentActIndex = actIndex;
         currentPointIndex = pointIndex;
@@ -108,6 +120,8 @@ angular.module('starter.services', [])
 
     return taskService;
 })
+
+
 
 
 // API for getting data from the remote server

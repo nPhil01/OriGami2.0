@@ -5,6 +5,7 @@
     "ionic": "driftyco/ionic-bower#1.1.0"
   },
   "dependencies": {
-    "angular-translate": "~2.8.1"
+    "angular-translate": "~2.8.1",
+    "paper-button": "PolymerElements/paper-button#~1.0.11"
   }
 }

@@ -1,5 +1,3 @@
-
-
 /* NEW HOME PAGE ---------------------------------------- */
 .person-type {
     background-color: #80DEEA;
@@ -252,7 +250,7 @@
 /* Modal window with explanation of the game rules */
 
 .plan-route {
-    height: 30%;
+    height: 31%;
     background-color: #3F51B5;
     letter-spacing: 0.04em;
     text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);

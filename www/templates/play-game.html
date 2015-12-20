@@ -6,11 +6,11 @@
     <!-- Information about how to play the game -->
     <script id="gameinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar class="bar-positive">
+            <!-- <ion-header-bar class="bar-positive">
                 <h1 class="title">{{'game_info' | translate}}</h1>
-            </ion-header-bar>
+            </ion-header-bar> -->
 
-            <ion-content style="height: 100%; background-color:#fec00f">
+            <ion-content style="height: 100%; background-color: #1976D2">
                 <div class="plan-route" style="background-color:#3F51B5">
                     <div class="information">
                         <div class="info-icon">
@@ -38,7 +38,7 @@
                 </div>
             </ion-content>
 
-            <ion-footer-bar class="bar-dark" ng-click="modal.remove()">
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
                 <p class="title">{{'start_playing' | translate}}</p>
             </ion-footer-bar>
 
@@ -48,47 +48,38 @@
     <!-- Information about the next waypoint -->
     <script id="waypointinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar class="bar-positive">
-                <h1 class="title">{{'next_point' | translate}}</h1>
-            </ion-header-bar>
 
-            <ion-content style="height: 100%; background-color:#673AB7">
-                <div class="plan-route" style="background-color:#673AB7">
-                    <div class="information">
-                        <i class="ion-android-walk"></i>
-                        <h1>{{waypoint.name}}</h1>
-                        <p> {{waypoint.description}} </p>
-                    </div>
+            <ion-content style="height: 100%; background-color:#1565C0;">
+                <div class="answer_output">
+                    <i class="ion-android-pin"></i>
+                    <h1>Your task: {{waypoint.name}}</h1>
+                    <p> Description: {{waypoint.description}} </p>
                 </div>
             </ion-content>
+
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <p class="title">OK</p>
+                <p class="title">Continue</p>
             </ion-footer-bar>
 
         </ion-modal-view>
     </script>
 
+
     <!-- Notify when waypoint is reached -->
     <script id="waypoint-reached-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar class="bar-positive">
-                <h1 class="title">Way point reached!</h1>
-            </ion-header-bar>
 
-            <ion-content style="height: 100%; background-color:#673AB7">
-                <div class="plan-route" style="background-color:#673AB7">
-                    <div class="information">
-                        <i class="ion-thumbsup"></i>
-                        <h1>{{congratsMessage}} </h1>
-                        <br>
-                        <p>You reached '{{waypoint.name}}'</p>
-                    </div>
+            <ion-content style="height: 100%; background-color:#1565C0;">
+                <div class="answer_output">
+                    <i class="ion-ribbon-a"></i>
+                    <h1>{{congratsMessage}} </h1>
+
+                    <p>You reached your goal !</p>
                 </div>
             </ion-content>
+
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <span class="ionicons title" style="font-size:24px">Next
-          <span class="ion-ios-arrow-forward"></span>
-                </span>
+                <p class="title">Continue</p>
             </ion-footer-bar>
 
         </ion-modal-view>
@@ -97,25 +88,21 @@
     <!-- Game Over Modal -->
     <script id="gameover-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar class="bar-positive">
-                <h1 class="title">{{'game_over' | translate}}</h1>
-            </ion-header-bar>
-
-            <ion-content style="height: 100%; background-color:#673AB7">
-                <div class="plan-route" style="background-color:#673AB7">
-                    <div class="information">
-                        <i class="ion-flag"></i>
-                        <h1>{{'congrat' | translate}}</h1>
-                        <p> {{'you_completed' | translate}} </p>
-                    </div>
+            <ion-content style="height: 100%; background-color:#1565C0">
+                <div class="answer_output">
+                    <img src="./img/icons/Medal.png" />
+                    <h1>{{'congrat' | translate}}</h1>
+                    <p> {{'you_completed' | translate}} </p>
                 </div>
             </ion-content>
+            
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <p class="title">OK</p>
+                <p class="title">Continue</p>
             </ion-footer-bar>
 
         </ion-modal-view>
     </script>
+
 
     <!-- Error Modal -->
     <script id="error-modal.html" type="text/ng-template">
@@ -185,6 +172,50 @@
             </ion-footer-bar>
         </ion-modal-view>
     </script>
+
+
+    <!-- QA  Game Modal -->
+    <script id="qa-modal.html" type="text/ng-template">
+        <ion-modal-view style="padding: 0; margin:0; dispay:block; ">
+            <div class="question">
+                <h1 class="description">Now answer the question: </h1>
+                <h1 class="question_title">{{task.question}}</h1>
+                <button id="fab" ng-show="answerPicked" ng-click="checkAnswer(); modal.remove()" class="button button-positive button-fab" style="background-color:#FFFF00"><i class="icon ion-android-done" style="color:#1565C0"></i></button>
+            </div>
+            <div class="answers">
+                <div class="answer1" ng-click="chooseAnswer(task.answers[0], 0)" ng-class="{'clicked_ans': clicked[0]}">
+                    <h1>{{task.answers[0]}}</h1></div>
+                <div class="answer2" ng-click="chooseAnswer(task.answers[1], 1)" ng-class="{'clicked_ans': clicked[1]}">
+                    <h1>{{task.answers[1]}}</h1></div>
+                <div class="answer3" ng-click="chooseAnswer(task.answers[2], 2)" ng-class="{'clicked_ans': clicked[2]}">
+                    <h1>{{task.answers[2]}}</h1></div>
+                <div class="answer4" ng-click="chooseAnswer(task.answers[3], 3)" ng-class="{'clicked_ans': clicked[3]}">
+                    <h1>{{task.answers[3]}}</h1></div>
+            </div>
+        </ion-modal-view>
+    </script>
+
+
+
+    <!-- QA result Modal -->
+    <script id="qa-result-modal.html" type="text/ng-template">
+        <ion-modal-view style="padding: 0; margin:0; dispay:block; background-color: #03A9F4;">
+
+            <ion-content style="height: 100%; background-color:#1565C0;">
+                <div class="answer_output">
+                    <i class="{{icon}}"></i>
+                    <h1>{{answerResult}}</h1>
+                </div>
+            </ion-content>
+
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
+                <p class="title">Continue</p>
+            </ion-footer-bar>
+
+        </ion-modal-view>
+    </script>
+
+
 
     <div class="bar bar-subheader bar-assertive" ng-show="showInfo" class="ng-show">
         <h2 class="title">{{subHeaderInfo}}</h2>
