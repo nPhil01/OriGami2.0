@@ -556,7 +556,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 })
 
 // controller for gameplay
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState) {
+.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
@@ -595,7 +595,21 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var endGame = function () {
         createModal('gameover-modal.html', 'endgame');
+
+        $scope.shareButtons = false;
+        $timeout(function () {
+            $scope.shareButtons = true;
+        }, 1200);
+
         $scope.$broadcast('gameOverEvent');
+
+        $scope.shareViaFacebook = function (message, image, link) {
+            $cordovaSocialSharing.canShareVia("twitter", message, image, link).then(function (result) {
+                $cordovaSocialSharing.shareViaFacebook(message, image, link);
+            }, function (error) {
+                alert("Cannot share on Twitter");
+            });
+        };
     };
 
     var abortGame = function (message) {
@@ -653,63 +667,73 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
 
+
     var performQATask = function (task) {
-      //$scope.showInfo = true;
-      createModal('qa-modal.html', 'qa');
+        //$scope.showInfo = true;
+        createModal('qa-modal.html', 'qa');
 
-      $scope.answerPicked = false;
-      $scope.rightAnswer = $scope.task.answers[0]; //Index of the right element in a schaffled array
-      $scope.choosedAnswer = "";
-      $scope.clicked = [false,false,false,false];
-        
-      $scope.chooseAnswer = function (answer, index) {
-          $scope.choosedAnswer = answer;
-          $scope.answerPicked = true;
-          $scope.clicked = [false,false,false,false];
-          $scope.clicked[index] = true;
-      };
+        $scope.answerPicked = false;
+        $scope.rightAnswer = $scope.task.answers[0]; //Index of the right element in a schaffled array
+        $scope.choosedAnswer = "";
+        $scope.clicked = [false, false, false, false];
 
-      //Shuffle the array to fill the answer boxes randomly
-      var currentIndex = 4,
-          temporaryValue, randomIndex;
+        $scope.chooseAnswer = function (answer, index) {
+            $scope.choosedAnswer = answer;
+            $scope.answerPicked = true;
+            $scope.clicked = [false, false, false, false];
+            $scope.clicked[index] = true;
+        };
 
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
+        //Shuffle the array to fill the answer boxes randomly
+        var currentIndex = 4,
+            temporaryValue, randomIndex;
 
-          // Pick a remaining element...
-          randomIndex = Math.floor(Math.random() * currentIndex);
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
 
-          currentIndex -= 1;
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
 
-          // And swap it with the current element.
-          temporaryValue = $scope.task.answers[currentIndex];
-          $scope.task.answers[currentIndex] = $scope.task.answers[randomIndex];
-          $scope.task.answers[randomIndex] = temporaryValue;
-      }
-        
-      $scope.checkAnswer = function () {
-          $scope.answer = true;  // true - right; false - wrong;
-          
-          if ($scope.choosedAnswer == $scope.rightAnswer){
-              $scope.answerResult = "Correct Answer!";
-              $scope.answer = true;
-              $scope.icon = "ion-android-happy";
-          } else{
-              $scope.answer = false;
-              $scope.answerResult = "Sorry, next time will be better! ";
-              $scope.rightAnswer = "The right answer was: " + $scope.rightAnswer;
-              $scope.icon = "ion-android-sad";
-          }
-          $scope.$broadcast('qaTaskCompleted', $scope.task);
-      };
-  };
-    
-    
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = $scope.task.answers[currentIndex];
+            $scope.task.answers[currentIndex] = $scope.task.answers[randomIndex];
+            $scope.task.answers[randomIndex] = temporaryValue;
+        }
+
+        $scope.checkAnswer = function () {
+            $scope.answer = true; // true - right; false - wrong;
+
+            if ($scope.choosedAnswer == $scope.rightAnswer) {
+                $scope.answerResult = "Correct Answer!";
+                $scope.answer = true;
+                $scope.icon = "ion-android-happy";
+
+                $timeout(function () {
+                    $scope.icon = "ion-android-happy";
+                }, 1200);
+
+            } else {
+                $scope.answer = false;
+                $scope.answerResult = "Sorry, next time will be better! ";
+                $scope.rightAnswer = "The right answer was: " + $scope.rightAnswer;
+                $scope.icon = "ion-android-sad";
+
+                $timeout(function () {
+                    $scope.icon = "ion-android-happy";
+                }, 600);
+            }
+            $scope.$broadcast('qaTaskCompleted', $scope.task);
+        };
+    };
+
+
     $scope.$on('qaTaskCompleted', function (event) {
         $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
         createModal('qa-result-modal.html', 'georefResult');
     });
-    
+
     /* Show message, then execute proc is supplied as argument */
     var showPopup = function (title, msg, proc) {
         var alertPopup = $ionicPopup.alert({
@@ -747,7 +771,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.$broadcast('qaEvent', $scope.task);
         } else if (modal.id === 'georefResult') {
             handleTask();
-        }  else if (modal.id === 'qaResult') {
+        } else if (modal.id === 'qaResult') {
             handleTask();
         } else if (modal.id === 'waypoint') {
             handleTask();

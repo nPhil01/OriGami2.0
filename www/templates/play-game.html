@@ -93,6 +93,10 @@
                     <img src="./img/icons/Medal.png" />
                     <h1>{{'congrat' | translate}}</h1>
                     <p> {{'you_completed' | translate}} </p>
+                    
+                    <!-- Facebook Scharing Button -->
+                    <button id="fab" ng-show = "shareButtons"  ng-click="shareViaFacebook('I completed OriGami task! ', null, null)" class="button button-positive button-fab" style="background-color:#3b5998"><i class="icon ion-social-facebook" style="color:white"></i></button>
+                    
                 </div>
             </ion-content>
             
