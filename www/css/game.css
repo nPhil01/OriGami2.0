@@ -98,7 +98,7 @@
 
 .question .description{
      text-align: center;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .question .question_mark {
@@ -109,7 +109,7 @@
 .question h1 {
     margin-left: auto;
     margin-right: auto;
-    font-size: 40px;
+    font-size: 30px;
     position: relative;
     top: 25%;
     width: 75%;
@@ -136,7 +136,7 @@
 
 /* Triggert when clicked */
 .clicked_ans{  
-    background-color: #E3F2FD;
+    background-color: #64B5F6;
 }
 
 
@@ -210,7 +210,7 @@
 /* Answer Output Window */
 .answer_output{
     position: relative;
-    top: 15%;
+    top: 12%;
     text-align: center;
 }
 .answer_output i{
@@ -219,12 +219,12 @@
 }
 .answer_output h1{
     font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    font-size: 50px;
+    font-size: 40px;
     color:white;
 }
 .answer_output p{
     font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     color:white;
     
     margin-top: 5%;
