@@ -61,7 +61,7 @@ angular.module('starter').controller('pathController', ['$scope', '$ionicModal',
                 baselayers: {
                     osm: {
                         name: 'OpenStreetMap',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: true,
                         layerOptions: {

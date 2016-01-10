@@ -271,7 +271,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             zoom: 16
         },
         defaults: {
-            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             maxZoom: 18,
             zoomControlPosition: 'topleft',
             lat: 57,
@@ -821,7 +821,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.initialize = function () {
         $scope.map = {
             defaults: {
-                tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                 maxZoom: 19,
                 zoomControlPosition: 'bottomleft'
             },
