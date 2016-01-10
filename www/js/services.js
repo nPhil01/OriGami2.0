@@ -18,6 +18,9 @@ angular.module('starter.services', [])
         game = null;
     };
     
+    editedGame.resetActivities = function(){
+        editedGame.activities = [];
+    }
     return editedGame;    
 }) 
 

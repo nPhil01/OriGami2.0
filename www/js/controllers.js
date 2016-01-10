@@ -98,11 +98,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             Data.newAct($scope.activities);
             Data.clearType();
             $scope.modal.remove();
-            $scope.$apply();
+            //$scope.$apply();
         } else {
             console.log("No points specified");
             $scope.modal.remove();
-            $scope.$apply();
+            //$scope.$apply();
         }
     };
 })
@@ -246,8 +246,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         };
 
         $scope.navactivities = Edit.getGame().activities;
+        Edit.resetActivities();
+        
         $scope.rateGame(Edit.getGame().difficulty - 1);
-    } else {
+        
+        for(var i = 0; i < Data.getAct().length; i++){
+            $scope.navactivities.push(Data.getAct()[i]);
+        }
+    } else { 
+        console.log(Data.getAct().length);
         $scope.navactivities = Data.getAct();
     }
 
