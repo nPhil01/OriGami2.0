@@ -17,10 +17,10 @@
 
         <label class="item item-input">
           <span class="input-label" ng-class="name_border">{{'name' | translate}}</span>
-          <input type="text" ng-model="newWaypoint.name" placeholder="" ng-minlength="1" ng-maxlength="10" required ng-class="name_border"></label>
+          <input type="text" ng-model="newWaypoint.name" placeholder="" ng-minlength="1" ng-maxlength="100" required ng-class="name_border"></label>
          <label class="item item-input"> 
           <span class="input-label" ng-class ="description_border">{{'instructions' | translate}}</span>
-          <input type="text" ng-model="newWaypoint.description" placeholder="{{'name_destination' | translate}}" ng-minlength="1" ng-maxlength="1000" required>
+          <input type="text" ng-model="newWaypoint.description" placeholder="{{'name_destination' | translate}}" ng-minlength="1" ng-maxlength="500" required>
         </label>
 
         <div class="item tabs tabs-secondary tabs-icon-left">
