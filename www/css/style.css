@@ -154,11 +154,15 @@
 .createdAct {
     margin-bottom: 20px;
 }
+
 .download_tiles{
+    width: 85%;
+    margin: auto ;
+    margin-bottom: 5px;
+    margin-top: 10px;
     border-radius: 10px;
     background-color: #FFEB3B;
     background-image: linear-gradient( -48deg, #f87f73 0%, #f87f73 10%, #FFEB3B 40%,#FFEB3B 60%);
-    
 }
 
 

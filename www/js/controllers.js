@@ -206,12 +206,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $translate.instant('oops_wrong');
             });
     };
-
 })
 
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', ['$rootScope', '$scope', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams', '$cordovaCamera', function ($rootScope, $scope, $http, $location, $cordovaGeolocation,
+.controller('NewGameCtrl', ['$rootScope', '$scope','$state', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams', '$cordovaCamera', function ($rootScope, $scope,$state, $http, $location, $cordovaGeolocation,
     $ionicModal, API, Edit, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams, $cordovaCamera, $translate) {
 
     /* Game Parameters ----- */
@@ -451,9 +450,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         Task.clearTask();
         $scope.currentActIndex = null;
         $scope.currentPointIndex = null;
+        
         $ionicHistory.goBack();
         Task.clearTask();
+        
     };
+    
 
     // Submit task for Android device
     $scope.submitGRTaskAndroid = function () {

@@ -1,10 +1,12 @@
 <ion-view cache-view="false" align-title="center" view-title="Created Games">
-    <ion-content style="background-color:#80DEEA;text-align:center; ">
+
+    <ion-content style="background-color:#80DEEA;height:100%;">
         <!-- Here are games, which were created before-->
         <!-- The only difference is that teacher can change settings of the game and create new games -->
         <div style="width:100%;">
             <div class="list card download_tiles" ng-repeat="item in list">
-                <div class="item item-avatar game-desc" >
+                <a>
+                    <div class="item item-avatar game-desc">
                         <img src="./img/navigation.png">
                         <h2>{{item.name}}</h2>
                         <div style="display:inline-flex;">
@@ -15,24 +17,25 @@
                             <i class={{item.diff[3]}} style="font-size:2em;color:#2196F3;"></i>
                             <i class={{item.diff[4]}} style="font-size:2em;color:#2196F3;"></i>
                         </div>
-                </div>
-                <div class="item item-body game-desc" style="display:flex;">
-                    <div style="width:70%;">
-                        <span>
+                    </div>
+                    <div class="item item-body game-desc" style="display:flex;">
+                        <div style="width:70%;">
+                            <span>
                        {{item.description}}
                     </span>
-                        <p>
-                            <a class="subdued"> <i class="icon ion-clock"></i> {{item.timecompl}}</a>
-                            <i class="icon ion-trash-a" ng-click="deleteItem(item,'{{item.name}}')">  Delete</i>
-                            <!-- <i class="icon ion-edit" ng-click="editItem(item)" ui-sref="tab.newgame">{{'edit' | translate}}</i> 
+                            <p>
+                                <a class="subdued"> <i class="icon ion-clock"></i> {{item.timecompl}}</a>
+                                <i class="icon ion-trash-a" ng-click="deleteItem(item,'{{item.name}}')">  Delete</i>
+                                <!-- <i class="icon ion-edit" ng-click="editItem(item)" ui-sref="tab.newgame">{{'edit' | translate}}</i> 
                     <i class="icon ion-edit"  ui-sref="tab.editgame({gameId: item._id})" ng-click = "editItem(item)">{{'edit' | translate}}</i>  -->
-                            <i class="icon ion-edit" ui-sref="tab.newgame" ng-click="editItem(item)">{{'edit' | translate}}</i>
-                        </p>
+                                <i class="icon ion-edit" ui-sref="tab.newgame" ng-click="editItem(item)">{{'edit' | translate}}</i>
+                            </p>
+                        </div>
+                        <div style="position:absolute;right:5%;text-align:center;">
+                            <button class="button button-fab button-positive icon ion-ios-cloud-download waves-effect waves-button waves-light" style="border: 1px solid #FFEB3B; background: rgba(255,0,0,  0); font-size:40px;"></button>
+                        </div>
                     </div>
-                    <div style="position:absolute;right:5%;text-align:center;">
-                      <button class="button button-fab button-positive icon ion-ios-cloud-download waves-effect waves-button waves-light" style="border: 1px solid #FFEB3B; background: rgba(255,0,0,  0); font-size:40px;"></button>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -44,8 +47,8 @@
          </span>
             </div>
         </div>
-
-        <button id="fab" class="button button-positive icon ion-plus button-fab " ng-click="createGame()" ui-sref="tab.newgame" style="position: absolute; bottom:2%; right: 2%;">
-            <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click="cancelGame()" style="position: absolute; bottom: 2%; left: 2%;"></button>
     </ion-content>
+    <button id="fab" class="button button-positive icon ion-plus button-fab " ng-click="createGame()" ui-sref="tab.newgame" style="position: fixed;bottom: 8%;right: 1%;">
+        <button class="button button-fab button-positive icon ion-chevron-left waves-effect waves-button waves-light" ng-click="cancelGame()" style="position: fixed;bottom: 8%;left: 1%;"></button>
+
 </ion-view>
