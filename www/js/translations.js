@@ -29,7 +29,7 @@ var translations = {
         "congrat":"Congratulations!",
         "you_completed":"You finished the game! ",
         "error":"Error!",
-        "geo_refer":"Geo-Referencing",
+        "geo_refer":"Geo-Referencing Task",
         "picture":"Picture",
         "picture_taken":"Where was the above picture taken? Mark it on the map.",
         "no_games_created":"There are no games created at the moment.",

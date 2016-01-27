@@ -15,7 +15,7 @@
                     <div class="information">
                         <div class="info-icon">
                             <i class="ion-android-map"></i>
-                           <!-- <h1>{{'step' | translate}} 1</h1> -->
+                            <!-- <h1>{{'step' | translate}} 1</h1> -->
                         </div>
                         <p>{{'plan_route' | translate}}</p>
                     </div>
@@ -93,13 +93,13 @@
                     <img src="./img/icons/Medal.png" />
                     <h1>{{'congrat' | translate}}</h1>
                     <p> {{'you_completed' | translate}} </p>
-                    
+
                     <!-- Facebook Scharing Button -->
-                    <button id="fab" ng-show = "shareButtons"  ng-click="shareViaFacebook('I completed OriGami task! ', null, null)" class="button button-positive button-fab" style="background-color:#3b5998"><i class="icon ion-social-facebook" style="color:white"></i></button>
-                    
+                    <button id="fab" ng-show="shareButtons" ng-click="shareViaFacebook('I completed OriGami task! ', null, null)" class="button button-positive button-fab" style="background-color:#3b5998"><i class="icon ion-social-facebook" style="color:white"></i></button>
+
                 </div>
             </ion-content>
-            
+
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
                 <p class="title">Continue</p>
             </ion-footer-bar>
@@ -134,17 +134,22 @@
     <!-- Georefencing Game Modal -->
     <script id="georef-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar class="bar-positive">
+            <!--  <ion-header-bar class="bar-positive">
                 <h1 class="title">{{'geo_refer' | translate}}</h1>
-            </ion-header-bar>
+            </ion-header-bar>  -->
 
-            <ion-content style="height: 100%; background-color:#673AB7">
-                <div class="plan-route" style="background-color:#673AB7">
-                    <div class="information">
-                        <!--<i class="ion-images"></i> -->
-                        <img src="{{geoRefPhoto}}">
-                        <h1>{{'picture' | translate}}</h1>
-                        <p>{{'picture_taken' | translate}}</p>
+            <ion-content style="height: 100%;background-color:#1565C0;">
+                <div class="georef_game">
+                        <img style="max-width:50%; width:50%; max-height:90%;" src="{{geoRefPhoto}}">
+                    <div class="georef_instr">
+                        <div class="content">
+                            <h1>{{'geo_refer' | translate}}</h1>
+
+                            <p>{{'picture_taken' | translate}}</p>
+                            <div class="georef_icon">
+                                 <i class="ion-ios-arrow-left"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </ion-content>
@@ -225,10 +230,10 @@
         <h2 class="title">{{subHeaderInfo}}</h2>
     </div>
 
-    <ion-content scroll=false  data-tap-disabled="true">
+    <ion-content scroll=false data-tap-disabled="true">
         <div class="map-container" ng-controller="StudentMapCtrl">
             <div id="map">
-                <leaflet defaults="map.defaults" layers="map.layers"  center="map.center" paths="map.paths" markers="map.markers" event-broadcast="map.events" ng-if="map"></leaflet>
+                <leaflet defaults="map.defaults" layers="map.layers" center="map.center" paths="map.paths" markers="map.markers" event-broadcast="map.events" ng-if="map"></leaflet>
             </div>
             <div id="smiley" class="smiley">
                 <canvas class="smiley" smiley></canvas>

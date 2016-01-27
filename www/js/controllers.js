@@ -247,13 +247,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
         $scope.navactivities = Edit.getGame().activities;
         Edit.resetActivities();
-        
+
         $scope.rateGame(Edit.getGame().difficulty - 1);
-        
-        for(var i = 0; i < Data.getAct().length; i++){
+
+        for (var i = 0; i < Data.getAct().length; i++) {
             $scope.navactivities.push(Data.getAct()[i]);
         }
-    } else { 
+    } else {
         console.log(Data.getAct().length);
         $scope.navactivities = Data.getAct();
     }
@@ -276,6 +276,22 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             zoomControlPosition: 'topleft',
             lat: 57,
             lng: 8
+        },
+        layers: {
+            baselayers: {
+                osm: {
+                    name: 'Satelite',
+                    url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                    type: 'xyz',
+                    top: true
+                },
+                streets: {
+                    name: 'Streets',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    type: 'xyz',
+                    top: false,
+                }
+            }
         },
 
         geojson: {},
@@ -362,6 +378,21 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             // An error occured. Show a message to the user
         });
     };
+
+    /* After choosing Photo put a marker, indication your position on a map */
+    var PhotoPositionMarker = function () {
+        if (!(this instanceof PhotoPositionMarker)) return new PhotoPositionMarker();
+        this.lat = "";
+        this.lng = "";
+    };
+    $scope.$on('leafletDirectiveMap.contextmenu', function (event, locationEvent) {
+        if ($scope.map.markers.length < 1) {
+            $scope.point = new PhotoPositionMarker();
+            $scope.point.lat = locationEvent.leafletEvent.latlng.lat;
+            $scope.point.lng = locationEvent.leafletEvent.latlng.lng;;
+            $scope.map.markers.push($scope.point);
+        }
+    });
 
 
     $scope.pathGame = function () {
@@ -808,6 +839,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 
+
 /* - Controller for map in student mode
  * - Only shows waypoint and emits signal when waypoint is reached
  * - Is not concerned with GameState or the game progression logic
@@ -1107,10 +1139,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.trackPosition = function () {
         var watchOptions = {
-          frequency: 100,
-          maximumAge: 1000,
-          timeout: 10000,
-          enableHighAccuracy: true // may cause errors if true
+            frequency: 100,
+            maximumAge: 1000,
+            timeout: 10000,
+            enableHighAccuracy: true // may cause errors if true
         };
         $scope.trackWatch = $cordovaGeolocation.watchPosition(watchOptions);
         $scope.trackWatch.then(
