@@ -552,7 +552,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 
 // COntroller for view, which creates new tasks for already created activities
-.controller('taskCreation', function ($rootScope, $scope, $http, $location, $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory) {
+.controller('taskCreation', function ($rootScope, $scope, $http, $location, $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory, $translate) {
     //Type of the TASK
     $scope.addQAtask = function () {
         Data.addTaskType("QA");
@@ -563,7 +563,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 })
 
 // controller for gameplay
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing) {
+.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing, $translate) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
@@ -812,7 +812,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
  * - Only shows waypoint and emits signal when waypoint is reached
  * - Is not concerned with GameState or the game progression logic
  */
-.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', 'leafletData', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, $timeout, leafletData) {
+.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', 'leafletData', '$translate', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, $timeout, leafletData, $translate) {
 
     $scope.waypointLoaded = false;
     $scope.allowEdit = false;
@@ -1107,9 +1107,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.trackPosition = function () {
         var watchOptions = {
-            frequency: 1000,
-            timeout: 10000,
-            enableHighAccuracy: true // may cause errors if true
+          frequency: 100,
+          maximumAge: 1000,
+          timeout: 10000,
+          enableHighAccuracy: true // may cause errors if true
         };
         $scope.trackWatch = $cordovaGeolocation.watchPosition(watchOptions);
         $scope.trackWatch.then(
