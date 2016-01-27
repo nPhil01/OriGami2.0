@@ -60,7 +60,7 @@ angular.module('starter').controller('pathController', ['$scope', '$ionicModal',
             layers: {
                 baselayers: {
                     osm: {
-                        name: 'OpenStreetMap',
+                        name: 'Satelite View',
                         url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: true,
@@ -70,32 +70,18 @@ angular.module('starter').controller('pathController', ['$scope', '$ionicModal',
                         }
                     },
                     streets: {
-                        name: 'Streets',
-                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+                        name: 'Streets View',
+                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz',
                         top: false,
-                        layerOptions: {
-                            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
-                            continuousWorld: false
-                        }
                     },
                     topographic: {
-                        name: 'Topographic',
+                        name: 'Topographic View',
                         url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: false,
                         layerOptions: {
                             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
-                            continuousWorld: false
-                        }
-                    },
-                    satellite: {
-                        name: 'Satellite',
-                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                        type: 'xyz',
-                        top: false,
-                        layerOptions: {
-                            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
                             continuousWorld: false
                         }
                     }
