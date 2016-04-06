@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 'leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova','ngAnimate'])
+angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 'leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova', 'ngAnimate'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,7 +30,9 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
         $translateProvider.preferredLanguage('en');
     })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+    $ionicConfigProvider.tabs.position('bottom');
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -62,6 +64,24 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
                 }
             }
         })
+        .state('tab.leaders', {
+            url: '/leaders',
+            cache: false,
+            views: {
+                'leaders-tab': {
+                    templateUrl: 'templates/leaders.html'
+                }
+            }
+        })
+        .state('tab.stats', {
+            url: '/stats',
+            cache: false,
+            views: {
+                'stat-tab': {
+                    templateUrl: 'templates/statistics.html'
+                }
+            }
+        })
         .state('tab.home', {
             url: '/home',
             views: {
@@ -74,6 +94,7 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
 
     .state('tab.avgames', {
             url: '/avgames',
+            cache: false,
             views: {
                 'tab-home': {
                     templateUrl: 'templates/av-games.html',
@@ -90,7 +111,20 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
                 }
             }
         })
-        .state('tab.editgame', {
+
+    /* Test State : Create new Game  -------------------- */
+    .state('tab.creategame', {
+            url: '/creategame',
+            views: {
+                'tab-home': {
+                    templateUrl: 'templates/creategame.html',
+                    controller: 'TeacherCtrl'
+                }
+            }
+        })
+        /* --------------------------------------------------- */
+
+    .state('tab.editgame', {
             url: '/editgame/:gameId',
             views: {
                 'tab-home': {
@@ -108,15 +142,16 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
                 }
             }
         })
-        .state('tab.playgame', {
-            url: '/playgame/:gameName',
-            views: {
-                'tab-home': {
-                    templateUrl: 'templates/play-game.html',
-                    controller: 'PlayCtrl'
-                }
+
+    .state('tab.playgame', {
+        url: '/playgame/:gameName',
+        views: {
+            'tab-home': {
+                templateUrl: 'templates/play-game.html',
+                controller: 'PlayCtrl'
             }
-        })
+        }
+    })
 
     // Creation of task - Aided navigation and Path planning
     .state('tab.aidnavig', {

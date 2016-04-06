@@ -1,4 +1,19 @@
 angular.module('starter.directives', [])
+    .directive('testAnimate', function () {
+        return {
+            link: function (scope, iElement, iAttrs) {
+                scope.$watch(iAttrs.testAnimate, function (newValue, oldValue) {
+                    if (newValue == -1) {
+                        iElement.stop();
+                    } else {
+                        iElement.animate({
+                            width: 100 + '%'
+                        }, 10000);
+                    }
+                });
+            }
+        };
+    })
     .directive('smiley', function ($parse) {
         var directive = {
             restrict: 'A',
@@ -52,20 +67,20 @@ angular.module('starter.directives', [])
                     /* Not perfect. Fill should instead be based on whether distance to
                      destination is decreasing, rather than using absolute distance */
                     switch (true) {
-                        case distance <= 10:
-                            fill = 'green';
-                            break;
-                        case distance <= 50:
-                            fill = 'yellowgreen';
-                            break;
-                        case distance <= 100:
-                            fill = 'gold';
-                            break;
-                        case distance <= 500:
-                            fill = 'yellow';
-                            break;
-                        default:
-                            fill = 'red';
+                    case distance <= 10:
+                        fill = 'green';
+                        break;
+                    case distance <= 50:
+                        fill = 'yellowgreen';
+                        break;
+                    case distance <= 100:
+                        fill = 'gold';
+                        break;
+                    case distance <= 500:
+                        fill = 'yellow';
+                        break;
+                    default:
+                        fill = 'red';
                     }
 
                     /* Clear canvas and draw smiley */

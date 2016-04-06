@@ -23,7 +23,24 @@ angular.module('starter.services', [])
     }
     return editedGame;    
 }) 
-
+.factory('PathData',function(){
+    var pathObj = {};
+    var pathdata = [];
+    
+    pathObj.addCoord = function(lat,lng){
+        pathdata.push({
+            'lat' : lat,
+            'lng' : lng
+        })
+    };
+    
+    pathObj.getPath = function(){
+        return pathdata;
+    };
+    
+    return pathObj; 
+    
+})
 .factory('Data', function () {
 
     var actService = {};

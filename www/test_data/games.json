@@ -1,7 +1,6 @@
 [
-    
+
     //Game 1
-    
     {
         "name": "City Exploration",
         "description": "Easy game which tests you basic navigation abilities. Complete all the activities, share your results with friends and make your parents and friends proud! ",
@@ -65,11 +64,78 @@
                 ],
                 "type": "Aided Wayfinding"
             }
+        ],
+        "players": [
+            {
+                "Player1": 100
+            }, 
+            {
+                "Player2": 100
+            }, 
+            {
+                "Player3": 100
+            }, 
+            {
+                "Player4": 100
+            }, 
+            {
+                "Player5": 100
+            }
         ]
     },
-    
-    
-    
+
+
+
+
+    {
+        "name": "FD demo 1",
+        "description": "Semana aberta UA 24/11/2015",
+        "timecompl": "20 min.",
+        "difficulty": 2,
+        "activities": [
+            {
+                "points": [{
+                    "name": "Reitoria",
+                    "description": "Entrada da reitoria da UA",
+                    "lon": -8.657556731723162,
+                    "lat": 40.63122281700757,
+                    "created": 1448364040337,
+                    "tasks": [{
+                            "type": "QA",
+                            "question": "Le musÃ©e GrÃ©vin est un musÃ©e de...",
+                            "answers": {
+                                "0": "cire",
+                                "1": "antiquitÃ©s",
+                                "2": "peintures",
+                                "3": "sculpture"
+                            }
+                    },
+                        {
+                            "type": "GeoReference",
+                            "photo": "asdfgas"
+                        }]
+            }],
+                "type": "Find destination",
+                "show": true
+        }, {
+                "points": [{
+                    "name": "Ponto 2",
+                    "description": "Farmacia",
+                    "lon": -8.658868074417114,
+                    "lat": 40.630935421930296,
+                    "created": 1448364140014,
+                    "tasks": []
+            }],
+                "type": "Follow route",
+                "show": false
+        }],
+        "_id": "56544a74d006e13f05bd23dd"
+    }
+
+
+
+
+
     // Game 2
     {
         "name": "City Exploration 1 ",
@@ -136,9 +202,9 @@
             }
         ]
     },
-    
+
     // Game 3
-    
+
     {
         "name": "City Exploration",
         "description": "Easy game which tests you basic navigation abilities. Complete all the activities, share your results with friends and make your parents and friends proud! ",
@@ -204,5 +270,5 @@
             }
         ]
     }
-    
+
 ]

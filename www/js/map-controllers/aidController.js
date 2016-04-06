@@ -18,7 +18,7 @@ angular.module('starter').controller('aidController', ['$scope', '$ionicModal',
                 lng: 8
 
             },
-           layers: {
+            layers: {
                 baselayers: {
                     osm: {
                         name: 'Satelite View',
@@ -62,68 +62,42 @@ angular.module('starter').controller('aidController', ['$scope', '$ionicModal',
 
         $scope.map.markers = new Array();
 
-        var Waypoint = function () {
-            if (!(this instanceof Waypoint)) return new Waypoint();
-            this.lat = "";
-            this.lng = "";
-            this.name = "";
-        };
+        /**
+         * Add Waypoint with modal
+         */
+        $scope.$on('leafletDirectiveMap.contextmenu', function (event, locationEvent) {
+            var Waypoint = function () {
+                this.lat = "";
+                this.lng = "";
+                this.name = "";
+            };
 
-        $ionicModal.fromTemplateUrl('templates/map/aid_point.html', {
+            $scope.newWaypoint = new Waypoint();
+            $scope.newWaypoint.lat = locationEvent.leafletEvent.latlng.lat;
+            $scope.newWaypoint.lng = locationEvent.leafletEvent.latlng.lng;;
+        });
+
+
+        $ionicModal.fromTemplateUrl('templates/map/waypoint.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.modal = modal;
         });
 
-        /**
-         * Add Waypoint with modal
-         */
-        $scope.$on('leafletDirectiveMap.contextmenu', function (event, locationEvent) {
-            $scope.newWaypoint = new Waypoint();
-            $scope.newWaypoint.lat = locationEvent.leafletEvent.latlng.lat;
-            $scope.newWaypoint.lng = locationEvent.leafletEvent.latlng.lng;;
-            $scope.modal.show();
-        });
 
-        $scope.saveWaypoint = function () {
+        $scope.saveWayPoint = function () {
             $scope.map.markers.push($scope.newWaypoint);
             $scope.modal.remove();
         };
 
-        $scope.saveAidPoint = function () {
-            if (($scope.newWaypoint.name == "" || $scope.newWaypoint.name == undefined) || ($scope.newWaypoint.description == undefined || $scope.newWaypoint.description == "")) {
-
-                if ($scope.newWaypoint.name == "" || $scope.newWaypoint.name == undefined) {
-                    $scope.name_border = "red";
-                } else {
-                    $scope.name_border = "";
-                }
-
-                if ($scope.newWaypoint.description == undefined || $scope.newWaypoint.description == "") {
-                    $scope.description_border = "red";
-                } else {
-                    $scope.description_border = "";
-                }
-            } else {
-                $scope.name_border = "";
-                $scope.description_border = "";
-
-                $scope.map.markers.push($scope.newWaypoint);
-                $scope.modal.hide();
-            }
-        };
-
         $scope.closeModal = function () {
             $scope.modal.hide();
-
-            $scope.name_border = "";
-            $scope.description_border = "";
-
         };
 
         $scope.removeMarkers = function () {
             $scope.modal.remove();
         };
+
 
     }]);

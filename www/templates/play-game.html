@@ -38,7 +38,7 @@
                 </div>
             </ion-content>
 
-            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
+            <ion-footer-bar class="bar-positive" ng-click="modal.remove()" class="title_foot">
                 <p class="title">{{'start_playing' | translate}}</p>
             </ion-footer-bar>
 
@@ -49,7 +49,7 @@
     <script id="waypointinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
 
-            <ion-content style="height: 100%; background-color:#1565C0;">
+            <ion-content style="height: 100%; background-color:#64B5F6;">
                 <div class="answer_output">
                     <i class="ion-android-pin"></i>
                     <h1>Your task: {{waypoint.name}}</h1>
@@ -67,12 +67,13 @@
     <!-- Notify when waypoint is reached -->
     <script id="waypoint-reached-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-content style="height: 100%; background-color:#1565C0;">
+            <ion-content style="height: 100%; background-color:#53DF83;">
                 <div class="answer_output">
                     <i class="ion-ribbon-a"></i>
                     <h1>{{congratsMessage}} </h1>
 
                     <p>You reached your goal !</p>
+                    <p>+20 points</p>
                 </div>
             </ion-content>
 
@@ -85,23 +86,46 @@
 
     <!-- Game Over Modal -->
     <script id="gameover-modal.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-content style="height: 100%; background-color:#1565C0">
+        <ion-modal-view style="height:75%; ">
+            <ion-content style="height: 100%; background-color:#64B5F6">
                 <div class="answer_output">
-                    <img src="./img/icons/Medal.png" />
-                    <h1>{{'congrat' | translate}}</h1>
-                    <p> {{'you_completed' | translate}} </p>
+                   <!-- <img src="./img/icons/Medal.png" /> -->
+                    <h1 ng-show="score > 0">{{'congrat' | translate}}</h1>
+                    <h1 ng-hide="score > 0" style="margin-top:10%;">Next time will be better!</h1>
+                    <!-- <p> {{'you_completed' | translate}} </p> -->
+                    <p style="font-size:3vh;margin-top:1%;">Your Score: <span style="font-size:3.5vh">{{score}} points</span></p>
 
-                    <!-- Facebook Scharing Button -->
-                    <button id="fab" ng-show="shareButtons" ng-click="shareViaFacebook('I completed OriGami task! ', null, null)" class="button button-positive button-fab" style="background-color:#3b5998"><i class="icon ion-social-facebook" style="color:white"></i></button>
+                    <div ng-show="score > 0">
+                        <p style="font-size:3vh;margin-top:5%;">Add your name to leaderboards</p>
 
+                        <div class="lead_name">
+                            <input type="text" ng-model="player.name" required>
+                            <button id="fab" ng-click="addLeader()" class="button button-positive button-fab" style="background-color:#53DF83;"><i class="icon ion-android-done" style="font-size:3vh;color:#1565C0;"></i></button>
+                        </div>
+
+                        <p style="font-size:3vh;margin-top:1%;">Leaderboard</p>
+                        <!-- Facebook Scharing Button
+                    <button id="fab" ng-show="shareButtons" ng-click="shareViaFacebook('I completed OriGami task! ', null, null)" class="button button-positive button-fab" style="background-color:#3b5998"><i class="icon ion-social-facebook" style="color:white"></i></button>-->
+
+                        <div class="leaderboard">
+                            <div class="row header">
+                                <div class="col">Position</div>
+                                <div class="col">Name</div>
+                                <div class="col">Points</div>
+                            </div>
+                            <div class="row content" ng-repeat="data in bestPlayers() | orderBy:'-points'">
+                                <div class="col">{{$index + 1}}</div>
+                                <div class="col">{{data.name}}</div>
+                                <div class="col">{{data.points}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </ion-content>
-
-            <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <p class="title">Continue</p>
-            </ion-footer-bar>
-
+            <div class="exit_butt">
+                <button class="button button-block button-balanced save_but" ng-click="exitGame();modal.remove()">{{'save' | translate}}</button>
+            </div>
         </ion-modal-view>
     </script>
 
@@ -113,8 +137,8 @@
                 <h1 class="title">{{'error' | translate}}</h1>
             </ion-header-bar>
 
-            <ion-content style="height: 100%; background-color:#673AB7">
-                <div class="plan-route" style="background-color:#673AB7">
+            <ion-content style="height: 100%; background-color:#64B5F6">
+                <div class="plan-route" style="background-color:#64B5F6">
                     <div class="information">
                         <i class="ion-alert-circled"></i>
                         <h1>{{'error' | translate}}</h1>
@@ -135,17 +159,16 @@
             <!--  <ion-header-bar class="bar-positive">
                 <h1 class="title">{{'geo_refer' | translate}}</h1>
             </ion-header-bar>  -->
-
-            <ion-content style="height: 100%;background-color:#1565C0;">
+            <ion-content style="height: 100%;background-color:#64B5F6;">
                 <div class="georef_game">
-                        <img style="max-width:50%; width:50%; max-height:90%;" src="{{geoRefPhoto}}">
+                    <img style="max-width:50%; width:50%; max-height:100%;" src="{{geoRefPhoto}}">
                     <div class="georef_instr">
                         <div class="content">
                             <h1>{{'geo_refer' | translate}}</h1>
 
                             <p>{{'picture_taken' | translate}}</p>
                             <div class="georef_icon">
-                                 <i class="ion-ios-arrow-left"></i>
+                                <i class="ion-ios-arrow-left"></i>
                             </div>
                         </div>
                     </div>
@@ -160,17 +183,18 @@
     <!-- Georefencing result Modal -->
     <script id="georef-result-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar class="bar-positive">
+            <!-- <ion-header-bar class="bar-positive">
                 <h1 class="title">{{'geo_refer' | translate}}</h1>
-            </ion-header-bar>
+            </ion-header-bar> -->
 
-            <ion-content style="height: 100%; background-color:#673AB7">
-                <div class="plan-route" style="background-color:#673AB7">
-                    <div class="information">
+            <ion-content style="height: 100%; background-color:#64B5F6">
+                <div class="plan-route" style="background-color:#64B5F6">
+                    <div class="geor_result">
                         <!--<i class="ion-images"></i> -->
                         <div class="feedback-icon {{georefSmiley}}"></div>
-                        <p>Distance to original location</p>
-                        <h3 style="color:yellow"> {{georefDistance}} metres</h3>
+                        <p>Distance to original location {{georefDistance}} metres</p>
+                        <p ng-hide="geoResult">-{{georefDistance}} points</p>
+                        <h2 ng-show="geoResult">+25 points</h2>
                     </div>
                 </div>
             </ion-content>
@@ -183,35 +207,42 @@
 
     <!-- QA  Game Modal -->
     <script id="qa-modal.html" type="text/ng-template">
-        <ion-modal-view style="padding: 0; margin:0; dispay:block; ">
-            <div class="question">
-                <h1 class="description">Now answer the question: </h1>
-                <h1 class="question_title">{{task.question}}</h1>
-                <button id="fab" ng-show="answerPicked" ng-click="checkAnswer(); modal.remove()" class="button button-positive button-fab" style="background-color:#FFFF00"><i class="icon ion-android-done" style="color:#1565C0"></i></button>
-            </div>
-            <div class="answers">
-                <div class="answer1" ng-click="chooseAnswer(task.answers[0], 0)" ng-class="{'clicked_ans': clicked[0]}">
-                    <h1>{{task.answers[0]}}</h1></div>
-                <div class="answer2" ng-click="chooseAnswer(task.answers[1], 1)" ng-class="{'clicked_ans': clicked[1]}">
-                    <h1>{{task.answers[1]}}</h1></div>
-                <div class="answer3" ng-click="chooseAnswer(task.answers[2], 2)" ng-class="{'clicked_ans': clicked[2]}">
-                    <h1>{{task.answers[2]}}</h1></div>
-                <div class="answer4" ng-click="chooseAnswer(task.answers[3], 3)" ng-class="{'clicked_ans': clicked[3]}">
-                    <h1>{{task.answers[3]}}</h1></div>
-            </div>
+        <ion-modal-view style="padding: 0; margin:0; dispay:block; background-color:#64B5F6; ">
+            <ion-content style="height: 100%; width:100%;">
+                <div class="qa_question" ng-class="{right_ans: answer == true,wrong_ans: answer == false}">
+                    <div class="skillbar clearfix">
+                        <div class="skillbar-bar"  test-animate="timeLeft"></div>
+                    </div>
+                    <h1 class="description">Now answer the question: </h1>
+                    <h1 class="question_title">{{task.question}}</h1>
+                    <button id="fab" ng-show="answerPicked" ng-click="showOutput();modal.remove()" class="button button-positive button-fab" style="background-color:#FFFF00"><i class="icon ion-arrow-right-c" style="color:#1565C0"></i></button>
+                </div>
+                <div class="qa_answers">
+                    <div class="answer1" ng-click="chooseAnswer(task.answers[0], 0);timeLeft = -1" ng-class="{'clicked_answ': clicked[0]}">
+                        <h1>{{task.answers[0]}}</h1></div>
+                    <div class="answer2" ng-click="chooseAnswer(task.answers[1], 1);timeLeft = -1" ng-class="{'clicked_answ': clicked[1]}">
+                        <h1>{{task.answers[1]}}</h1></div>
+                    <div class="answer3" ng-click="chooseAnswer(task.answers[2], 2);timeLeft = -1" ng-class="{'clicked_answ': clicked[2]}">
+                        <h1>{{task.answers[2]}}</h1></div>
+                    <div class="answer4" ng-click="chooseAnswer(task.answers[3], 3);timeLeft = -1" ng-class="{'clicked_answ': clicked[3]}">
+                        <h1>{{task.answers[3]}}</h1></div>
+                </div>
+            </ion-content>
         </ion-modal-view>
     </script>
 
 
 
     <!-- QA result Modal -->
-    <script id="qa-result-modal.html" type="text/ng-template">
-        <ion-modal-view style="padding: 0; margin:0; dispay:block; background-color: #03A9F4;">
-
-            <ion-content style="height: 100%; background-color:#1565C0;">
+    <script id="qa-result-modal.html" type="text/ng-template" class="qa_font">
+        <ion-modal-view style="padding: 0; margin:0; dispay:block; background-color: #64B5F6;">
+            <ion-content style="height: 100%; width:100%;" ng-class="{right_ans: answer == true,clicked_answ: answer == false}">
                 <div class="answer_output">
                     <i class="{{icon}}"></i>
                     <h1>{{answerResult}}</h1>
+                    <p ng-show="!answer">Right answer: {{rightAnswer}}</p>
+                    <p ng-hide="answer">-10 points</p>
+                    <p ng-show="answer">+25 points</p>
                 </div>
             </ion-content>
 
@@ -221,7 +252,6 @@
 
         </ion-modal-view>
     </script>
-
 
 
     <div class="bar bar-subheader bar-assertive" ng-show="showInfo" class="ng-show">

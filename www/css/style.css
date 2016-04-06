@@ -1,87 +1,132 @@
+/* white Space Tab bug fix */
+
+.tabs-top > .tabs,
+.tabs.tabs-top {
+    top: 0 !important;
+}
+
+.has-tabs-top {
+    top: 47px !important;
+}
+
+.tabs-positive > .tabs {
+    background-color: #2196F3 !important;
+}
+
+@font-face {
+    font-family: 'Segoe';
+    /*a name to be used later*/
+    src: url("../fonts/segoeprb.ttf");
+    ;
+    /*URL to font*/
+}
+
+
 /* NEW HOME PAGE ---------------------------------------- */
+
 .person-type {
     background-color: #80DEEA;
     height: 100%;
     position: relative;
 }
+
 .person-type .player {
-    background-color: #3F51B5;
+    background-color: #64B5F6;
     height: 45%;
     position: relative;
 }
+
 .person-type .player .type-picture {
     height: 100%;
     position: relative;
 }
+
 .person-type .player .type-picture img {
     top: 35%;
     left: 5%;
     position: absolute;
 }
+
 .person-type .player .type-picture .info {
     height: 100%;
     left: 32%;
     top: 35%;
     position: absolute;
-    letter-spacing: 0.04em;
-    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
-    font-style: normal;
     display: block;
 }
+
 .person-type .player .type-picture .info h2 {
     color: white;
-    font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 5vh;
 }
+
 .person-type .player .type-picture .info p {
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    font-size: 2vh;
 }
+
 .person-type .player .type-picture .next {
     left: 5%;
     bottom: 5%;
     position: absolute;
 }
+
 .person-type .teacher {
     height: 55%;
-    background-color: #FF5752;
+    background-color: #53DF83;
 }
+
 .person-type .teacher .type-picture {
     height: 100%;
     position: relative;
 }
+
 .person-type .teacher .type-picture img {
     top: 25%;
     right: 5%;
     position: absolute;
 }
+
 .person-type .teacher .type-picture .info {
     height: 100%;
     width: 60%;
     left: 5%;
     top: 25%;
     position: absolute;
-    letter-spacing: 0.04em;
-    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
     font-style: normal;
     display: block;
 }
+
 .person-type .teacher .type-picture .info h2 {
     color: white;
-    font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 800;
+    font-size: 5vh;
 }
+
 .person-type .teacher .type-picture .info p {
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    font-size: 2vh;
 }
+
 .person-type .teacher .type-picture .next {
     right: 5%;
     bottom: 5%;
     position: absolute;
 }
+
 .game-backg {
     height: 180px;
     background-image: url("../img/navigation.jpg");
@@ -89,25 +134,29 @@
     display: block;
     position: relative;
 }
+
 .game-modal {
     background-image: url("../img/1.png");
     background-size: cover;
     height: 100%;
 }
+
 .game-backg h2 {
     font-size: 2.5em;
     text-align: center;
     color: white;
     left: 5%;
 }
+
 .game-backg p {
     font-size: 1.5em;
     text-align: center;
     color: white;
     left: 5%;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-    font-style: normal;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
+
 .game-type {
     position: absolute;
     bottom: 10%;
@@ -115,19 +164,24 @@
     display: flex;
     margin: auto;
 }
+
 .game-type button {
     margin-left: 10px;
 }
+
 .scroll {
     min-height: 100%;
 }
+
 .scroll,
 .angular-leaflet-map {
     height: 100%;
 }
+
 .leaflet-bottom {
     bottom: 10px;
 }
+
 .games-cont .fab.button-fab-bottom-right {
     top: auto;
     right: 16px;
@@ -135,6 +189,7 @@
     left: auto;
     position: relative;
 }
+
 
 /* Collapsed list */
 
@@ -144,34 +199,21 @@
     padding-bottom: 0;
     transition: 0.09s all linear;
 }
+
 .list .item.item-accordion.ng-hide {
     line-height: 0px;
 }
+
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
     display: block !important;
 }
+
 .createdAct {
     margin-bottom: 20px;
 }
 
-.download_tiles{
-    width: 85%;
-    margin: auto ;
-    margin-bottom: 5px;
-    margin-top: 10px;
-    border-radius: 10px;
-    background-color: #FFEB3B;
-    background-image: linear-gradient( -48deg, #f87f73 0%, #f87f73 10%, #FFEB3B 40%,#FFEB3B 60%);
-}
 
-
-.download_button{
-    background-color:aqua;
-    position: absolute;
-    height: 40%;
-    width: 40%;
-}
 
 /* Tasks creation */
 
@@ -181,12 +223,15 @@
     left: 15%;
     display: flex;
 }
+
 .tasks .fab.button-fab {}
+
 .map-container {
     position: relative;
     width: 100%;
     height: 100%;
 }
+
 
 /* Play Game */
 
@@ -195,36 +240,142 @@
     width: 100%;
     height: 100%;
 }
+
 #smiley {
     position: absolute;
     right: 0%;
     top: 2%;
     opacity: 0.7;
 }
+
 .bearing {
     position: absolute;
     right: 40%;
     top: 100%;
 }
 
-/* "Play Game" part ------------------ */
 
+/* Created games page  ------------------ */
+.allg_cont{
+   width: 100%;
+    height: 85%;
+    top:20%;
+    position: absolute;
+}
+.techm_h {
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 5vh;
+    color: white;
+    top:50%;
+    margin-top: 50px;
+}
+
+.download_tiles {
+    width: 85%;
+    margin: auto;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 20px;
+    background-color: #FFEB3B;
+}
+
+.download_button {
+    background-color: aqua;
+    position: absolute;
+    height: 40%;
+    width: 40%;
+}
+
+.game_desc{
+    width: 100%;
+}
 .game-desc span {
     font-size: 1.0em;
 }
-.game-desc h2,
-.game-desc p,
-.game-desc p a,
-.game-desc {
-    color: black;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
-    font-style: normal;
+.game-desc .techm_diffc{
+    width: 100%;
+   height: 100%;
+    text-align: center;
 }
-.game-desc h2 {
-    font-size: 2em;
+.game-desc .techm_diffc i{
 }
-.game-desc p {
-    font-size: 1em;
+
+.game-desc  .play_but{
+     background: #53DF83;
+    border-radius: 30px;
+    width: 20vw;
+    height: 5vh;
+    color: white;
+    box-shadow: 0 0 0 0;
+    margin:auto;
+    margin-top: 3%;
+    text-align: center;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 1.5vh;
+    line-height: 5vh;
+}
+.game-desc  .play_but .content{
+    display: flex;
+    margin: auto;
+    width: 50%;
+}
+.game-desc  .play_but .content i{
+    margin-right: auto;
+    font-size: 5vh;
+}
+.game-desc  .play_but .content p{
+         margin-right: auto;
+     font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 3vh;
+    color: white;
+}
+
+.game-desc h2{
+     color: #3F51B5;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 4.5vh;
+    text-align: center;
+}
+.game-desc p{
+     color: #3F51B5;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    font-size: 2vh;
+    text-align: center;
+}
+
+.teachm_menu{
+    width: 100%;
+    display: flex;
+    
+}
+
+.teachm_b {
+    background: #64B5F6;
+    border-radius: 25px;
+    width: 15vw;
+    height: 5vh;
+    color: white;
+    box-shadow: 0 0 0 0;;
+    margin-right: 5px;
+    text-align: center;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 1.5vh;
+    line-height: 5vh;
+}
+.back_icon{
+    font-size:6vh;position: fixed;top: 1.5%;left: 2%;  cursor: pointer; color:white;
+}
+.newgame_icon{
+    font-size:5vh;position: fixed;top: 2%;right: 2%; color:white;cursor: pointer;
 }
 
 /*Info tab */
@@ -238,43 +389,49 @@
     color: #fafafa;
     position: relative;
 }
+
 .info-tab .information {
     position: relative;
     top: 20%;
 }
+
 .info-tab i {
     font-size: 5em;
 }
+
 .info-tab h1 {
     font-size: 2em;
     text-align: center;
     color: white;
 }
+
 .info-tab p {
     font-size: 1.5em;
     text-align: center;
     color: white;
 }
 
-.info-tab h2{
+.info-tab h2 {
     font-size: 2.5em;
     text-align: center;
     color: white;
 }
 
 
-/* Georefence Game */ 
-.georef_game{
+/* Georefence Game */
+
+.georef_game {
     width: 100%;
     height: 100%;
     display: flex;
 }
 
-.georef_game .georef_instr{
+.georef_game .georef_instr {
     width: 50%;
     height: 100%;
     text-align: center;
-     font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
 
 .georef_game .georef_instr .content {
@@ -286,134 +443,176 @@
 
 .georef_game .georef_instr .content h1 {
     position: relative;
-    top:5%;
-    font-size: 2.5em;
+    top: 5%;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 4vh;
     text-align: center;
     color: white;
     margin-bottom: 5%;
 }
+
 .georef_game .georef_instr .content p {
     position: relative;
-    top:20%;
-    font-size: 1.5em;
+    top: 20%;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 2vh;
     text-align: center;
     color: white;
+    margin-bottom: 30px;
 }
 
-.georef_game .georef_instr .content .georef_icon{
+.georef_game .georef_instr .content .georef_icon {
     position: relative;
-    top:20%;
+    top: 20%;
     font-size: 4.5em;
     color: white;
 }
+
 
 /* Modal window with explanation of the game rules */
 
 .plan-route {
     height: 31%;
     background-color: #3F51B5;
-    letter-spacing: 0.04em;
-    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
-   font-family: 'RobotoDraft', sans-serif;
     text-align: center;
-    font-style: normal;
     display: block;
     color: #fafafa;
     position: relative;
     background-color: #fec00f;
 }
-.plan-route .information {
-    position: relative;
-}
-.plan-route i {
-    font-size: 5em;
-}
-.plan-route h1 {
-    font-size: 2em;
+.plan-route .geor_result p{
+    font-family: 'Lato', sans-serif;
+    margin-top: 25px;
+    font-weight: 900;
+    font-size: 3vh;
     text-align: center;
     color: white;
 }
-.plan-route p {
-    font-size: 1.5em;
+.plan-route .geor_result h2{
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 5vh;
+}
+
+
+.plan-route i {
+    font-size: 5em;
+}
+
+.plan-route h1 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 4vh;
     text-align: center;
     color: white;
 }
 
+.plan-route p {
+    font-family: 'Lato', sans-serif;
+    margin-top: 25px;
+    font-weight: 900;
+    font-size: 2.5vh;
+    text-align: center;
+    color: white;
+}
+
+
 /* Page where user chooses task types ---------------------------------------- */
+
 .task-type {
     background-color: #80DEEA;
     display: block;
     height: 100%;
 }
+
 .task-type .type1 {
     background-color: #3F51B5;
     height: 50%;
 }
+
 .task-type .type1 .content {
     position: relative;
-    top:15%;
+    top: 15%;
 }
+
 .task-type .type1 .content img {
-     position: relative;
-    top:20%;
-     display: block;
+    position: relative;
+    top: 20%;
+    display: block;
     margin: 0 auto;
 }
+
 .task-type .type1 .content h2 {
     color: white;
     text-align: center;
-    margin-left: auto; margin-right: auto; 
-    font-family: 'RobotoDraft', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
+
 .task-type .type1 .content p {
     color: white;
     text-align: center;
-    margin-left: auto; margin-right: auto; 
-    font-family: 'Roboto', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
-
 
 .task-type .type2 {
     background-color: #4CAF50;
     height: 50%;
 }
+
 .task-type .type2 .content {
     position: relative;
     top: 15%;
 }
-.task-type .type2 .content  img {
-     display: block;
+
+.task-type .type2 .content img {
+    display: block;
     margin: 0 auto;
 }
+
 .task-type .type2 .content h2 {
     color: white;
     text-align: center;
-    margin-left: auto; margin-right: auto; 
-    font-family: 'RobotoDraft', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
+
 .task-type .type2 .content p {
     color: white;
     text-align: center;
-    margin-left: auto; margin-right: auto; 
-    font-family: 'Roboto', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
 
+
 /* Georefence task creation -------------------------- */
-.photoPC{
+
+.photoPC {
     position: absolute;
-    left:40%;
+    left: 40%;
     display: block;
 }
 
-.photoPC h2{
+.photoPC h2 {
     letter-spacing: 0.04em;
     text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
     text-align: center;
     color: black;
-    font-family: 'RobotoDraft', sans-serif;
-    font-size: 25;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
 }
-
 
 .georef {
     height: 100%;
@@ -421,8 +620,8 @@
     position: relative;
 }
 
-/* step 1*/
 
+/* step 1*/
 
 .georef .georef_step1 {
     height: 60%;
@@ -430,24 +629,26 @@
     position: relative;
 }
 
-.georef .georef_step1 img{
+.georef .georef_step1 img {
     heigh: 300px;
     width: 300px;
-    left:40%;
-    top:25%;
+    left: 40%;
+    top: 25%;
     position: absolute;
 }
 
-.georef .georef_step1 button{
-    left:20%;
-    top:5%;
+.georef .georef_step1 button {
+    left: 20%;
+    top: 5%;
     position: absolute;
 }
-.georef .georef_step1 .getpict{
-    left:50%;
-    top:5%;
+
+.georef .georef_step1 .getpict {
+    left: 50%;
+    top: 5%;
     position: absolute;
 }
+
 
 /* step 2 */
 
@@ -457,16 +658,19 @@
     width: 80%;
     position: relative;
 }
+
 .georef .georef_step2 label {
     top: 10%;
     height: 70%;
     width: 95%;
 }
+
 .georef .georef_step2 label input {
     top: 10%;
     height: 70%;
     width: 100%;
 }
+
 
 /* step 3 */
 
@@ -475,6 +679,7 @@
     width: 100%;
     position: relative;
 }
+
 .dev-phase {
     height: 100%;
     width: 60%;
@@ -487,6 +692,7 @@
     text-align: center;
     font-style: normal;
 }
+
 .form-background {
     position: relative;
     height: 100%;
@@ -494,12 +700,15 @@
     background-image: url("/www/img/april.jpg");
     background-size: cover;
 }
+
 .input-info {
     letter-spacing: 0.04em;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: left;
     font-style: normal;
 }
+
 
 /* List with all created points and task for each point ------------------*/
 
@@ -508,44 +717,52 @@
     height: 100%;
     width: 100%;
 }
+
 .points-cont .location-icon i {
     letter-spacing: 0.04em;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
     font-style: normal;
 }
+
 .points-cont .location-icon {
     position: absolute;
     left: 2%;
     font-size: 1.1em;
 }
+
 .points-cont .new-task {
     position: absolute;
     right: 15%;
     font-size: 1.1em;
 }
+
 .points-cont .all-tasks {
     position: absolute;
     right: 2%;
     font-size: 1.1em;
 }
+
 .points-cont p {
     position: absolute;
     letter-spacing: 0.04em;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
     font-style: normal;
     left: 25%;
     font-size: 1.2em;
 }
+
 .points-cont i {
     position: absolute;
-    letter-spacing: 0.04em;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
-    font-style: normal;
     right: 5%;
 }
+
 
 /* List with all the created activities in two windows: EDIT and NEW ------------------- */
 
@@ -556,13 +773,15 @@
     border-width: 5px;
     border-color: black;
 }
+
 .activity-edit p {
     letter-spacing: 0.04em;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
-    font-style: normal;
     color: white;
 }
+
 .activity-new {
     background-color: brown;
     height: 90px;
@@ -570,48 +789,57 @@
     border-width: 5px;
     border-color: black;
 }
+
 .activity-new p {
     letter-spacing: 0.04em;
-    font-family: "Lucida Grande", "Segoe UI", "Arial", sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
-    font-style: normal;
     color: white;
 }
+
 
 /*   Page with Languages --------------------------- */
 
 .lang-tab {
     height: 30%;
     background-color: #3F51B5;
-    font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
     text-align: center;
     display: block;
     color: #fafafa;
     position: relative;
 }
+
 .lang-tab .information {
     position: relative;
     top: 20%;
 }
+
 .lang-tab i {
     font-size: 5em;
 }
+
 .lang-tab h1 {
     font-size: 2em;
     text-align: center;
     color: white;
 }
+
 .lang-tab p {
     font-family: 'RobotoDraft', sans-serif;
     font-size: 1.5em;
     text-align: center;
     color: white;
 }
-.lang-country{
+
+.lang-country {
     font-family: 'RobotoDraft', sans-serif;
     font-size: 1.2em;
-        color: black;
+    color: black;
 }
+
 
 /* Border line of game title */
 
@@ -620,23 +848,22 @@
 }
 
 .black {
-    border:none;
+    border: none;
 }
 
+
 /* Border line of new Waypoint Desription */
+
 .red {
     border: 2px solid red;
 }
 
 .black {
-    border:none;
+    border: none;
 }
-
-
 
 .feedback-icon {
     font-size: 8em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
 }
-
