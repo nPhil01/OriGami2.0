@@ -199,6 +199,11 @@ angular.module('starter.services', [])
                 method: 'GET',
             });
         },
+        getMetadata: function () {
+            return $http.get(base + '/games/metadata', {
+                method: 'GET',
+            });
+        },
         saveItem: function (form) {
             return $http.post(base + '/games/item', form, {
                 method: 'POST',
@@ -306,7 +311,6 @@ angular.module('starter.services', [])
                 });
         return defer.promise;
     };
-
     return data;
 })
 

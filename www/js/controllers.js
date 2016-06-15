@@ -26,21 +26,18 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicHistory.goBack();
     };
 
-
-
     // Fetch all the games from the server
     $scope.games = [];
-    API.getOne("metadata").success(function (data, status, headers, config) {
-        console.log(data);
+    API.getMetadata().success(function (metadata, status, headers, config) {
         $scope.games = [];
-        for (var i = 0; i < data[0].games.length; i++) {
-            $scope.games.push(data[0].games[i]);
-            $scope.games[i].diff = Array.apply(null, Array(data[0].games[i].diff)).map(function () {
+        for (var i = 0; i < metadata.length; i++) {
+            $scope.games.push(metadata[i]);
+            $scope.games[i].diff = Array.apply(null, Array(metadata[i].diff)).map(function () {
                 return "ion-ios-star"
             });
         }
     }).error(function (data, status, headers, config) {
-
+        console.log("Could not fetch game metadata from server");
     });
 
 
@@ -600,7 +597,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.finishGame = function () {
         var metaFile = [];
-        API.getOne("metadata").success(function (data, status, headers, config) {
+        API.getMetadata().success(function (data, status, headers, config) {
             metaFile = data;
             var metagame = {};
             metagame.name = $scope.newgame.name;
@@ -611,6 +608,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             metaFile[0].games.push(metagame);
 
             console.log(metagame);
+            /*
             API.deleteItem("metadata", $rootScope.getToken())
                 .success(function (data, status, headers, config) {
                     $rootScope.hide();
@@ -618,7 +616,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $rootScope.notify(
                         $translate.instant('oops_wrong'));
                 });
-
+            */
             API.saveItem(metaFile)
                 .success(function (data, status, headers, config) {
                     console.log(data);
@@ -1466,7 +1464,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.exitGame = function () {
         var delGame = {};
 
-        console.log(PathData.getPath());
+        //console.log(PathData.getPath());
 
         API.getOne($scope.gameName)
             .success(function (data, status, headers, config) {
