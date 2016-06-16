@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.value('Server', 'giv-origami.uni-muenster.de:8000')
+.value('Server', 'giv-origami.uni-muenster.de/origamidb')
 
 .factory('Edit', function() {
     var editedGame = {};

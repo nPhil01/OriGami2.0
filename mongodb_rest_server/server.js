@@ -14,8 +14,8 @@ server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
-server.listen(8000, function () {
-  console.log("Mongodb REST interface server started");
+server.listen(8000, "127.0.0.1", function () {
+  console.log("Mongodb REST interface server started. Will only listen to requests from localhost (use nginx etc. downstream)");
 });
 
 // Get only one certain game
