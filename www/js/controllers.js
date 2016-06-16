@@ -92,7 +92,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $translate.instant('oops_wrong'));
         });
     };
-*/
+    */
 
 
     /*API.getAll().success(function (data, status, headers, config) {
@@ -455,7 +455,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.$on('$destroy', function () {
-        $scope.modal.remove();
+        if (typeof $scope.modal != 'undefined') {
+            $scope.modal.remove();
+        }
     });
 
     //Add Waypoint with modal
@@ -1379,7 +1381,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     });
 
     $scope.$on('$destroy', function () {
-        $scope.modal.remove();
+        if (typeof $scope.modal != 'undefined') {
+            $scope.modal.remove();
+        }
     });
 
     $scope.$on('geoRefMarkedEvent', function (event, distance) {
