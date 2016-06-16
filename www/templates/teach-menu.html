@@ -2,10 +2,10 @@
     <div style="position:fixed; top:2%; width:100%;">
         <h2 class="techm_h">Created Games</h2>
         <i class="ion-arrow-left-c back_icon" ng-click="cancelGame()"></i>
-        <i class="ion-plus-round newgame_icon" ng-click="cancelGame()" ng-click="startGameCreation()" ui-sref="tab.creategame"></i>
+        <i class="ion-plus-round newgame_icon" ng-click="startGameCreation()" ui-sref="tab.creategame"></i>
     </div>
     <ion-content style="height:90%;top:10%;">
-        <div class="list card download_tiles" ng-repeat="item in list | orderBy:'difficulty' ">
+        <div class="list card download_tiles" ng-repeat="item in list | orderBy:'name' ">
             <a>
                 <div class="item game-desc">
                     <h2>{{item.name}}</h2>
