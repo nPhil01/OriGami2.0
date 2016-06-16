@@ -15,7 +15,7 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
 server.listen(8000, function () {
-  console.log("Server started");
+  console.log("Mongodb REST interface server started");
 });
 
 // Get only one certain game
