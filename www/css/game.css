@@ -2,7 +2,7 @@
 
 .title_foot p {
     font-size: 4.5vh;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     line-height: 100%;
 }
@@ -39,7 +39,7 @@
     text-align: center;
     color: white;
     font-size: 4.5vh;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     line-height: 100%;
 }
@@ -55,7 +55,7 @@
     background: white;
     font-size: 3vh;
     color: #2196F3;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 700;
     text-align: center;
     margin: auto;
@@ -88,7 +88,7 @@
 }
 
 .answer .photo_c .photoAns_b {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 700;
     display: block;
     color: white;
@@ -115,7 +115,7 @@
 .answer label .wrong-input {
     font-size: 15px;
     color: #2196F3;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 700;
     font-size: 2vh;
     line-height: 100%;
@@ -152,7 +152,7 @@
     margin-left: -37.5%;
     width: 75%;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 2vh;
     background-color: #53DF83;
@@ -173,7 +173,7 @@
     color: white;
     margin-top: 5px;
     font-size: 4.5vh;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     line-height: 100%;
 }
@@ -183,7 +183,7 @@
     color: white;
     margin-top: 5px;
     font-size: 2.5vh;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     line-height: 100%;
 }
@@ -201,7 +201,7 @@
     margin-left: -37.5%;
     width: 75%;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 2vh;
     color: white;
@@ -236,7 +236,7 @@
 }
 
 .photo_div .photo_ic label {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 2vh;
     display: block;
@@ -261,14 +261,14 @@
 /* Question Modal */
 
 .qa_font {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     line-height: 100%;
 }
 
 .qa_question {
     background-color: #64B5F6;
-    height: 30%;
+    height: 35%;
     width: 100%;
     position: relative;
     text-align: center;
@@ -277,7 +277,7 @@
 .qa_question .description {
     text-align: center;
     font-size: 2.5vh;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     line-height: 100%;
 }
@@ -292,11 +292,12 @@
     margin-right: auto;
     font-size: 5vh;
     position: relative;
-    top: 10%;
-    width: 75%;
+    top: 2%;
+    width: 85%;
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
+    font-size: 22pt;
 }
 
 .qa_question button {
@@ -307,7 +308,7 @@
 
 .qa_answers {
     width: 100%;
-    height: 70%;
+    height: 65%;
 }
 
 .qa_answers .answer1 {
@@ -360,7 +361,7 @@
 .qa_answers .answer1 h1 {
     position: relative;
     top: 40%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     color: #2196F3;
@@ -369,7 +370,7 @@
 .qa_answers .answer2 h1 {
     position: relative;
     top: 40%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     color: #2196F3;
@@ -378,7 +379,7 @@
 .qa_answers .answer3 h1 {
     position: relative;
     top: 40%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     color: #2196F3;
@@ -387,7 +388,7 @@
 .qa_answers .answer4 h1 {
     position: relative;
     top: 40%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     color: #2196F3;
@@ -506,14 +507,14 @@
 }
 
 .answer_output h1 {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
     color: white;
 }
 
 .answer_output p {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 3.5vh;
     color: white;
@@ -529,13 +530,13 @@
 }
 
 .end_info h1 {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
 }
 
 .end_info p {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
 }
@@ -550,7 +551,7 @@
 }
 
 .waypoint_info h1 {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     color: white;
@@ -566,7 +567,7 @@
 }
 
 .waypoint_desc h1 {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     color: white;
@@ -577,14 +578,14 @@
 
 .leaderboard .header .col {
     background-color: #53DF83;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 3vh;
     color: white;
 }
 
 .leaderboard .content .col {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 600;
     font-size: 2vh;
     color: white;
@@ -600,7 +601,7 @@
     width: 80%;
     text-align: center;
     margin-bottom: 20px;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 700;
     font-size: 2vh;
     color: #2196F3;
@@ -618,7 +619,7 @@
 .exit_butt .save_but {
     width: 100%;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 2vh;
     color: white;
@@ -633,7 +634,7 @@
 .point_butt .save_but {
     width: 50%;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 2vh;
     color: white;
@@ -646,7 +647,7 @@
 
 .leadb_h {
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 6vh;
     color: #FFEB3B;
@@ -687,14 +688,14 @@
 }
 
 .sort_h {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 3vh;
 }
 
 .leadb .header .col {
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
     color: white;
@@ -703,7 +704,7 @@
 
 .leadb .content .col {
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
 }
 
 .best_pl {

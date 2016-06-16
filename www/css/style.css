@@ -14,13 +14,8 @@
 }
 
 @font-face {
-    font-family: 'Segoe';
-    /*a name to be used later*/
-    src: url("../fonts/segoeprb.ttf");
-    ;
-    /*URL to font*/
+    font-family: sans-serif;
 }
-
 
 /* NEW HOME PAGE ---------------------------------------- */
 
@@ -52,7 +47,7 @@
     left: 32%;
     top: 35%;
     position: absolute;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     display: block;
@@ -60,14 +55,14 @@
 
 .person-type .player .type-picture .info h2 {
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
 }
 
 .person-type .player .type-picture .info p {
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     font-size: 2vh;
 }
@@ -100,7 +95,7 @@
     left: 5%;
     top: 25%;
     position: absolute;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     font-style: normal;
@@ -109,14 +104,14 @@
 
 .person-type .teacher .type-picture .info h2 {
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 800;
     font-size: 5vh;
 }
 
 .person-type .teacher .type-picture .info p {
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     font-size: 2vh;
 }
@@ -153,7 +148,7 @@
     text-align: center;
     color: white;
     left: 5%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -264,7 +259,7 @@
 }
 .techm_h {
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
     color: white;
@@ -313,7 +308,7 @@
     margin-top: 3%;
     text-align: center;
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 1.5vh;
     line-height: 5vh;
@@ -329,7 +324,7 @@
 }
 .game-desc  .play_but .content p{
          margin-right: auto;
-     font-family: 'Lato', sans-serif;
+     font-family: sans-serif;
     font-weight: 700;
     font-size: 3vh;
     color: white;
@@ -337,14 +332,14 @@
 
 .game-desc h2{
      color: #3F51B5;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4.5vh;
     text-align: center;
 }
 .game-desc p{
      color: #3F51B5;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     font-size: 2vh;
     text-align: center;
@@ -366,7 +361,7 @@
     margin-right: 5px;
     text-align: center;
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 1.5vh;
     line-height: 5vh;
@@ -383,7 +378,7 @@
 .info-tab {
     height: 40%;
     background-color: #3F51B5;
-    font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
     display: block;
     color: #fafafa;
@@ -430,7 +425,7 @@
     width: 50%;
     height: 100%;
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -444,7 +439,7 @@
 .georef_game .georef_instr .content h1 {
     position: relative;
     top: 5%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     text-align: center;
@@ -455,7 +450,7 @@
 .georef_game .georef_instr .content p {
     position: relative;
     top: 20%;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 2vh;
     text-align: center;
@@ -483,7 +478,7 @@
     background-color: #fec00f;
 }
 .plan-route .geor_result p{
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     margin-top: 25px;
     font-weight: 900;
     font-size: 3vh;
@@ -492,7 +487,7 @@
 }
 .plan-route .geor_result h2{
     color: white;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 5vh;
 }
@@ -503,7 +498,7 @@
 }
 
 .plan-route h1 {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 900;
     font-size: 4vh;
     text-align: center;
@@ -511,7 +506,7 @@
 }
 
 .plan-route p {
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     margin-top: 25px;
     font-weight: 900;
     font-size: 2.5vh;
@@ -550,7 +545,7 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -559,7 +554,7 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -583,7 +578,7 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -592,7 +587,7 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -610,7 +605,7 @@
     text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
     text-align: center;
     color: black;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
 }
 
@@ -703,7 +698,7 @@
 
 .input-info {
     letter-spacing: 0.04em;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: left;
     font-style: normal;
@@ -720,7 +715,7 @@
 
 .points-cont .location-icon i {
     letter-spacing: 0.04em;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     font-style: normal;
@@ -747,7 +742,7 @@
 .points-cont p {
     position: absolute;
     letter-spacing: 0.04em;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     font-style: normal;
@@ -757,7 +752,7 @@
 
 .points-cont i {
     position: absolute;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     right: 5%;
@@ -776,7 +771,7 @@
 
 .activity-edit p {
     letter-spacing: 0.04em;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     color: white;
@@ -792,7 +787,7 @@
 
 .activity-new p {
     letter-spacing: 0.04em;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     color: white;
@@ -804,7 +799,7 @@
 .lang-tab {
     height: 30%;
     background-color: #3F51B5;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-weight: 500;
     text-align: center;
     display: block;
@@ -828,14 +823,14 @@
 }
 
 .lang-tab p {
-    font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.5em;
     text-align: center;
     color: white;
 }
 
 .lang-country {
-    font-family: 'RobotoDraft', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.2em;
     color: black;
 }
