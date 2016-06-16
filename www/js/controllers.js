@@ -598,6 +598,23 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.finishGame = function () {
+        API.saveItem($scope.newgame)
+            .success(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.doRefresh(1);
+                $ionicHistory.goBack();
+                $scope.newgame = {};
+            })
+            .error(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+                $ionicHistory.goBack();
+                $scope.newgame = {};
+                $scope.numberTask = 0;
+            });
+    };
+    /*
+    $scope.finishGame = function () {
         var metaFile = [];
         API.getMetadata().success(function (data, status, headers, config) {
             metaFile = data;
@@ -618,26 +635,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $rootScope.notify(
                         $translate.instant('oops_wrong'));
                 });
-            */
+            
             API.saveItem(metaFile)
                 .success(function (data, status, headers, config) {
                     console.log(data);
-
-
-                    API.saveItem($scope.newgame)
-                        .success(function (data, status, headers, config) {
-                            $rootScope.hide();
-                            $rootScope.doRefresh(1);
-                            $ionicHistory.goBack();
-                            $scope.newgame = {};
-                        })
-                        .error(function (data, status, headers, config) {
-                            $rootScope.hide();
-                            $rootScope.notify("Oops something went wrong!! Please try again later");
-                            $ionicHistory.goBack();
-                            $scope.newgame = {};
-                            $scope.numberTask = 0;
-                        });
                 })
                 .error(function (data, status, headers, config) {
                     $rootScope.hide();
@@ -663,11 +664,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $ionicHistory.goBack();
                 $scope.newgame = {};
                 $scope.numberTask = 0;
-            });*/
+            });
 
 
     };
-
+    */
 
     $scope.removeMarkers = function () {
         $scope.modal.remove();
