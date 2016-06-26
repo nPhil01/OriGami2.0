@@ -1502,6 +1502,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.waypointLoaded = false;
     $scope.allowEdit = false;
+    $scope.showMarker = false;
 
     /* Initialize view of map */
     $scope.initialize = function () {
@@ -1566,6 +1567,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         };
 
         $scope.geoLocButtonColor = "button-calm";
+        $scope.playerMarkerButtonColor = "button-calm";
         $scope.getRealTimePos = false;
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
@@ -1576,13 +1578,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.updatePlayerPosMarker = function (position) {
         if (typeof $scope.map.markers.PlayerPos === "undefined") {
+            var playerMarker = './img/icons/marker-transparent.png';
             var marker = {
                 lat: position.lat,
                 lng: position.lng,
                 message: "You are here",
                 draggable: false,
                 icon: {
-                    iconUrl: './img/icons/Youarehere.png',
+                    iconUrl: playerMarker,
                     iconSize: [48, 48],
                     iconAnchor: [24, 48]
                 }
@@ -1868,6 +1871,30 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.toggleGeoLocation(false);
         }
     });
+
+    // Show player position if button is pressed
+    $scope.showPositionMarker = function () {
+        if ($scope.showMarker == false) {
+            $scope.showMarker = true;
+            $scope.playerMarkerButtonColor = "button-balanced";
+
+            if (typeof $scope.map.markers.PlayerPos != "undefined") {
+                $scope.map.markers.PlayerPos.icon = {
+                    iconUrl: './img/icons/Youarehere.png',
+                    iconSize: [48, 48],
+                    iconAnchor: [24, 48]
+                };
+                // Hide marker again after 5 seconds
+                $timeout(function () {
+                    $scope.map.markers.PlayerPos.icon = {
+                        iconUrl: './img/icons/marker-transparent.png'
+                    };
+                    $scope.playerMarkerButtonColor = "button-calm";
+                    $scope.showMarker = false;
+                }, 5000);
+            }
+        }
+    }
 
     $scope.initialize();
 

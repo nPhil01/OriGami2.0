@@ -180,11 +180,10 @@
 .games-cont .fab.button-fab-bottom-right {
     top: auto;
     right: 16px;
-    bottom: 16px;
+    bottom: 25px;
     left: auto;
     position: relative;
 }
-
 
 /* Collapsed list */
 
@@ -249,6 +248,19 @@
     top: 100%;
 }
 
+#button-container {
+    top:auto;
+    right: 1%;
+    left: auto;
+    bottom: 16px;
+    position: absolute;
+}
+
+.map-button {
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+}
 
 /* Created games page  ------------------ */
 .allg_cont{
@@ -589,6 +601,8 @@
     margin-right: auto;
     font-family: sans-serif;
     font-weight: 500;
+    font-size: 6vw;
+    line-height: 1em;
 }
 
 
