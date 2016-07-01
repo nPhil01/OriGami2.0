@@ -290,15 +290,15 @@
 .qa_question h1 {
     margin-left: auto;
     margin-right: auto;
-    font-size: 5vh;
+    font-size: 14pt;
     position: relative;
     top: 2%;
     width: 85%;
     color: white;
     font-family: sans-serif;
     font-weight: 900;
-    font-size: 3vh;
-    line-height: 3vh;
+    font-size: calc(1vh + 1vw + 1vmin);
+    line-height: 3vmin;
 }
 
 .qa_question button {
@@ -361,54 +361,54 @@
 
 .qa_answers .answer1 h1 {
     position: relative;
-    top: 40%;
+    top: 10%;
     font-family: sans-serif;
     font-weight: 900;
-    font-size: 4vh;
+    font-size: calc(1vh + 1vw + 1vmin);
     color: #2196F3;
 }
 
 .qa_answers .answer2 h1 {
     position: relative;
-    top: 40%;
+    top: 10%;
     font-family: sans-serif;
     font-weight: 900;
-    font-size: 4vh;
+    font-size: calc(1vh + 1vw + 1vmin);
     color: #2196F3;
 }
 
 .qa_answers .answer3 h1 {
     position: relative;
-    top: 40%;
+    top: 10%;
     font-family: sans-serif;
     font-weight: 900;
-    font-size: 4vh;
+    font-size: calc(1vh + 1vw + 1vmin);
     color: #2196F3;
 }
 
 .qa_answers .answer4 h1 {
     position: relative;
-    top: 40%;
+    top: 10%;
     font-family: sans-serif;
     font-weight: 900;
-    font-size: 4vh;
+    font-size: calc(1vh + 1vw + 1vmin);
     color: #2196F3;
 }
 
 .qa_answers .answer1:hover h1 {
-    font-size: 5vh;
+    font-size: calc(1vh + 1vw + 1.2vmin);
 }
 
 .qa_answers .answer2:hover h1 {
-    font-size: 5vh;
+    font-size: calc(1vh + 1vw + 1.2vmin);
 }
 
 .qa_answers .answer3:hover h1 {
-    font-size: 5vh;
+    font-size: calc(1vh + 1vw + 1.2vmin);
 }
 
 .qa_answers .answer4:hover h1 {
-    font-size: 5vh;
+    font-size: calc(1vh + 1vw + 1.2vmin);
 }
 
 
