@@ -5,6 +5,13 @@
         <!-- <button ng-click = "createFile()">ASDGFASDGASDG</button> -->
     </div>
     <ion-content style="height:90%;top:10%;">
+        <!-- Display error message if http request fails to fetch games -->
+       <div class="padding ui-feedback" ng-show="error_msg != null">
+            <div class="ui-feedback-icon">
+                <i class="ion-wifi"></i>
+            </div>
+            <div class="ui-feedback-message">{{error_msg}}</div>
+        </div>
         <div class="list card calm-bg download_tiles" style="background-color:#FFEB3B" ng-repeat="game in games | orderBy:'name'">
             <a ng-click="gameSelect(game.name)" style="width:100%;height:100%;">
 

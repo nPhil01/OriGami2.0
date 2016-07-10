@@ -639,7 +639,7 @@
 }
 
 .georef .georef_step1 img {
-    heigh: 300px;
+    height: 300px;
     width: 300px;
     left: 40%;
     top: 25%;
@@ -875,4 +875,29 @@
     font-size: 8em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+}
+
+/* For error notifications */
+.ui-feedback {
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 25%;
+    font-size:5vw;
+    line-height: 5vmin;
+    width:90%;
+    display:block;
+    background-color: #fec00f;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ui-feedback-icon {
+    width: 15%;
+    display:table-cell;
+    vertical-align: middle;
+    font-size: 10vw;
+    color: brown;
+}
+
+.ui-feedback-message {
+    display:table-cell;
 }

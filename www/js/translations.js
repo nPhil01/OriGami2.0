@@ -56,6 +56,7 @@ var translations = {
         "error_watching":"Error occurred when watching position",
         "now_using_geo":"Now using Geolocation! Map panning disabled",
         "avail_games":"Available Games",
+        "network_error" : "Could not connect to server! Check internet connection", 
         
         /* New Phrases ------------------------- */
         
@@ -78,7 +79,7 @@ var translations = {
         "no_points": "No Points Specified",
         "marked_location": "Marked photography location ",
         "original_location": "Original photograph location?",
-        "take_picture": "Take a picture",
+        //"take_picture": "Take a picture",
         "get_picture":"Get a picture",
         "select_file": "Select file",
         "nogames_created": "There are no games created at the moment"

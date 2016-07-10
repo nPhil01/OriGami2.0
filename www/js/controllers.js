@@ -29,6 +29,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     // Fetch all the games from the server
     $scope.games = [];
     API.getMetadata().success(function (metadata, status, headers, config) {
+        $scope.error_msg = null;
         $scope.games = [];
         for (var i = 0; i < metadata.length; i++) {
             $scope.games.push(metadata[i]);
@@ -37,6 +38,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             });
         }
     }).error(function (data, status, headers, config) {
+        $scope.error_msg = $translate.instant('network_error');
         console.log("Could not fetch game metadata from server");
     });
 
@@ -176,6 +178,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     API.getAll().success(function (data, status, headers, config) {
         $scope.list = [];
+        $scope.error_msg = null;
         for (var i = 0; i < data.length; i++) {
             if (data[i].name != null) {
                 $scope.list.push(data[i]);
@@ -193,6 +196,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.noData = false;
         }
     }).error(function (data, status, headers, config) {
+        $scope.error_msg = $translate.instant('network_error');
         $rootScope.notify(
             $translate.instant('oops_wrong'));
     });
