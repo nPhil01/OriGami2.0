@@ -172,7 +172,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 })
 
-.controller('TeacherCtrl', function ($rootScope, $scope, API, Edit, $timeout, $ionicModal, $window, $ionicHistory, $translate, $ionicSlideBoxDelegate, $cordovaCamera, $q) {
+.controller('TeacherCtrl', function ($rootScope, $scope, API, Edit, $timeout, $ionicModal, $window, $ionicHistory, 
+	$translate, $ionicSlideBoxDelegate, $cordovaCamera, $q) {
     // List of all available games fetched from the server
     $scope.list = [];
 
@@ -521,9 +522,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.qaTask = {};
 
         $scope.picFile = [];
+        $scope.picFilename = [];
+        $scope.imgPrvw = [];
 
         $scope.modal.remove();
-        createModal('templates/tasks/quest_type.html');
+        $scope.qamodal = createModal('templates/tasks/quest_type.html');
     };
 
     $scope.addGRtask = function () {
@@ -534,6 +537,30 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
         $scope.georP = null;
         $scope.gameMap.markers = [];
+    };
+
+    $scope.imgUpload = function(file, picIndex) {
+        var upload = API.uploadImage(file);
+        var reader = new FileReader();
+
+        // Previewing the image
+        reader.onload = function(event) {
+            $scope.imgPrvw[picIndex] = event.target.result;
+            $scope.$apply();
+        }
+        reader.readAsDataURL(file);
+
+        upload.then(function(res) {
+            console.log(res);
+            if (res.status == 200) {
+                $scope.picFilename[picIndex] = res.data.img_file;
+            } else {
+                console.log('Error! Pic POSTed, but no filename returned')
+            }
+            console.log($scope.picFilename);
+        }), function(res) {
+            console.log("Error uploading image.", res);
+        }
     };
 
     /* Picture is Loaded */
@@ -726,8 +753,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.list.splice($scope.list.indexOf(item), 1);
     };
 
-
-
     $scope.editItem = function (item) {
         $scope.navactivities = [];
 
@@ -782,9 +807,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             });
     };
 })
-
-
-
 
 // Controller which controls new GAME creation
 .controller('NewGameCtrl', ['$rootScope', '$scope', '$state', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams', '$cordovaCamera', function ($rootScope, $scope, $state, $http, $location, $cordovaGeolocation,
@@ -1010,7 +1032,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     //Submit task when running on Windows
     $scope.submitGRTask = function (uploadedPhoto) {
-        $scope.imgURI = "data:image/jpeg;base64," + uploadedPhoto.base64;
+        //$scope.imgURI = "data:image/jpeg;base64," + uploadedPhoto.base64;
 
         Task.addPhoto($scope.imgURI);
         Task.addCoordinates($scope.map.markers[0].lat, $scope.map.markers[0].lng);
@@ -1160,7 +1182,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 }])
 
-
 // controller for gameplay
 .controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing, $translate, API, PathData) {
     $scope.gameName = $stateParams.gameName;
@@ -1247,7 +1268,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     };
 
-
     var performGeoReferencingTask = function () {
         $scope.showInfo = true;
         $scope.subHeaderInfo = "Mark location on map";
@@ -1255,13 +1275,29 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         createModal('georef-modal.html', 'georef');
     };
 
+    $scope.getImageURL = function(imageName) {
+        return API.getImageURL(imageName);
+    };
+
     var performQATask = function (task) {
         //$scope.showInfo = true;
+        $scope.imageAnswers = false;
         createModal('qa-modal.html', 'qa');
 
         $scope.timeLeft = 10;
         $scope.answerPicked = false;
-        $scope.rightAnswer = $scope.task.answers[0]; //Index of the right element in a schaffled array
+        // console.log(typeof $scope.task.answers == 'undefined', typeof $scope.task.imgans != 'undefined');
+        if (typeof $scope.task.answers == 'undefined' && typeof $scope.task.imgans != 'undefined') {  
+	        $scope.imageAnswers = true;
+            $scope.task.answers = $scope.task.imgans;
+        } else { 
+            // Should not reach here.
+            // TODO: Disallow creation of QA game without images or text answers
+            //console.log($scope.task.imgans); 
+            console.log("Activity did not have any type of answers for questions");
+        }
+
+        $scope.rightAnswer = $scope.task.answers[0]; // Correct answer is always at position 0
         $scope.choosedAnswer = "";
         $scope.clicked = [false, false, false, false];
         $scope.ansChoosen = false;

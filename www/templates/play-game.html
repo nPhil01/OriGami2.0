@@ -219,13 +219,25 @@
                 </div>
                 <div class="qa_answers">
                     <div class="answer1" ng-click="chooseAnswer(task.answers[0], 0);timeLeft = -1" ng-class="{'clicked_answ': clicked[0]}">
-                        <h1>{{task.answers[0]}}</h1></div>
+                        <h1 ng-hide="imageAnswers">{{task.answers[0]}}</h1>
+                        <img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="{{task.answers[0]}}" ng-src="{{ getImageURL(task.answers[0])}}">
+                        <!--<img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="task.answers[0].filename" src="data:image/jpeg;base64,{{task.answers[0].base64}}">-->
+                    </div>
                     <div class="answer2" ng-click="chooseAnswer(task.answers[1], 1);timeLeft = -1" ng-class="{'clicked_answ': clicked[1]}">
-                        <h1>{{task.answers[1]}}</h1></div>
+                        <h1 ng-hide="imageAnswers">{{task.answers[1]}}</h1>
+                        <img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="{{task.answers[1]}}" ng-src="{{ getImageURL(task.answers[1])}}">
+                        <!--<img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="task.answers[1].filename" src="data:image/jpeg;base64,{{task.answers[1].base64}}">-->
+                    </div>
                     <div class="answer3" ng-click="chooseAnswer(task.answers[2], 2);timeLeft = -1" ng-class="{'clicked_answ': clicked[2]}">
-                        <h1>{{task.answers[2]}}</h1></div>
+                        <h1 ng-hide="imageAnswers">{{task.answers[2]}}</h1>
+                        <img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="{{task.answers[2]}}" ng-src="{{ getImageURL(task.answers[2])}}">
+                        <!--<img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="task.answers[2].filename" src="data:image/jpeg;base64,{{task.answers[2].base64}}">-->
+                    </div>
                     <div class="answer4" ng-click="chooseAnswer(task.answers[3], 3);timeLeft = -1" ng-class="{'clicked_answ': clicked[3]}">
-                        <h1>{{task.answers[3]}}</h1></div>
+                        <h1 ng-hide="imageAnswers">{{task.answers[3]}}</h1>
+                        <img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="{{task.answers[3]}}" ng-src="{{ getImageURL(task.answers[3])}}">
+                        <!--<img style='max-width:100%; max-height:100%' ng-show="imageAnswers" alt="task.answers[3].filename" src="data:image/jpeg;base64,{{task.answers[3].base64}}">-->
+                    </div>
                 </div>
             </ion-content>
         </ion-modal-view>

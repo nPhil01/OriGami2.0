@@ -145,7 +145,7 @@ angular.module('starter.services', [])
 
 
 // API for getting data from the remote server
-.factory('API', function ($rootScope, $http, $ionicLoading, $window, Server) {
+.factory('API', function ($rootScope, $http, $ionicLoading, $window, Server, Upload) {
     var base = "http://" + Server;
     /*$rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
@@ -221,7 +221,19 @@ angular.module('starter.services', [])
             return $http.delete(base + '/games/item/' + name, {
                 method: 'DELETE',
             });
+        },
+        getImageURL: function(name) {
+            return base + '/data/img/' + name;
+        },
+        uploadImage: function(file) {
+            return Upload.upload({
+                url: base + '/data/img/upload',
+                data: {
+                    imgfile: file
+                }
+            });
         }
+
     };
 })
 

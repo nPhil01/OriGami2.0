@@ -18,8 +18,11 @@
                 <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
                     <label class="photoAns_b" for="photoAns1">Add Photo</label>
                 </div>
-                <input class="btn inputfile" id="photoAns1" type="file" ng-model="file" multiple accept="image/*" onload="onLoad1" base-sixty-four-input>
-                 <img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[0].base64}}" ng-hide = "picFile[0] == null">
+                <!--<input class="btn inputfile" id="photoAns1" type="file" ng-model="file" multiple accept="image/*" onload="onLoad1" base-sixty-four-input>-->
+                <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[0].base64}}" ng-hide = "picFile[0] == null">-->
+                <input class="btn inputfile" type="file" id="photoAns1" ngf-select="imgUpload($file, 0)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgPrvw[0]}}" ng-hide = "imgPrvw[0] == null">
+            </div>
             </div>
 
 
@@ -31,8 +34,10 @@
                 <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
                     <label class="photoAns_b" for="photoAns2">Add Photo</label>
                 </div>
-                <input class="btn inputfile" id="photoAns2" type="file" ng-model="file" accept="image/*" onload="onLoad2" base-sixty-four-input>
-                 <img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[1].base64}}" ng-hide = "picFile[1] == null">
+                <!--<input class="btn inputfile" id="photoAns2" type="file" ng-model="file" accept="image/*" onload="onLoad2" base-sixty-four-input>-->
+                <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[1].base64}}" ng-hide = "picFile[1] == null">-->
+                <input class="btn inputfile" type="file" id="photoAns2" ngf-select="imgUpload($file, 1)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgPrvw[1]}}" ng-hide = "imgPrvw[1] == null">
             </div>
 
             <div class="answer">
@@ -43,8 +48,10 @@
                 <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
                     <label class="photoAns_b" for="photoAns3">Add Photo</label>
                 </div>
-                <input class="btn inputfile" id="photoAns3" type="file" ng-model="file" accept="image/*" onload="onLoad3"base-sixty-four-input>
-                 <img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[2].base64}}" ng-hide = "picFile[2] == null">
+                <!--<input class="btn inputfile" id="photoAns3" type="file" ng-model="file" accept="image/*" onload="onLoad3" base-sixty-four-input>-->
+                 <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[2].base64}}" ng-hide = "picFile[2] == null">-->
+                <input class="btn inputfile" type="file" id="photoAns3" ngf-select="imgUpload($file, 2)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgPrvw[2]}}" ng-hide = "imgPrvw[2] == null">
             </div>
 
             <div class="answer">
@@ -55,15 +62,17 @@
                 <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
                     <label class="photoAns_b" for="photoAns4">Add Photo</label>
                 </div>
-                <input class="btn inputfile" id="photoAns4" type="file" ng-model="file" accept="image/*" onload="onLoad4" base-sixty-four-input>
-                 <img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[3].base64}}" ng-hide = "picFile[3] == null">
+                <!--<input class="btn inputfile" id="photoAns4" type="file" ng-model="file" accept="image/*" onload="onLoad4" base-sixty-four-input>-->
+                 <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[3].base64}}" ng-hide = "picFile[3] == null">-->
+                <input class="btn inputfile" type="file" id="photoAns4" ngf-select="imgUpload($file, 3)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgPrvw[3]}}" ng-hide = "imgPrvw[3] == null">
             </div>
         </div>
 
         <div class="navi">
-            <button class="button button-block button-balanced save_but" ng-click="submitQA(picFile)">{{'save' | translate}}</button>
+            <button class="button button-block button-balanced save_but" ng-click="submitQA(picFilename)">{{'save' | translate}}</button>
         </div>
 
     </ion-content>
-     <a class="skip_b" ng-click = "noTask()"><p style="color:white;">CANCEL</p></a>
+     <a class="skip_b" ng-click = "noTask()"><p style="<colo></colo>r:white;">CANCEL</p></a>
 </ion-modal-view>
