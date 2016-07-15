@@ -56,11 +56,9 @@ var translations = {
         "error_watching":"Error occurred when watching position",
         "now_using_geo":"Now using Geolocation! Map panning disabled",
         "avail_games":"Available Games",
-        "network_error" : "Could not connect to server! Check internet connection", 
-        
-        /* New Phrases ------------------------- */
-        
-        "chose_language" : "Choose the language",
+        "network_error" : "Could not connect to server! Check internet connection",
+        "wrong_ans_1" : "Sorry. Better luck next time!",
+        "choose_language" : "Choose the language",
         "number_activ" : "Number of activities",
         "wayp_reached" : "Waypoint reached",
         "good_job" : "Good job!",
@@ -82,7 +80,9 @@ var translations = {
         //"take_picture": "Take a picture",
         "get_picture":"Get a picture",
         "select_file": "Select file",
-        "nogames_created": "There are no games created at the moment"
+        "nogames_created": "There are no games created at the moment",
+        "right_answer" : "Correct Answer"
+
 	},
     
     /* Deutsch --------------------------------------------------- */
@@ -146,7 +146,7 @@ var translations = {
         
         /* New Phrases ------------------------- */
         
-        "chose_language" : "Wähle eine Sprache",
+        "choose_language" : "Wähle eine Sprache",
         "number_activ" : "Anzahl an Aktivitäten",
         "wayp_reached" : "Wegpunkt erreicht",
         "good_job" : "Super",
@@ -233,7 +233,7 @@ var translations = {
         
         /* New Phrases ------------------------- */
         
-        "chose_language" : "Escoja el idioma",
+        "choose_language" : "Escoja el idioma",
         "number_activ" : "Número de actividades",
         "wayp_reached" : "Llegaste a tu destino",
         "good_job" : "Buen trabajo!",
@@ -318,7 +318,7 @@ var translations = {
         
         /* New Phrases ------------------------- */
         
-        "chose_language" : "Escohla o idioma",
+        "choose_language" : "Escohla o idioma",
         "number_activ" : "Número de atividades",
         "wayp_reached" : "Chegou a seu destino",
         "good_job" : "Bom trabalho!",
@@ -405,7 +405,7 @@ var translations = {
         
         /* New Phrases ------------------------- */
         
-        "chose_language" : "Trie l’idioma",
+        "choose_language" : "Trie l’idioma",
         "number_activ" : "Nombre d’activitats",
         "wayp_reached" : "Has arribat al teu destí",
         "good_job" : "Bon treball!",

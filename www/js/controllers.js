@@ -1281,14 +1281,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var performQATask = function (task) {
         //$scope.showInfo = true;
-        $scope.imageAnswers = false;
+        $scope.nonTextAnswer = false;
         createModal('qa-modal.html', 'qa');
 
         $scope.timeLeft = 10;
         $scope.answerPicked = false;
         // console.log(typeof $scope.task.answers == 'undefined', typeof $scope.task.imgans != 'undefined');
         if (typeof $scope.task.answers == 'undefined' && typeof $scope.task.imgans != 'undefined') {  
-	        $scope.imageAnswers = true;
+	        $scope.nonTextAnswer = true;
             $scope.task.answers = $scope.task.imgans;
         } else { 
             // Should not reach here.
@@ -1298,7 +1298,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
 
         $scope.rightAnswer = $scope.task.answers[0]; // Correct answer is always at position 0
-        $scope.choosedAnswer = "";
+        $scope.chosenAnswer = "";
         $scope.clicked = [false, false, false, false];
         $scope.ansChoosen = false;
         $scope.answer = null; // true - right; false - wrong;
@@ -1322,7 +1322,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
         $scope.chooseAnswer = function (answer, index) {
             if (!$scope.ansChoosen) {
-                $scope.choosedAnswer = answer;
+                $scope.chosenAnswer = answer;
                 $scope.ansChoosen = true;
                 $scope.answerPicked = true;
                 $scope.clicked = [false, false, false, false];
@@ -1330,7 +1330,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
                 clearInterval(intervalId);
 
-                if ($scope.choosedAnswer == $scope.rightAnswer) {
+                if ($scope.chosenAnswer == $scope.rightAnswer) {
                     $scope.answerResult = "Correct Answer!";
                     $scope.answer = true;
                     $scope.icon = "ion-android-happy";
@@ -1342,7 +1342,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $scope.score += 25;
                 } else {
                     $scope.answer = false;
-                    $scope.answerResult = "Sorry, next time will be better! ";
+                    $scope.answerResult = $translate.instant("wrong_ans_1");
                     $scope.rightAnswer = $scope.rightAnswer;
                     $scope.icon = "ion-sad-outline";
                     $scope.score -= 10;
@@ -1354,7 +1354,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         var intervalId = setInterval(function () {
             $scope.timeLeft--;
             if ($scope.timeLeft <= 0) {
-                $scope.answerResult = "Sorry, next time will be better! ";
+                $scope.answerResult = $translate.instant("wrong_ans_1");
                 $scope.rightAnswer = $scope.rightAnswer;
                 $scope.icon = "ion-sad-outline";
                 $scope.score -= 10;
