@@ -1,9 +1,9 @@
 var translations = {
 	"en": {
 		"appinfo": "Languages",
-        "start_header_stud": "OriGami for Students",
+        "start_header_stud": "Play OriGami",
         "start_info_stud": "Start learning geography by searching places on the map,receiving not only great marks, but also a huge amount of positive memories.",
-        "start_header_teach": "OriGami for Teachers",
+        "start_header_teach": "Create OriGami",
         "start_info_teach": "Start creating fun tasks for your belowed students!",
         "edit":"Edit",
         "edit_game": "Edit Game",
@@ -88,9 +88,9 @@ var translations = {
     /* Deutsch --------------------------------------------------- */
 	"de": {
 		"appinfo": "Sprachen",
-        "start_header_stud": "OriGami für Schüler",
+        "start_header_stud": "OriGami Spielen",
         "start_info_stud": "Lerne Geographie, indem du Orte auf einer Karte suchst und findest. Erhalte nicht nur Punkte für das Spiel, sondern vor allem tolle Erinnerungen!",
-        "start_header_teach": "OriGami für Lehrer",
+        "start_header_teach": "OriGami Erstellen",
         "start_info_teach": "Erstelle lustige Aufgaben für deine/Ihre Schüler!",
         "edit":"Bearbeite",
         "edit_game": "Bearbeite Spiel",
