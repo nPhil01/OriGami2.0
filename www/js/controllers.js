@@ -1263,6 +1263,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 performQATask($scope.task);
             } else {
                 // perform other kinds of tasks here
+                console.log("Handling other tasks, but of what kind?");
                 handleTask();
             }
         }
@@ -1275,26 +1276,24 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         createModal('georef-modal.html', 'georef');
     };
 
-    $scope.getImageURL = function(imageName) {
-        return API.getImageURL(imageName);
-    };
-
     var performQATask = function (task) {
         //$scope.showInfo = true;
-        $scope.nonTextAnswer = false;
         createModal('qa-modal.html', 'qa');
 
+        $scope.nonTextAnswer = false; // True if images are used as answers
         $scope.timeLeft = 10;
         $scope.answerPicked = false;
-        // console.log(typeof $scope.task.answers == 'undefined', typeof $scope.task.imgans != 'undefined');
-        if (typeof $scope.task.answers == 'undefined' && typeof $scope.task.imgans != 'undefined') {  
-	        $scope.nonTextAnswer = true;
-            $scope.task.answers = $scope.task.imgans;
-        } else { 
-            // Should not reach here.
-            // TODO: Disallow creation of QA game without images or text answers
-            //console.log($scope.task.imgans); 
-            console.log("Activity did not have any type of answers for questions");
+
+        if (typeof $scope.task.answers == 'undefined') {
+            if (typeof $scope.task.imgans != 'undefined') {  
+	            $scope.nonTextAnswer = true;
+                $scope.task.answers = $scope.task.imgans;
+            } else { 
+                // Should not reach here.
+                // TODO: Disallow creation of QA game without images or text answers
+                //console.log($scope.task.imgans); 
+                console.log("Activity did not have any image/text answers for questions");
+            }
         }
 
         $scope.rightAnswer = $scope.task.answers[0]; // Correct answer is always at position 0
@@ -1318,6 +1317,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             temporaryValue = $scope.task.answers[currentIndex];
             $scope.task.answers[currentIndex] = $scope.task.answers[randomIndex];
             $scope.task.answers[randomIndex] = temporaryValue;
+        }
+
+        if ($scope.nonTextAnswer) {
+            $scope.imgAnsURL_0 = API.getImageURL($scope.task.answers[0]);
+            $scope.imgAnsURL_1 = API.getImageURL($scope.task.answers[1]);
+            $scope.imgAnsURL_2 = API.getImageURL($scope.task.answers[2]);
+            $scope.imgAnsURL_3 = API.getImageURL($scope.task.answers[3]);
+            $scope.imgRightAnswerURL = API.getImageURL($scope.rightAnswer);
+            console.log($scope.imgAnsURL_0, $scope.imgAnsURL_1, $scope.imgAnsURL_2, $scope.imgAnsURL_3);
         }
 
         $scope.chooseAnswer = function (answer, index) {
