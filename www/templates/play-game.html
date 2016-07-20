@@ -285,6 +285,7 @@
             </div>
             <!-- <button class="button button-fab button-fab-bottom-right next button-calm icon ion-settings waves-effect waves-button waves-light" ui-sref="tab.teachmenu"></button> -->
             <div id="button-container">
+                <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-help waves-effect waves-button waves-light" ng-click="performGeoReferencingTask()" ng-show="task.type == 'GeoReference'"></button>
                 <button class="button button-fab map-button {{playerMarkerButtonColor}} icon ion-pin waves-button waves-light" ng-click="showPositionMarker()"></button>
                 <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-android-locate waves-effect waves-button waves-light" ng-click="toggleGeoLocation(true)"></button>
             </div>

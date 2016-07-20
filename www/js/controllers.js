@@ -1208,7 +1208,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicModal.fromTemplateUrl(templateUrl, {
             id: id,
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            backdropClickToClose: false
         }).then(function (modal) {
             $scope.modal = modal;
             $scope.modal.show();
@@ -1258,7 +1259,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         } else {
             $scope.task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
             if ($scope.task.type == 'GeoReference') {
-                performGeoReferencingTask($scope.task);
+                $scope.performGeoReferencingTask($scope.task);
             } else if ($scope.task.type == 'QA') {
                 performQATask($scope.task);
             } else {
@@ -1269,7 +1270,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     };
 
-    var performGeoReferencingTask = function () {
+    $scope.performGeoReferencingTask = function () {
         $scope.showInfo = true;
         $scope.subHeaderInfo = "Mark location on map";
         $scope.geoRefPhoto = $scope.task.photo;
