@@ -4,35 +4,48 @@
             <div class="information">
                 <i class="icon ion-help"></i>
                 <h2>Question</h2>
-                <h1 style="font-size:15px;"></h1>
-                <textarea rows="3" ng-model="qaTask.question"> </textarea>
+                <div class="question">
+                    <textarea rows="3" ng-model="qaTask.question" placeholder="Add text or choose image"> </textarea>
+                    <div class="photo_c">
+                        <label class="photoAns" for="photoQuestion">
+                            <img class="photo_ic" src="./img/icons/photo.svg">
+                            <br>Add Pic
+                        </label>
+                        <input class="btn inputfile" type="file" id="photoQuestion" ngf-select="imgUpload($file, 0)" accept="image/*">
+                    </div>
+                    <!--<img class="anspic_dis" ng-src="{{imgPrvw[0]}}" ng-hide = "imgPrvw[0] == null">-->
+                </div>
             </div>
         </div>
 
         <div class="answers">
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[0]" class="wrong-input">
+                    <input type="text" ng-model="qaTask.answers[0]" class="wrong-input" placeholder="{{ 'right_answer' | translate }}">
                     <i class="icon ion-checkmark-round wrong"></i>
                 </label>
-                <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
-                    <label class="photoAns_b" for="photoAns1">Add Photo</label>
+                <div class="photo_c">
+                    <label class="photoAns" for="photoAns1">
+                        <img class="photo_ic" src="./img/icons/photo.svg">
+                        <br>Add Pic
+                    </label>
                 </div>
                 <!--<input class="btn inputfile" id="photoAns1" type="file" ng-model="file" multiple accept="image/*" onload="onLoad1" base-sixty-four-input>-->
                 <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[0].base64}}" ng-hide = "picFile[0] == null">-->
                 <input class="btn inputfile" type="file" id="photoAns1" ngf-select="imgUpload($file, 0)" accept="image/*">
                 <img class="anspic_dis" ng-src="{{imgPrvw[0]}}" ng-hide = "imgPrvw[0] == null">
             </div>
-            </div>
-
 
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[1]" class="wrong-input">
+                    <input type="text" ng-model="qaTask.answers[1]" class="wrong-input" placeholder="Add text OR  picture">
                     <i class="icon ion-close-round wrong"></i>
                 </label>
-                <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
-                    <label class="photoAns_b" for="photoAns2">Add Photo</label>
+                <div class="photo_c">
+                    <label class="photoAns" for="photoAns2">
+                        <img class="photo_ic" src="./img/icons/photo.svg">
+                        <br>Add Pic
+                    </label>
                 </div>
                 <!--<input class="btn inputfile" id="photoAns2" type="file" ng-model="file" accept="image/*" onload="onLoad2" base-sixty-four-input>-->
                 <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[1].base64}}" ng-hide = "picFile[1] == null">-->
@@ -42,11 +55,14 @@
 
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[2]" class="wrong-input">
+                    <input type="text" ng-model="qaTask.answers[2]" class="wrong-input" placeholder="Add text OR  picture">
                     <i class="icon ion-close-round wrong"></i>
                 </label>
-                <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
-                    <label class="photoAns_b" for="photoAns3">Add Photo</label>
+                <div class="photo_c">
+                    <label class="photoAns" for="photoAns3">
+                        <img class="photo_ic" src="./img/icons/photo.svg">
+                        <br>Add Pic
+                    </label>
                 </div>
                 <!--<input class="btn inputfile" id="photoAns3" type="file" ng-model="file" accept="image/*" onload="onLoad3" base-sixty-four-input>-->
                  <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[2].base64}}" ng-hide = "picFile[2] == null">-->
@@ -56,11 +72,14 @@
 
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[3]" class="wrong-input">
+                    <input type="text" ng-model="qaTask.answers[3]" class="wrong-input" placeholder="Add text OR picture">
                     <i class="icon ion-close-round wrong"></i>
                 </label>
-                <div class="photo_c"><img class="photo_ic" src="./img/icons/photo.svg">
-                    <label class="photoAns_b" for="photoAns4">Add Photo</label>
+                <div class="photo_c">
+                    <label class="photoAns" for="photoAns4">
+                        <img class="photo_ic" src="./img/icons/photo.svg">
+                        <br>Add Pic
+                    </label>
                 </div>
                 <!--<input class="btn inputfile" id="photoAns4" type="file" ng-model="file" accept="image/*" onload="onLoad4" base-sixty-four-input>-->
                  <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[3].base64}}" ng-hide = "picFile[3] == null">-->
@@ -68,10 +87,11 @@
                 <img class="anspic_dis" ng-src="{{imgPrvw[3]}}" ng-hide = "imgPrvw[3] == null">
             </div>
         </div>
-
-        <div class="navi">
-            <button class="button button-block button-balanced save_but" ng-click="submitQA(picFilename)">{{'save' | translate}}</button>
-        </div>
+    </div>
+    
+    <div class="navi">
+        <button class="button button-block button-balanced save_but" ng-click="submitQA(picFilename)">{{'save' | translate}}</button>
+    </div>
 
     </ion-content>
      <a class="skip_b" ng-click = "noTask()"><p style="<colo></colo>r:white;">CANCEL</p></a>
