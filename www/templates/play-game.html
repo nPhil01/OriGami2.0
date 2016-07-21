@@ -51,7 +51,8 @@
 
             <ion-content style="height: 100%; background-color:#64B5F6;">
                 <div class="answer_output">
-                    <i class="ion-android-pin"></i>
+                    <i class="ion-android-pin" ng-hide="waypoint.pic"></i>
+                    <img ng-src="{{waypointImgURL}}" alt="{{waypoint.pic}}" width="90%", height="50%" ng-show="waypoint.pic">
                     <h1>Your task: {{waypoint.name}}</h1>
                     <p> Description: {{waypoint.description}} </p>
                 </div>
@@ -283,10 +284,14 @@
                 <canvas class="smiley" smiley></canvas>
                 <img class="bearing" src="./img/bearing.png" alt="ARROW" style="transform: rotate({{bearing}}deg)">
             </div>
-            <!-- <button class="button button-fab button-fab-bottom-right next button-calm icon ion-settings waves-effect waves-button waves-light" ui-sref="tab.teachmenu"></button> -->
             <div id="button-container">
+                <!--Button to display modal with waypoint info (hide during georeferencing task) -->
+                <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-information waves-effect waves-button waves-light" ng-click="showWaypointInfoModal()" ng-hide="task.type == 'GeoReference'"></button>
+                <!--Button to display modal georeferencing question -->
                 <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-help waves-effect waves-button waves-light" ng-click="performGeoReferencingTask()" ng-show="task.type == 'GeoReference'"></button>
+                <!--Button to dislpay player's position on map as icon. Icon is hidden after 5 seconds -->
                 <button class="button button-fab map-button {{playerMarkerButtonColor}} icon ion-pin waves-button waves-light" ng-click="showPositionMarker()"></button>
+                <!--Button to center map with geolocation information. Map panning is disabled as long as this button is active -->
                 <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-android-locate waves-effect waves-button waves-light" ng-click="toggleGeoLocation(true)"></button>
             </div>
         </div>

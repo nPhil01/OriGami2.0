@@ -444,7 +444,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicModal.fromTemplateUrl(templateUrl, {
             id: id,
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            backdropClickToClose: false
         }).then(function (modal) {
             $scope.modal = modal;
             $scope.modal.show();
@@ -1238,14 +1239,23 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     };
 
-    var handleNextWaypoint = function () {
+ 
+    $scope.showWaypointInfoModal = function() {
+        createModal('waypointinfo-modal.html', 'wpinfo');
+    };
+
+   var handleNextWaypoint = function () {
         GameState.todoWaypointIndex(); // Get pending waypoint
         if (GameState.allWaypointsCleared()) {
             handleNextActivity();
         } else {
             var actIndex = GameState.getCurrentActivity();
             var pointIndex = GameState.getCurrentWaypoint();
+            $scope.waypointImgURL = null;
             $scope.waypoint = GameData.getWaypoint(actIndex, pointIndex);
+            if ($scope.waypoint.pic != undefined) {
+                $scope.waypointImgURL = API.getImageURL($scope.waypoint.pic);
+            }
             $scope.$broadcast('waypointLoadedEvent', $scope.waypoint);
 
             $scope.score += 20;
@@ -1514,6 +1524,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.players.sort(compare);
         };
     };
+
 
     $scope.exitGame = function () {
         var delGame = {};
