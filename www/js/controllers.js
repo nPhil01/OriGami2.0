@@ -1225,9 +1225,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
 
-    $scope.score = 0;
     $scope.CORRECT_ANS_SCORE = 10;
     $scope.WRONG_ANS_PENALTY = 0;
+    $scope.TIME_LIMIT = 30; // time limit to answer question (in seconds) 
+
+    $scope.score = 0;
 
     /* only for debug purposes */
     var debugState = function () {
@@ -1330,7 +1332,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         createModal('qa-modal.html', 'qa');
 
         //$scope.nonTextAnswer = false; // True if images are used as answers
-        $scope.timeLeft = 60;
+        $scope.timeLeft = $scope.TIME_LIMIT;
         $scope.answerPicked = false;
 /*
         if (typeof $scope.task.answers == 'undefined') {

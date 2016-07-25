@@ -1,17 +1,18 @@
 angular.module('starter.directives', [])
-    .directive('testAnimate', function () {
+    .directive('timerProgressbar', function () {
         return {
             link: function (scope, iElement, iAttrs) {
-                scope.$watch(iAttrs.testAnimate, function (newValue, oldValue) {
+                scope.$watch(iAttrs.timerProgressbar, function (newValue, oldValue) {
                     if (newValue == -1) {
                         iElement.stop();
                     } else {
                         iElement.animate({
                             width: 100 + '%'
-                        }, 10000);
+                        }, scope.TIME_LIMIT * 1000);
                     }
                 });
-            }
+            },
+            scope : false
         };
     })
     .directive('smiley', function ($parse) {
