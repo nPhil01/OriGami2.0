@@ -1226,6 +1226,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
 
     $scope.score = 0;
+    $scope.CORRECT_ANS_SCORE = 10;
+    $scope.WRONG_ANS_PENALTY = 0;
 
     /* only for debug purposes */
     var debugState = function () {
@@ -1294,7 +1296,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             }
             $scope.$broadcast('waypointLoadedEvent', $scope.waypoint);
 
-            $scope.score += 20;
+            $scope.score += $scope.CORRECT_ANS_SCORE;
         }
     };
 
@@ -1375,7 +1377,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.imgAnsURL_2 = API.getImageURL($scope.task.answers[2].img);
         $scope.imgAnsURL_3 = API.getImageURL($scope.task.answers[3].img);
         $scope.imgRightAnswerURL = API.getImageURL($scope.rightAnswer.img);
-        console.log($scope.imgAnsURL_0, $scope.imgAnsURL_1, $scope.imgAnsURL_2, $scope.imgAnsURL_3);
+        // console.log($scope.imgAnsURL_0, $scope.imgAnsURL_1, $scope.imgAnsURL_2, $scope.imgAnsURL_3);
     
         $scope.chooseAnswer = function (answer, index) {
             if (!$scope.ansChoosen) {
@@ -1396,13 +1398,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         $scope.icon = "ion-android-happy";
                     }, 1200);
 
-                    $scope.score += 25;
+                    $scope.score += $scope.CORRECT_ANS_SCORE;
                 } else {
                     $scope.answer = false;
                     $scope.answerResult = $translate.instant("wrong_ans_1");
                     $scope.rightAnswer = $scope.rightAnswer;
                     $scope.icon = "ion-sad-outline";
-                    $scope.score -= 10;
+                    $scope.score -= $scope.WRONG_ANS_PENALTY;
 
                 }
             }
@@ -1495,10 +1497,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.georefSmiley = 'ion-happy-outline';
             $scope.geoResult = true;
 
-            $scope.score += 25;
+            $scope.score += $scope.CORRECT_ANS_SCORE;
         } else {
             $scope.georefSmiley = 'ion-sad-outline';
-            $scope.score -= distance;
+            $scope.score -= $scope.WRONG_ANS_PENALTY;
         }
         createModal('georef-result-modal.html', 'georefResult');
     });
