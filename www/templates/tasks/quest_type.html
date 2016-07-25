@@ -5,15 +5,15 @@
                 <i class="icon ion-help"></i>
                 <h2>Question</h2>
                 <div class="question">
-                    <textarea rows="3" ng-model="qaTask.question" placeholder="Add text or choose image"> </textarea>
+                    <textarea rows="3" ng-model="qaTask.question.txt" placeholder="Add text or choose image"> </textarea>
                     <div class="photo_c">
                         <label class="photoAns" for="photoQuestion">
                             <img class="photo_ic" src="./img/icons/photo.svg">
                             <br>Add Pic
                         </label>
-                        <input class="btn inputfile" type="file" id="photoQuestion" ngf-select="imgUpload($file, 0)" accept="image/*">
+                        <input class="btn inputfile" type="file" id="photoQuestion" ngf-select="imgUpload($file, $event)" accept="image/*">
                     </div>
-                    <!--<img class="anspic_dis" ng-src="{{imgPrvw[0]}}" ng-hide = "imgPrvw[0] == null">-->
+                    <img class="anspic_dis" ng-src="{{imgQuestionPrvw}}" ng-hide = "imgQuestionPrvw == null">
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="answers">
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[0]" class="wrong-input" placeholder="{{ 'right_answer' | translate }}">
+                    <input type="text" ng-model="qaTask.answers[0].txt" class="wrong-input" placeholder="{{ 'right_answer' | translate }}">
                     <i class="icon ion-checkmark-round wrong"></i>
                 </label>
                 <div class="photo_c">
@@ -32,13 +32,13 @@
                 </div>
                 <!--<input class="btn inputfile" id="photoAns1" type="file" ng-model="file" multiple accept="image/*" onload="onLoad1" base-sixty-four-input>-->
                 <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[0].base64}}" ng-hide = "picFile[0] == null">-->
-                <input class="btn inputfile" type="file" id="photoAns1" ngf-select="imgUpload($file, 0)" accept="image/*">
-                <img class="anspic_dis" ng-src="{{imgPrvw[0]}}" ng-hide = "imgPrvw[0] == null">
+                <input class="btn inputfile" type="file" id="photoAns1" ng-model="photoAns1" ngf-select="imgUpload($file, $event)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgAnsPrvw[0]}}" ng-hide = "imgAnsPrvw[0] == null">
             </div>
 
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[1]" class="wrong-input" placeholder="Add text OR  picture">
+                    <input type="text" ng-model="qaTask.answers[1].txt" class="wrong-input" placeholder="Add text OR  picture">
                     <i class="icon ion-close-round wrong"></i>
                 </label>
                 <div class="photo_c">
@@ -49,13 +49,13 @@
                 </div>
                 <!--<input class="btn inputfile" id="photoAns2" type="file" ng-model="file" accept="image/*" onload="onLoad2" base-sixty-four-input>-->
                 <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[1].base64}}" ng-hide = "picFile[1] == null">-->
-                <input class="btn inputfile" type="file" id="photoAns2" ngf-select="imgUpload($file, 1)" accept="image/*">
-                <img class="anspic_dis" ng-src="{{imgPrvw[1]}}" ng-hide = "imgPrvw[1] == null">
+                <input class="btn inputfile" type="file" id="photoAns2" ngf-select="imgUpload($file, $event)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgAnsPrvw[1]}}" ng-hide = "imgAnsPrvw[1] == null">
             </div>
 
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[2]" class="wrong-input" placeholder="Add text OR  picture">
+                    <input type="text" ng-model="qaTask.answers[2].txt" class="wrong-input" placeholder="Add text OR  picture">
                     <i class="icon ion-close-round wrong"></i>
                 </label>
                 <div class="photo_c">
@@ -66,13 +66,13 @@
                 </div>
                 <!--<input class="btn inputfile" id="photoAns3" type="file" ng-model="file" accept="image/*" onload="onLoad3" base-sixty-four-input>-->
                  <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[2].base64}}" ng-hide = "picFile[2] == null">-->
-                <input class="btn inputfile" type="file" id="photoAns3" ngf-select="imgUpload($file, 2)" accept="image/*">
-                <img class="anspic_dis" ng-src="{{imgPrvw[2]}}" ng-hide = "imgPrvw[2] == null">
+                <input class="btn inputfile" type="file" id="photoAns3" ngf-select="imgUpload($file, $event)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgAnsPrvw[2]}}" ng-hide = "imgAnsPrvw[2] == null">
             </div>
 
             <div class="answer">
                 <label class="item item-input item-floating-label ans_inp">
-                    <input type="text" ng-model="qaTask.answers[3]" class="wrong-input" placeholder="Add text OR picture">
+                    <input type="text" ng-model="qaTask.answers[3].txt" class="wrong-input" placeholder="Add text OR picture">
                     <i class="icon ion-close-round wrong"></i>
                 </label>
                 <div class="photo_c">
@@ -83,8 +83,8 @@
                 </div>
                 <!--<input class="btn inputfile" id="photoAns4" type="file" ng-model="file" accept="image/*" onload="onLoad4" base-sixty-four-input>-->
                  <!--<img class="anspic_dis" ng-src="data:image/jpeg;base64,{{picFile[3].base64}}" ng-hide = "picFile[3] == null">-->
-                <input class="btn inputfile" type="file" id="photoAns4" ngf-select="imgUpload($file, 3)" accept="image/*">
-                <img class="anspic_dis" ng-src="{{imgPrvw[3]}}" ng-hide = "imgPrvw[3] == null">
+                <input class="btn inputfile" type="file" id="photoAns4" ngf-select="imgUpload($file, $event)" accept="image/*">
+                <img class="anspic_dis" ng-src="{{imgAnsPrvw[3]}}" ng-hide = "imgAnsPrvw[3] == null">
             </div>
         </div>
     </div>

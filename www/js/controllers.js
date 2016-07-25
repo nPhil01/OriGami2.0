@@ -474,6 +474,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.newWaypoint.tasks = [];
 
         createModal('templates/map/waypoint.html', 'm1');
+        //createModal('templates/tasks/quest_type.html');
     });
 
     $scope.$on('leafletDirectiveMap.click', function (event, locationEvent) {
@@ -521,10 +522,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     /* Handle Task Creation routine */
     $scope.addQAtask = function () {
         $scope.qaTask = {};
+        $scope.qaTask.answers = [{}, {}, {}, {}]; // Four answers - either text or images
+        $scope.qaTask.question = {};
 
         $scope.picFile = [];
         $scope.picFilename = [];
-        $scope.imgPrvw = [];
+        $scope.imgAnsPrvw = [];
+        $scope.imgQuestionPrvw = null;
 
         $scope.modal.remove();
         $scope.qamodal = createModal('templates/tasks/quest_type.html');
@@ -540,27 +544,58 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.gameMap.markers = [];
     };
 
-    $scope.imgUpload = function(file, picIndex) {
-        var upload = API.uploadImage(file);
-        var reader = new FileReader();
+    $scope.imgUpload = function(file, $event) {
+        if (file) {
+            var upload = API.uploadImage(file);
+            var reader = new FileReader();
+            var isQuestion = false;
 
-        // Previewing the image
-        reader.onload = function(event) {
-            $scope.imgPrvw[picIndex] = event.target.result;
-            $scope.$apply();
-        }
-        reader.readAsDataURL(file);
-
-        upload.then(function(res) {
-            console.log(res);
-            if (res.status == 200) {
-                $scope.picFilename[picIndex] = res.data.img_file;
-            } else {
-                console.log('Error! Pic POSTed, but no filename returned')
+            switch($event.target.id) {
+                case 'photoAns1': 
+                    picIndex = 0;
+                    break;
+                case 'photoAns2': 
+                    picIndex = 1;
+                    break;
+                case 'photoAns3': 
+                    picIndex = 2;
+                    break;
+                case 'photoAns4': 
+                    picIndex = 3;
+                    break;
+                case 'photoQuestion': 
+                    isQuestion = true;
+                    break;
             }
-            console.log($scope.picFilename);
-        }), function(res) {
-            console.log("Error uploading image.", res);
+
+            // Previewing the image
+            reader.onload = function(event) {
+                if (!isQuestion) {
+                    $scope.imgAnsPrvw[picIndex] = event.target.result;
+                } else {
+                    $scope.imgQuestionPrvw = event.target.result;
+                }
+                $scope.$apply();
+            }
+            
+            reader.readAsDataURL(file);
+
+            upload.then(function(res) {
+                //console.log(res);
+                if (res.status == 200) {
+                    //$scope.picFilename[picIndex] = res.data.img_file;
+                    if (isQuestion) {
+                        $scope.qaTask.question.img = res.data.img_file;
+                    } else {
+                        $scope.qaTask.answers[picIndex].img = res.data.img_file;
+                    }
+                } else {
+                    console.log('Error! Pic POSTed, but no filename returned')
+                }
+                //console.log($scope.picFilename);
+            }), function(res) {
+                console.log("Error uploading image.", res);
+            }
         }
     };
 
@@ -580,7 +615,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.submitQA = function (imgAnswers) {
         $scope.qaTask.type = "QA";
-        $scope.qaTask.imgans = imgAnswers;
+        //$scope.qaTask.imgans = imgAnswers;
 
         $scope.numberTask++;
         $scope.mainMap.markers[$scope.mainMap.markers.length - 1].tasks.push($scope.qaTask);
@@ -594,6 +629,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.onLoadG = function (e, reader, file, fileList, fileOjects, fileObj) {
         $scope.georP = fileObj;
     };
+    
     $scope.submitGR = function (img_file) {
         /*Creation of game content */
         $scope.geoTask.type = "GeoReference";
@@ -1291,10 +1327,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         //$scope.showInfo = true;
         createModal('qa-modal.html', 'qa');
 
-        $scope.nonTextAnswer = false; // True if images are used as answers
-        $scope.timeLeft = 10;
+        //$scope.nonTextAnswer = false; // True if images are used as answers
+        $scope.timeLeft = 60;
         $scope.answerPicked = false;
-
+/*
         if (typeof $scope.task.answers == 'undefined') {
             if (typeof $scope.task.imgans != 'undefined') {  
 	            $scope.nonTextAnswer = true;
@@ -1305,6 +1341,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 //console.log($scope.task.imgans); 
                 console.log("Activity did not have any image/text answers for questions");
             }
+        }*/
+
+        if (typeof $scope.task.answers == 'undefined') {
+            console.log("No answers for this activity");
         }
 
         $scope.rightAnswer = $scope.task.answers[0]; // Correct answer is always at position 0
@@ -1330,15 +1370,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.task.answers[randomIndex] = temporaryValue;
         }
 
-        if ($scope.nonTextAnswer) {
-            $scope.imgAnsURL_0 = API.getImageURL($scope.task.answers[0]);
-            $scope.imgAnsURL_1 = API.getImageURL($scope.task.answers[1]);
-            $scope.imgAnsURL_2 = API.getImageURL($scope.task.answers[2]);
-            $scope.imgAnsURL_3 = API.getImageURL($scope.task.answers[3]);
-            $scope.imgRightAnswerURL = API.getImageURL($scope.rightAnswer);
-            console.log($scope.imgAnsURL_0, $scope.imgAnsURL_1, $scope.imgAnsURL_2, $scope.imgAnsURL_3);
-        }
-
+        $scope.imgAnsURL_0 = API.getImageURL($scope.task.answers[0].img);
+        $scope.imgAnsURL_1 = API.getImageURL($scope.task.answers[1].img);
+        $scope.imgAnsURL_2 = API.getImageURL($scope.task.answers[2].img);
+        $scope.imgAnsURL_3 = API.getImageURL($scope.task.answers[3].img);
+        $scope.imgRightAnswerURL = API.getImageURL($scope.rightAnswer.img);
+        console.log($scope.imgAnsURL_0, $scope.imgAnsURL_1, $scope.imgAnsURL_2, $scope.imgAnsURL_3);
+    
         $scope.chooseAnswer = function (answer, index) {
             if (!$scope.ansChoosen) {
                 $scope.chosenAnswer = answer;

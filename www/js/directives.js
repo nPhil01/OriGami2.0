@@ -93,4 +93,24 @@ angular.module('starter.directives', [])
             }
         };
         return directive;
+    })
+    .directive('oriQa', function (API) {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div><h1>{{qadata.txt}}</h1></div>',
+            link: function (scope, element, attrs) {
+                if (scope.qadata && typeof scope.qadata.img != 'undefined') {
+                    element.css({
+                        'background-image': 'url(' + API.getImageURL(scope.qadata.img) + ')',
+                        'background-size': 'cover',
+                        'height': '100%'
+                    });
+                }
+            },
+            scope : {
+                qadata : '=',
+                task : '='
+            }
+        }
     });
