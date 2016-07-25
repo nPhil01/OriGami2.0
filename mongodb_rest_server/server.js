@@ -148,16 +148,21 @@ server.get("/data/img/:filename", function (req, res, next) {
   var imgdir = "data";
   var fullpath = imgdir + "/" + filename;
 
-  var img = fs.readFileSync(fullpath);
-  
-  im.identify(fullpath, function(err, features) {
-    if (err) throw err;
-    mime_type = features['mime type'];
-    res.writeHead(200, {'Content-type': mime_type});
-    res.end(img, 'binary');
-    return next();
+  fs.readFile(fullpath, function (err, file) {
+    if (err) {
+      console.log("Error when reading file - ", fullpath);
+      res.writeHead(500);
+      return res.end();
+    }
+    im.identify(fullpath, function (err, features) {
+      if (err) throw err;
+      mime_type = features['mime type'];
+      res.writeHead(200, { 'Content-type': mime_type });
+      res.write(file);
+      res.end();
+      return next();
+    });
   });
-  
 });
 
 
