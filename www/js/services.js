@@ -223,6 +223,9 @@ angular.module('starter.services', [])
             });
         },
         getImageURL: function(name) {
+            if (name == undefined) {
+                return null
+            }
             return base + '/data/img/' + name;
         },
         uploadImage: function(file) {
