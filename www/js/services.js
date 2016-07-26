@@ -30,7 +30,8 @@ angular.module('starter.services', [])
     pathObj.addCoord = function(lat,lng){
         pathdata.push({
             'lat' : lat,
-            'lng' : lng
+            'lng' : lng,
+            'timestamp' : (new Date()).toISOString()
         })
     };
 
@@ -474,7 +475,7 @@ angular.module('starter.services', [])
 })
 
 /* Keep track of gameplay for analytics */
-.factory('PlayerStats', function ($rootScope, $http, $filter, GameData, GameState) {
+.factory('PlayerStats', function ($rootScope, $http, $filter, GameData, GameState, PathData) {
     var playerStats = {};
     var data = {}
     var tasks = [];
@@ -543,7 +544,13 @@ angular.module('starter.services', [])
         data.endTime = getTimeStamp();
         data.total_score = score;
         data.activities = activities;
-        playerStats.debug("End of Game")
+        data.trajectory = PathData.getPath();
+        origami_stats = localStorage.getItem('origami_stats') 
+        if (!origami_stats) {
+            origami_stats = [];
+        }
+        origami_stats.push(data);
+        localStorage.setItem('origami_stats', origami_stats);
     }
     playerStats.debug = function(msg) {
         console.log(msg, data);

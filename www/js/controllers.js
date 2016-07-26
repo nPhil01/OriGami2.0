@@ -1296,7 +1296,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
    var handleNextWaypoint = function () {
         GameState.todoWaypointIndex(); // Get pending waypoint
         if (GameState.allWaypointsCleared()) {
-            console.log("Handle next waypoint - end activity");
             PlayerStats.endActivity();
             handleNextActivity();
         } else {
@@ -1311,7 +1310,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
             $scope.score += $scope.CORRECT_ANS_SCORE;
         }
-        PlayerStats.debug("Handle next waypoint");
     };
 
     var handleTask = function () {
@@ -1321,7 +1319,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         } else {
             $scope.task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
             PlayerStats.startTask($scope.task);
-            console.log($scope.task);
             if ($scope.task.type == 'GeoReference') {
                 $scope.performGeoReferencingTask($scope.task);
             } else if ($scope.task.type == 'QA') {
@@ -1332,7 +1329,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 handleTask();
             }
         }
-        PlayerStats.debug("Handle next task");
     };
 
     $scope.performGeoReferencingTask = function () {
