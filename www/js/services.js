@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.value('Server', 'giv-origami.uni-muenster.de/origamidb')
+.value('Server', 'localhost:5000')
 
 .factory('Edit', function() {
     var editedGame = {};
@@ -33,7 +33,7 @@ angular.module('starter.services', [])
             'lng' : lng
         })
     };
-    
+
     pathObj.getPath = function(){
         return pathdata;
     };
@@ -87,8 +87,6 @@ angular.module('starter.services', [])
     return actService;
 })
 
-
-
 .factory('Task', function ($rootScope, $http, $ionicLoading, $window) {
     var taskService = {};
     var task = {}; // Question - Answer / Georeference
@@ -141,10 +139,7 @@ angular.module('starter.services', [])
     return taskService;
 })
 
-
-
-
-// API for getting data from the remote server
+// API for getting data from the remote server (REST interface to Mongodb)
 .factory('API', function ($rootScope, $http, $ionicLoading, $window, Server, Upload) {
     var base = "http://" + Server;
     /*$rootScope.show = function (text) {
@@ -459,7 +454,9 @@ angular.module('starter.services', [])
         }
         return waypointIndex;
     };
-
+    /* Return index of next task. 
+     * If current task is not finished, return index of current task
+     */
     state.todoTaskIndex = function () {
         if (tasksFinished == true) {
             //$rootScope.$broadcast('allTasksClearedEvent');
@@ -474,4 +471,83 @@ angular.module('starter.services', [])
     };
 
     return state;
+})
+
+/* Keep track of gameplay for analytics */
+.factory('PlayerStats', function ($rootScope, $http, $filter, GameData, GameState) {
+    var playerStats = {};
+    var data = {}
+    var tasks = [];
+    var waypoints = [];
+    var activities = [];
+
+    var getTimeStamp = function() {return (new Date()).toISOString()};
+    playerStats.init = function() {
+        data = {
+            machineID : null,
+            startTime : (new Date()).toISOString(),
+            endTime : null,
+            gameCompleted : false,
+            activities : [],
+            total_score : 0
+        }
+        activities = [];
+
+    };
+    playerStats.getMachineID = function() {
+        machineID = "someuniqeid";
+    };
+    playerStats.startTask = function(task) {
+        curTask = {};
+        curTask.startTime = getTimeStamp();
+        curTask.endTime = null;
+        //var task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask())
+        curTask.type = task.type;
+        if (task.type = "QA") {
+            curTask.question = task.question;
+        } else if (task.type = "GeoReference") {
+            curTask.lat = task.lat;
+            curTask.lng = task.lng;
+        }
+    };
+    playerStats.endTask = function(result) {
+        curTask.result = result;
+        curTask.endTime = getTimeStamp();
+        tasks.push(curTask);
+    };
+    playerStats.startWaypoint = function(waypoint) {
+        curWaypoint = {};
+        tasks = [];
+        curWaypoint.name = waypoint.name;
+        curWaypoint.lat = waypoint.lat;
+        curWaypoint.lng = waypoint.lng;
+        curWaypoint.startTime = getTimeStamp();
+    };
+    playerStats.endWaypoint = function() {
+        curWaypoint.endTime = getTimeStamp();
+        curWaypoint.tasks = tasks;
+        waypoints.push(curWaypoint);
+    };
+    playerStats.startActivity = function(activity) {
+        curActivity = {};
+        curActivity.startTime = getTimeStamp();
+        curActivity.type =  activity.type;
+    };
+    playerStats.endActivity = function() {
+        curActivity.waypoints =  waypoints;
+        curActivity.endTime = getTimeStamp();
+        activities.push(curActivity);
+    };
+    playerStats.endGame = function(score) {
+        data.gameCompleted = true;
+        data.endTime = getTimeStamp();
+        data.total_score = score;
+        data.activities = activities;
+        playerStats.debug("End of Game")
+    }
+    playerStats.debug = function(msg) {
+        console.log(msg, data);
+    };
+
+    return playerStats;
 });

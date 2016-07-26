@@ -1220,7 +1220,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 }])
 
 // controller for gameplay
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing, $translate, API, PathData) {
+.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing, $translate, API, PathData, PlayerStats) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
@@ -1261,6 +1261,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         GameState.resetAll();
         createModal('gameinfo-modal.html', 'info');
         $scope.gameLoaded = true;
+        PlayerStats.init();
     };
 
     var abortGame = function (message) {
@@ -1275,6 +1276,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         } else if (GameState.gameOver()) {
             endGame();
         } else {
+            PlayerStats.startActivity(GameData.getActivity(index))
             handleNextWaypoint();
         }
     };
@@ -1287,6 +1289,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
    var handleNextWaypoint = function () {
         GameState.todoWaypointIndex(); // Get pending waypoint
         if (GameState.allWaypointsCleared()) {
+            console.log("Handle next waypoint - end activity");
+            PlayerStats.endActivity();
             handleNextActivity();
         } else {
             var actIndex = GameState.getCurrentActivity();
@@ -1300,6 +1304,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
             $scope.score += $scope.CORRECT_ANS_SCORE;
         }
+        PlayerStats.debug("Handle next waypoint");
     };
 
     var handleTask = function () {
@@ -1308,6 +1313,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             handleNextWaypoint();
         } else {
             $scope.task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
+            PlayerStats.startTask($scope.task);
             if ($scope.task.type == 'GeoReference') {
                 $scope.performGeoReferencingTask($scope.task);
             } else if ($scope.task.type == 'QA') {
@@ -1318,6 +1324,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 handleTask();
             }
         }
+        PlayerStats.debug("Handle next task");
     };
 
     $scope.performGeoReferencingTask = function () {
@@ -1399,7 +1406,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $timeout(function () {
                         $scope.icon = "ion-android-happy";
                     }, 1200);
-
                     $scope.score += $scope.CORRECT_ANS_SCORE;
                 } else {
                     $scope.answer = false;
@@ -1407,8 +1413,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $scope.rightAnswer = $scope.rightAnswer;
                     $scope.icon = "ion-sad-outline";
                     $scope.score -= $scope.WRONG_ANS_PENALTY;
-
                 }
+                PlayerStats.endTask({
+                        'answer_correct' : $scope.answer,
+                        'answer_chosen' : $scope.chosenAnswer
+                });
             }
         };
 
@@ -1458,6 +1467,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.$on('waypointReachedEvent', function (event) {
         $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
+        PlayerStats.endWaypoint();
         createModal('waypoint-reached-modal.html', 'waypoint');
     });
 
@@ -1510,6 +1520,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     /* Game Results */
 
     var endGame = function () {
+        PlayerStats.endGame($scope.score);
         createModal('gameover-modal.html', 'endgame');
 
         $scope.shareButtons = false;
@@ -1600,7 +1611,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
  * - Only shows waypoint and emits signal when waypoint is reached
  * - Is not concerned with GameState or the game progression logic
  */
-.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', 'leafletData', '$translate', 'PathData', function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, $timeout, leafletData, $translate, PathData) {
+.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', 'leafletData', '$translate', 'PathData', 'PlayerStats',function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, $timeout, leafletData, $translate, PathData, PlayerStats) {
 
     $scope.waypointLoaded = false;
     $scope.allowEdit = false;
@@ -1720,6 +1731,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     /* Add more markers once game is loaded */
     $scope.$on('waypointLoadedEvent', function (event, waypoint) {
+        PlayerStats.startWaypoint(waypoint);
         $ionicModal.fromTemplateUrl('waypointinfo-modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -1860,6 +1872,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     var markedLocation = L.latLng($scope.newGeoRefPoint.lat, $scope.newGeoRefPoint.lng);
                     var distance = parseInt(origLocation.distanceTo(markedLocation));
 
+                    /* Georef task - Path from where the photograph was originally taken to where the player marked */
                     var path = {
                         type: "polyline",
                         color: 'red',
@@ -1883,6 +1896,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         delete $scope.map.paths.georefTaskPath;
                         delete $scope.map.markers.playerPhotoMark;
                         delete $scope.map.markers.origPhotoMark;
+                        UserStats.endTask ({
+                            "marked_lat" : $scope.newGeoRefPoint.lat,
+                            "marked_lng" : $scope.newGeoRefPoint.lng,
+                            "distance_in_m" : distance
+                        });
                         $scope.$emit('geoRefMarkedEvent', distance);
                     }, 2000);
                     //$scope.map.markers.pop();
