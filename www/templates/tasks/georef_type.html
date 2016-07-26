@@ -4,13 +4,15 @@
         <p>Place the marker at the position from where the photo was taken</p>
         <div class="photo_div">
             <div class="photo_ic">
-                <img class="upl_ph"  ng-src="data:image/jpeg;base64,{{georP.base64}}" ng-hide = "georP == null">
+                <!--<img class="upl_ph"  ng-src="data:image/jpeg;base64,{{georP.base64}}" ng-hide = "georP == null">-->
+                <img ng-src="{{georefPicPrvw}}" ng-show="geoTask.photo">
                 <div>
                     <img class="cam_icon" src="./img/icons/camera.svg">
-                    <label for="photoPC">Add Photo</label>
+                    <label for="georefPic">Add Photo</label>
                 </div>
             </div>
-             <input class="btn inputfile" id="photoPC" type="file" ng-model="file" accept="image/*" onload="onLoadG" base-sixty-four-input>
+            <input class="btn inputfile" type="file" id="georefPic" ngf-select="imgUpload($file, $event)" accept="image/*">
+             <!--<input class="btn inputfile" id="photoPC" type="file" ng-model="file" accept="image/*" onload="onLoadG" base-sixty-four-input>-->
         </div>
 
         <div class="map_con">

@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.value('Server', 'localhost:5000')
+.value('Server', 'giv-origami.uni-muenster.de/origamidb')
 
 .factory('Edit', function() {
     var editedGame = {};
@@ -503,9 +503,9 @@ angular.module('starter.services', [])
         curTask.endTime = null;
         //var task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask())
         curTask.type = task.type;
-        if (task.type = "QA") {
+        if (task.type == "QA") {
             curTask.question = task.question;
-        } else if (task.type = "GeoReference") {
+        } else if (task.type == "GeoReference") {
             curTask.lat = task.lat;
             curTask.lng = task.lng;
         }

@@ -566,11 +566,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 case 'photoQuestion': 
                     isQuestion = true;
                     break;
+                case 'georefPic':
+                    isGeoref = true;
+                    break;
             }
 
             // Previewing the image
             reader.onload = function(event) {
-                if (!isQuestion) {
+                if (isGeoref) {
+                    $scope.georefPicPrvw = event.target.result;
+                } else if (!isQuestion) {
                     $scope.imgAnsPrvw[picIndex] = event.target.result;
                 } else {
                     $scope.imgQuestionPrvw = event.target.result;
@@ -584,7 +589,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 //console.log(res);
                 if (res.status == 200) {
                     //$scope.picFilename[picIndex] = res.data.img_file;
-                    if (isQuestion) {
+                    if (isGeoref) {
+                        $scope.geoTask.img = res.data.img_file;
+                    } else if (isQuestion) {
                         $scope.qaTask.question.img = res.data.img_file;
                     } else {
                         $scope.qaTask.answers[picIndex].img = res.data.img_file;
@@ -633,7 +640,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.submitGR = function (img_file) {
         /*Creation of game content */
         $scope.geoTask.type = "GeoReference";
-        $scope.geoTask.photo = "data:image/jpeg;base64," + $scope.georP.base64;
+        //$scope.geoTask.img = "data:image/jpeg;base64," + $scope.georP.base64;
         $scope.geoTask.lat = $scope.gameMap.markers[0].lat;
         $scope.geoTask.lng = $scope.gameMap.markers[0].lng;
 
@@ -1314,6 +1321,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         } else {
             $scope.task = GameData.getTask(GameState.getCurrentActivity(), GameState.getCurrentWaypoint(), GameState.getCurrentTask());
             PlayerStats.startTask($scope.task);
+            console.log($scope.task);
             if ($scope.task.type == 'GeoReference') {
                 $scope.performGeoReferencingTask($scope.task);
             } else if ($scope.task.type == 'QA') {
@@ -1330,7 +1338,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.performGeoReferencingTask = function () {
         $scope.showInfo = true;
         $scope.subHeaderInfo = "Mark location on map";
-        $scope.geoRefPhoto = $scope.task.photo;
+        $scope.geoRefPhoto = API.getImageURL($scope.task.img);
         createModal('georef-modal.html', 'georef');
     };
 
@@ -1896,7 +1904,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         delete $scope.map.paths.georefTaskPath;
                         delete $scope.map.markers.playerPhotoMark;
                         delete $scope.map.markers.origPhotoMark;
-                        UserStats.endTask ({
+                        PlayerStats.endTask ({
                             "marked_lat" : $scope.newGeoRefPoint.lat,
                             "marked_lng" : $scope.newGeoRefPoint.lng,
                             "distance_in_m" : distance
