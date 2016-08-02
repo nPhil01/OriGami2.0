@@ -5,7 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 'leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordova', 'ngAnimate', 'ngFileUpload'])
+angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 
+                            'leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 
+                            'ngCordova', 'ngAnimate', 'ngFileUpload', 'LocalForageModule'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,7 +32,7 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
         $translateProvider.preferredLanguage('en');
     })
 
-.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $localForageProvider) {
 
     $ionicConfigProvider.tabs.position('bottom');
 
@@ -202,5 +204,13 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/home');
+
+    $localForageProvider.config({
+        driver: localforage.INDEXEDDB,
+        name: 'origami',
+        storeName: 'playerdata',
+        description: 'keep track of gameplay and movement'
+
+    });
 
 });

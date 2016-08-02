@@ -475,7 +475,8 @@ angular.module('starter.services', [])
 })
 
 /* Keep track of gameplay for analytics */
-.factory('PlayerStats', function ($rootScope, $http, $filter, GameData, GameState, PathData) {
+.factory('PlayerStats', ['$rootScope', '$http', '$filter', 'GameData', 'GameState', 'PathData', 'LocalDB',
+                            function ($rootScope, $http, $filter, GameData, GameState, PathData, LocalDB) {
     var playerStats = {};
     var data = {}
     var tasks = [];
@@ -551,10 +552,28 @@ angular.module('starter.services', [])
         }
         origami_stats.push(data);
         localStorage.setItem('origami_stats', origami_stats);
+        */
     }
     playerStats.debug = function(msg) {
         console.log(msg, data);
     };
 
     return playerStats;
-});
+}])
+
+/* Store gamedata offline using Indexed DB */
+.factory('LocalDB', ['$localForage', function ($localForage) {
+    // Database has been intialized $localForageProvider.config in app.js 
+    db = {};
+    timestamp =(new Date()).toISOString();
+    db.saveItem = function(item) {
+        $localForage.setItem(timestamp, item)
+            .then(function() {
+                $localForage.getItem(timestamp).then(function(data) {
+                    console.log(data);
+                    console.log($localForage.driver());
+                });
+            });
+    };
+    return db;
+}]);
