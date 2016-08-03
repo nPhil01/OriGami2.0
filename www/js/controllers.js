@@ -1227,10 +1227,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 }])
 
 // controller for gameplay
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, 
-                                    $location, GameData, GameState, $timeout, $cordovaSocialSharing, $cordovaDevice,
-                                    $translate, API, PathData, PlayerStats) {
-	//console.log($cordovaDevice.getUUID());    
+.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing, $translate, API, PathData, PlayerStats) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
@@ -1618,19 +1615,62 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
  * - Only shows waypoint and emits signal when waypoint is reached
  * - Is not concerned with GameState or the game progression logic
  */
-.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', 'leafletData', '$translate', 'PathData', 'PlayerStats',function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, $timeout, leafletData, $translate, PathData, PlayerStats) {
+.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', 
+                                '$timeout', 'leafletData', '$translate', 'GameData', 'PathData', 'PlayerStats',
+                                function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, 
+                                            $timeout, leafletData, $translate, GameData, PathData, PlayerStats) {
 
     $scope.waypointLoaded = false;
     $scope.allowEdit = false;
     $scope.showMarker = false;
+
+    /* Initialize default map settings */
+    $scope.mapConfig = {
+        maxZoom : 19,
+        maxNativeZoom : 18,
+        zoomControlPosition: 'bottomleft',
+        defaultZoom: 18,
+        enableZoom : true,
+    };
+
+    /* Default game settings */
+    $scope.gameConfig = {
+        thresholdDistance : 30 // distance (in metres) to target waypoint below which target is treated as reached  
+    };
+
+    /* Override default settings with custom settings from game data */
+    $scope.$on('gameLoadedEvent', function (event, args) {
+        var gameConfig = GameData.getConfig();
+        if (gameConfig) {
+            /* Get map specific settings and override defaults */
+            if ('map' in gameConfig) {
+                for (var setting in gameConfig.map) {
+                    $scope.mapConfig[setting] = gameConfig.map[setting];
+                }
+            }
+            /* Override other settings */
+            if ('thresholdDistance' in gameConfig) {
+                $scope.gameConfig.thresholdDistance = gameConfig.thresholdDistance;
+            }
+        } else {
+            //console.log("No config for game. Using defaults");
+        }
+        // Initialize map after game is loaded
+        $scope.initialize();
+    });
 
     /* Initialize view of map */
     $scope.initialize = function () {
         $scope.map = {
             defaults: {
                 tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                maxZoom: 19,
-                zoomControlPosition: 'bottomleft'
+                maxNativeZoom: $scope.mapConfig.maxNativeZoom,
+                maxZoom: $scope.mapConfig.maxZoom,
+                doubleClickZoom: $scope.mapConfig.enableZoom, 
+                touchZoom: $scope.mapConfig.enableZoom, 
+                scrollWheelZoom: $scope.mapConfig.enableZoom, 
+                zoomControl : $scope.mapConfig.enableZoom,
+                zoomControlPosition: $scope.mapConfig.zoomControlPosition
             },
             layers: {
                 baselayers: {
@@ -1682,16 +1722,21 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             center: {
                 lat: 0,
                 lng: 0,
-                zoom: 18
+                zoom: $scope.mapConfig.defaultZoom
             }
         };
 
         $scope.geoLocButtonColor = "button-calm";
         $scope.playerMarkerButtonColor = "button-calm";
-        $scope.getRealTimePos = false;
+        $scope.getRealTimePos = false; // 'true' when map button is toggled to get real position from GPS
+        /*  initialDistance is a pseudo value for initial calculation of distance to map center.
+            Otherwise chances are high that first waypoint is reached as soon as map is loaded.
+            Actual distance is computed once map 'move' event is triggered.
+            Also used to calculate max frown curvature for smile, beyond which smiley doesn't frown anymore
+        */
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
-        $scope.thresholdDistance = 30;
+        $scope.thresholdDistance = $scope.gameConfig.thresholdDistance;
         $scope.locate();
         $scope.$emit('mapLoadedEvent');
     };
@@ -2023,6 +2068,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     }
 
-    $scope.initialize();
+    //$scope.initialize();
 
 }]);

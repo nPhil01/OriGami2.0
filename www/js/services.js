@@ -292,6 +292,14 @@ angular.module('starter.services', [])
         }
         return -1;
     };
+    data.getConfig = function() {
+        if (loaded) {
+            if ('config' in game) {
+                return game.config;
+            }
+        }
+        return null;
+    };
     data.loadGame = function (name) {
         var defer = $q.defer();
         //var games = $http.get('test_data/games.json')
@@ -300,6 +308,7 @@ angular.module('starter.services', [])
                 function (response) { // On success
                     game = response.data[0];
                     loaded = true;
+                    $rootScope.$broadcast('gameLoadedEvent');
                     defer.resolve();
                     /*
                 // load only those games which match selected game name
