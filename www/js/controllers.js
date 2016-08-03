@@ -1227,7 +1227,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 }])
 
 // controller for gameplay
-.controller('PlayCtrl', function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location, GameData, GameState, $timeout, $cordovaSocialSharing, $translate, API, PathData, PlayerStats) {
+.controller('PlayCtrl', ['$scope', '$stateParams', '$ionicModal', '$ionicPopup', '$ionicLoading', '$location', '$cordovaSocialSharing', 
+                         '$translate', '$timeout', 'GameData', 'GameState', 'API', 'PathData', 'PlayerStats', 
+                         function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location,  $cordovaSocialSharing, 
+                                    $translate, $timeout, GameData, GameState, API, PathData, PlayerStats) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
@@ -1606,7 +1609,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
-})
+}])
 
 
 
