@@ -546,6 +546,7 @@ angular.module('starter.services', [])
         data.total_score = score;
         data.activities = activities;
         data.trajectory = PathData.getPath();
+        /*
         origami_stats = localStorage.getItem('origami_stats') 
         if (!origami_stats) {
             origami_stats = [];
