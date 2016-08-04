@@ -28,8 +28,8 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
         for (lang in translations) {
             $translateProvider.translations(lang, translations[lang]);
         }
-
         $translateProvider.preferredLanguage('en');
+        $translateProvider.fallbackLanguage('en');
     })
 
 .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $localForageProvider) {

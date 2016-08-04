@@ -1109,6 +1109,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var initGame = function () {
         GameState.resetAll();
+        $translate.use(GameData.getConfig('language'));
         $scope.TIME_LIMIT = GameData.getConfig('qaTimeLimit'); // time limit to answer question (in seconds) 
         createModal('gameinfo-modal.html', 'info');
         $scope.gameLoaded = true;
