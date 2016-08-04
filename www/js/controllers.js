@@ -2,8 +2,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 .controller('HomeCtrl', function ($scope) {})
 
-.controller('GamesCtrl', function ($rootScope, $scope, $http, $location,
-    $ionicModal, API, Data, $window, $timeout, $ionicPopup, $ionicHistory, $translate) {
+.controller('GamesCtrl', [ '$rootScope', '$scope', '$http', '$location', '$ionicModal', '$window', '$timeout', 
+                            '$ionicPopup', '$ionicHistory', '$translate', 'API', 'Data', 
+                            function ($rootScope, $scope, $http, $location, $ionicModal, $window, $timeout, 
+                                        $ionicPopup, $ionicHistory, $translate, API, Data) {
 
     // Info Popups --------------------------------------
     $scope.showPathInfo = function () {
@@ -81,10 +83,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     };
 
-})
+}])
 
-.controller('TeacherCtrl', function ($rootScope, $scope, API, Edit, $timeout, $ionicModal, $window, $ionicHistory, 
-	$translate, $ionicSlideBoxDelegate, $cordovaCamera, $q) {
+.controller('TeacherCtrl', ['$rootScope', '$scope', '$timeout', '$ionicModal', '$window', '$ionicHistory', 
+                            '$translate', '$ionicSlideBoxDelegate', '$cordovaCamera', '$q', 'API', 'Edit', 
+                            function ($rootScope, $scope, $timeout, $ionicModal, $window, $ionicHistory, 
+                                    $translate, $ionicSlideBoxDelegate, $cordovaCamera, $q, API, Edit) {
     // List of all available games fetched from the server
     $scope.list = [];
 
@@ -699,11 +703,15 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $translate.instant('oops_wrong');
             });
     };
-})
+}])
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', ['$rootScope', '$scope', '$state', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 'API', 'Edit', 'Data', 'Task', '$window', '$ionicPopup', '$ionicHistory', 'leafletData', '$stateParams', '$cordovaCamera', function ($rootScope, $scope, $state, $http, $location, $cordovaGeolocation,
-    $ionicModal, API, Edit, Data, Task, $window, $ionicPopup, $ionicHistory, leafletData, $stateParams, $cordovaCamera, $translate) {
+.controller('NewGameCtrl', ['$rootScope', '$scope', '$state', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 
+                            '$window', '$ionicPopup', '$ionicHistory', '$stateParams', '$cordovaCamera', 
+                            '$translate', 'leafletData', 'API', 'Edit', 'Data', 'Task', 
+                            function ($rootScope, $scope, $state, $http, $location, $cordovaGeolocation, $ionicModal,
+                                        $window, $ionicPopup, $ionicHistory, $stateParams, $cordovaCamera, 
+                                        $translate, leafletData, API, Edit, Data, Task) {
 
     /* Game Parameters ----- */
     $scope.currentAction = "New Game";
