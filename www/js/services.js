@@ -241,6 +241,34 @@ angular.module('starter.services', [])
     var data = {};
     var game = {};
     var loaded = false;
+    var config = {};
+    /* Specify default configuration settings. Can be overridden by game specific configs*/
+    var default_config = {
+        // Defaults for leaflet map
+        map: {
+            maxZoom: 19,
+            maxNativeZoom: 18,
+            zoomControlPosition: 'bottomleft',
+            defaultZoom: 18,
+            enableZoom: true,
+            defaultLayer : 'satellite' // choose from : satellite / streets / topographic
+        },
+        thresholdDistance: 30, // distance (in metres) to target waypoint below which target is treated as reached 
+        thresholdDistanceGeolocOn: 10, // same when geolocation is on
+        georefThresholdDistance : 25, // threshold distance for georeference game to treat answer as correct and gain points
+        // scores and penalties for various scenarios
+        score: {
+            waypointCorrect: 10, // points gained when waypoint reached
+            answerCorrect : 10, // points gained when question answered correctly
+            answerIncorrect : 0, // points lost when question answered incorrectly
+            georefCorrect : 10, // points gained when georeference is below 'georefThresholdDistance'
+            georefIncorrect : 0 // points lost when georeference is more than 'georefThresholdDistance'
+        },
+        qaTimeLimit : 30, // time limit (in seconds) to choose answer in question-answer game
+        playerLocationHintTimeout : 5, // time limit (in seconds) to show player's position marker when button is pressed
+        language : "en" // recommmended interface language for game (alternatives - de / es / pt / en)
+
+    };
     data.isLoaded = function () {
         return loaded;
     };
@@ -292,11 +320,39 @@ angular.module('starter.services', [])
         }
         return -1;
     };
-    data.getConfig = function() {
+    data.getAllConfigs = function() {
         if (loaded) {
-            if ('config' in game) {
-                return game.config;
+            return config;
+        }
+        return null;
+    };
+    data.getConfig = function (prop) {
+        /*       
+            Check if object has nested keys. Angular don't provide inbuilt functions for the same 
+            e.g. objHasProp (myObj, 'foo.bar.xyz')
+            checks if myObj has 'foo', then 'bar', then 'xyz' as it's properties 
+            Second argument is a string
+        */
+        var objHasProp = function (obj, keys) {
+            keys = keys.split('.');
+            var next = keys.shift();
+            return obj[next] && (!keys.length || objHasProp(obj[next], keys.join('.')));
+        };
+        /*
+             Get nested key from obj - e.g.. getProp (myObj, 'foo.bar.xyz') gives myObj.foo.bar.xyz
+             As with previous function, second argument is a string
+        */
+        var getProp = function (obj, keys) {
+            for (var i = 0, keys = keys.split('.'), len = keys.length; i < len; i++) {
+                obj = obj[keys[i]];
+            };
+            return obj;
+        };
+        if (loaded) {
+            if (objHasProp(config, prop)) {
+                return getProp(config, prop);
             }
+            return null;
         }
         return null;
     };
@@ -308,21 +364,13 @@ angular.module('starter.services', [])
                 function (response) { // On success
                     game = response.data[0];
                     loaded = true;
+                    if (game.hasOwnProperty('config') == false) {
+                        game.config = {};
+                    }
+                    /* config will now contain default + customized configs */
+                    angular.merge (config, default_config, game.config);
                     $rootScope.$broadcast('gameLoadedEvent');
                     defer.resolve();
-                    /*
-                // load only those games which match selected game name
-			 var selected_game = $filter('filter')(response.data, {
-                         "name": name
-			 }, true);
-			 if (selected_game.length == 1) {
-                         loaded = true;
-                         game = selected_game[0];
-                         defer.resolve();
-			 } else {
-                         console.log("Error! More than one game matched");
-                         defer.reject("Error! More than one game matched");
-			 }*/
                 },
                 function (response) { //On failure
                     console.log("Fetching game data. HTTP GET request failed");

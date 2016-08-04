@@ -854,7 +854,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     };
 
-
     $scope.choosePhoto = function () {
         var options = {
             quality: 75,
@@ -891,14 +890,12 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     });
 
-
     $scope.pathGame = function () {
         Data.addType("Find destination");
     };
     $scope.aidGame = function () {
         Data.addType("Follow route");
     };
-
 
     //Collapsed list with tasks for each activity
     $scope.toggleActivity = function (activity) {
@@ -907,7 +904,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.isActivityShown = function (activity) {
         return activity.show;
     };
-
 
     //Function, which add new task to the choosen activity
     $scope.currentActIndex = null;
@@ -951,7 +947,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
         $ionicHistory.goBack();
         Task.clearTask();
-
     };
 
     // Submit task for Android device
@@ -1084,10 +1079,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
 
-    $scope.CORRECT_ANS_SCORE = 10;
-    $scope.WRONG_ANS_PENALTY = 0;
-    $scope.TIME_LIMIT = 30; // time limit to answer question (in seconds) 
-
     $scope.score = 0;
 
     /* only for debug purposes */
@@ -1118,6 +1109,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     var initGame = function () {
         GameState.resetAll();
+        $scope.TIME_LIMIT = GameData.getConfig('qaTimeLimit'); // time limit to answer question (in seconds) 
         createModal('gameinfo-modal.html', 'info');
         $scope.gameLoaded = true;
         PlayerStats.init();
@@ -1159,7 +1151,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             }
             $scope.$broadcast('waypointLoadedEvent', $scope.waypoint);
 
-            $scope.score += $scope.CORRECT_ANS_SCORE;
+            $scope.score += GameData.getConfig('score.waypointCorrect');
         }
     };
 
@@ -1249,13 +1241,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $timeout(function () {
                         $scope.icon = "ion-android-happy";
                     }, 1200);
-                    $scope.score += $scope.CORRECT_ANS_SCORE;
+                    $scope.score += GameData.getConfig('score.answerCorrect');
                 } else {
                     $scope.answer = false;
                     $scope.answerResult = $translate.instant("wrong_ans_1");
                     $scope.rightAnswer = $scope.rightAnswer;
                     $scope.icon = "ion-sad-outline";
-                    $scope.score -= $scope.WRONG_ANS_PENALTY;
+                    $scope.score -= GameData.getConfig('score.answerIncorrect');
                 }
                 PlayerStats.endTask({
                         'answer_correct' : $scope.answer,
@@ -1351,10 +1343,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.georefSmiley = 'ion-happy-outline';
             $scope.geoResult = true;
 
-            $scope.score += $scope.CORRECT_ANS_SCORE;
+            $scope.score += GameData.getConfig('score.georefCorrect');
         } else {
             $scope.georefSmiley = 'ion-sad-outline';
-            $scope.score -= $scope.WRONG_ANS_PENALTY;
+            $scope.score -= GameData.getConfig('score.georefIncorrect');
         }
         createModal('georef-result-modal.html', 'georefResult');
     });
@@ -1446,9 +1438,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
 }])
 
-/* - Controller for map in student mode
- * - Only shows waypoint and emits signal when waypoint is reached
- * - Is not concerned with GameState or the game progression logic
+/* - Controller for map in origami play mode
+ * - Only shows waypoint and emits signal when waypoint is reached or georeference game is played
+ * - Is not concerned with GameState or the game progression logic - that is a job for PlayCtrl
  */
 .controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', 
                                 '$timeout', 'leafletData', '$translate', 'GameData', 'PathData', 'PlayerStats',
@@ -1459,53 +1451,28 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.allowEdit = false;
     $scope.showMarker = false;
 
-    /* Initialize default map settings */
-    $scope.mapConfig = {
-        maxZoom : 19,
-        maxNativeZoom : 18,
-        zoomControlPosition: 'bottomleft',
-        defaultZoom: 18,
-        enableZoom : true,
-    };
-
-    /* Default game settings */
-    $scope.gameConfig = {
-        thresholdDistance : 30 // distance (in metres) to target waypoint below which target is treated as reached  
-    };
-
-    /* Override default settings with custom settings from game data */
+    // Initialize map after game is loaded. Needed because config settings are in game data
     $scope.$on('gameLoadedEvent', function (event, args) {
-        var gameConfig = GameData.getConfig();
-        if (gameConfig) {
-            /* Get map specific settings and override defaults */
-            if ('map' in gameConfig) {
-                for (var setting in gameConfig.map) {
-                    $scope.mapConfig[setting] = gameConfig.map[setting];
-                }
-            }
-            /* Override other settings */
-            if ('thresholdDistance' in gameConfig) {
-                $scope.gameConfig.thresholdDistance = gameConfig.thresholdDistance;
-            }
-        } else {
-            //console.log("No config for game. Using defaults");
-        }
-        // Initialize map after game is loaded
         $scope.initialize();
     });
 
     /* Initialize view of map */
     $scope.initialize = function () {
+        $scope.thresholdDistance = GameData.getConfig('thresholdDistance');
+        
+        var defaultLayer = GameData.getConfig('map.defaultLayer')
+        var isDefaultLayer = function(layerName) { return (defaultLayer === layerName) ? true : false; };
+
         $scope.map = {
             defaults: {
                 tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                maxNativeZoom: $scope.mapConfig.maxNativeZoom,
-                maxZoom: $scope.mapConfig.maxZoom,
-                doubleClickZoom: $scope.mapConfig.enableZoom, 
-                touchZoom: $scope.mapConfig.enableZoom, 
-                scrollWheelZoom: $scope.mapConfig.enableZoom, 
-                zoomControl : $scope.mapConfig.enableZoom,
-                zoomControlPosition: $scope.mapConfig.zoomControlPosition
+                maxNativeZoom: GameData.getConfig('map.maxNativeZoom'),
+                maxZoom: GameData.getConfig('map.maxZoom'),
+                doubleClickZoom: GameData.getConfig('map.enableZoom'), 
+                touchZoom: GameData.getConfig('map.enableZoom'), 
+                scrollWheelZoom: GameData.getConfig('map.enableZoom'), 
+                zoomControl : GameData.getConfig('map.enableZoom'),
+                zoomControlPosition: GameData.getConfig('map.zoomControlPosition')
             },
             layers: {
                 baselayers: {
@@ -1513,7 +1480,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         name: 'Satellite View',
                         url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
-                        top: true,
+                        top: isDefaultLayer('satellite'),
                         layerOptions: {
                             attribution: '&copy; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
                             continuousWorld: false
@@ -1523,7 +1490,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         name: 'OpenStreetMap View',
                         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz',
-                        top: false,
+                        top: isDefaultLayer('streets'),
                         layerOptions: {
                             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                             continuousWorld: false
@@ -1533,7 +1500,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         name: 'Topographic View',
                         url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
-                        top: false,
+                        top: isDefaultLayer('topographic'),
                         layerOptions: {
                             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
                             continuousWorld: false
@@ -1542,16 +1509,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 }
             },
             markers: {},
-            paths: {
-
-                // PATH DATA VISUALIZED 
-
-                /*p1: {
-                    color: '#008000',
-                    weight: 5,
-                    latlngs: PathData.getPath()
-                }*/
-            },
             events: {
                 map: {
                     enable: ['contextmenu', 'move', 'zoomend'],
@@ -1561,7 +1518,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             center: {
                 lat: 0,
                 lng: 0,
-                zoom: $scope.mapConfig.defaultZoom
+                zoom: GameData.getConfig('map.defaultZoom')
             }
         };
 
@@ -1575,7 +1532,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         */
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
-        $scope.thresholdDistance = $scope.gameConfig.thresholdDistance;
         $scope.locate();
         $scope.$emit('mapLoadedEvent');
     };
@@ -1811,7 +1767,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             args.lat = 51.94;
             args.lng = 7.60;
         } else {
-            /*********************************************************/
             $scope.georef.lat = args.lat;
             $scope.georef.lng = args.lng;
         }
@@ -1849,7 +1804,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.toggleGeoLocation = function (showInfo) {
         if ($scope.getRealTimePos == false) {
             $scope.getRealTimePos = true;
-
+            
+            // Geolocation is now ON
             if (showInfo) {
                 $ionicLoading.show({
                     template: $translate.instant('now_using_geo'),
@@ -1862,7 +1818,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     map.dragging.disable();
                 });
             $scope.geoLocButtonColor = "button-balanced";
-            $scope.thresholdDistance = 10;
+            $scope.thresholdDistance = GameData.getConfig('thresholdDistanceGeolocOn');
             $scope.trackPosition();
         } else {
             $scope.getRealTimePos = false;
@@ -1870,7 +1826,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 .then(function (map) {
                     map.dragging.enable();
                 });
-            $scope.thresholdDistance = 30;
+            $scope.thresholdDistance = GameData.getConfig('thresholdDistance');
             $scope.geoLocButtonColor = "button-calm";
             $scope.trackWatch.clearWatch();
         }
@@ -1902,7 +1858,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     };
                     $scope.playerMarkerButtonColor = "button-calm";
                     $scope.showMarker = false;
-                }, 5000);
+                }, GameData.getConfig('playerLocationHintTimeout') * 1000);
             }
         }
     }
