@@ -1677,21 +1677,25 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             },
             layers: {
                 baselayers: {
-                    osm: {
-                        name: 'Satelite View',
+                    satellite: {
+                        name: 'Satellite View',
                         url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: true,
                         layerOptions: {
-                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                            attribution: '&copy; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
                             continuousWorld: false
                         }
                     },
                     streets: {
-                        name: 'Streets View',
+                        name: 'OpenStreetMap View',
                         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz',
                         top: false,
+                        layerOptions: {
+                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                            continuousWorld: false
+                        }
                     },
                     topographic: {
                         name: 'Topographic View',
