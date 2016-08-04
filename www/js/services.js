@@ -336,7 +336,7 @@ angular.module('starter.services', [])
         var objHasProp = function (obj, keys) {
             keys = keys.split('.');
             var next = keys.shift();
-            return obj[next] && (!keys.length || objHasProp(obj[next], keys.join('.')));
+            return (typeof obj[next] != 'undefined') && (!keys.length || objHasProp(obj[next], keys.join('.')));
         };
         /*
              Get nested key from obj - e.g.. getProp (myObj, 'foo.bar.xyz') gives myObj.foo.bar.xyz
