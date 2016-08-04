@@ -42,100 +42,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         console.log("Could not fetch game metadata from server");
     });
 
-
-    /*$scope.games = [];
-    $scope.createFile = function () {
-        API.getAll().success(function (data, status, headers, config) {
-            $scope.games = [];
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].name != null) {
-                    $scope.games.push(data[i]);
-                }
-            }
-
-            if ($scope.games.length == 0) {
-                $scope.noData = true;
-            } else {
-                for (var i = 0; i < $scope.games.length; i++) {
-                    var maxPoint = 0
-
-                    if ($scope.games[i].players != undefined) {
-                        for (var d = 0; d < $scope.games[i].players.length; d++) {
-                            if ($scope.games[i].players[d].points > maxPoint) {
-                                maxPoint = $scope.games[i].players[d].points;
-                            }
-                        }
-                    }
-                    $scope.games[i].maxp = maxPoint;
-
-                    $scope.games[i].diff = Array.apply(null, Array($scope.games[i].difficulty)).map(function () {
-                        return "ion-ios-star"
-                    });
-                }
-                $scope.noData = false;
-            }
-            
-            var metaData = {};
-            metaData.name = "metadata";
-            metaData.games = $scope.games;
-
-            API.saveItem(metaData)
-                .success(function (data, status, headers, config) {
-
-                console.log(data);
-                })
-                .error(function (data, status, headers, config) {
-                    $rootScope.hide();
-                    $translate.instant('oops_wrong');
-                });
-
-        }).error(function (data, status, headers, config) {
-            $rootScope.notify(
-                $translate.instant('oops_wrong'));
-        });
-    };
-    */
-
-
-    /*API.getAll().success(function (data, status, headers, config) {
-        $scope.games = [];
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].name != null) {
-                $scope.games.push(data[i]);
-            }
-        }
-        if ($scope.games.length == 0) {
-            $scope.noData = true;
-        } else {
-            for (var i = 0; i < $scope.games.length; i++) {
-                var maxPoint = 0
-
-                if ($scope.games[i].players != undefined) {
-                    for (var d = 0; d < $scope.games[i].players.length; d++) {
-                        if ($scope.games[i].players[d].points > maxPoint) {
-                            maxPoint = $scope.games[i].players[d].points;
-                        }
-                    }
-                }
-                $scope.games[i].maxp = maxPoint;
-
-                $scope.games[i].diff = Array.apply(null, Array($scope.games[i].difficulty)).map(function () {
-                    return "ion-ios-star"
-                });
-            }
-            $scope.noData = false;
-        }
-    }).error(function (data, status, headers, config) {
-        $rootScope.notify(
-            $translate.instant('oops_wrong'));
-    });*/
-
     //Selected game
     $scope.gameSelect = function (gameName) {
         param = "/tab/playgame/" + gameName;
         $location.path(param);
     };
-
 
     // Create Activity
     $scope.submitPoint = function () {
@@ -214,7 +125,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicHistory.goBack();
     };
 
-
     /* Game Creation Wizard (Test Version) ------------------------------------------------ */
     $scope.newgame = {}; //General description of the game
     $scope.navactivities = []; // List of activities and types
@@ -255,7 +165,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         currentAct.type = $scope.act_type == 1 ? "Find destination" : "Follow route";
         currentAct.points = [];
     }
-
 
     /* Map Routine ------------------- */
     $scope.mainMap = {
@@ -489,7 +398,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }
     });
 
-
     var newMarker = {};
     $scope.numberTask = 0;
     $scope.saveWayPoint = function () {
@@ -688,68 +596,10 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 $scope.numberTask = 0;
             });
     };
-    /*
-    $scope.finishGame = function () {
-        var metaFile = [];
-        API.getMetadata().success(function (data, status, headers, config) {
-            metaFile = data;
-            var metagame = {};
-            metagame.name = $scope.newgame.name;
-            metagame.description = $scope.newgame.description;
-            metagame.timcompl = $scope.newgame.timecompl;
-            metagame.difficulty = $scope.newgame.difficulty;
-
-            metaFile[0].games.push(metagame);
-
-            console.log(metagame);
-            /*
-            API.deleteItem("metadata", $rootScope.getToken())
-                .success(function (data, status, headers, config) {
-                    $rootScope.hide();
-                }).error(function (data, status, headers, config) {
-                    $rootScope.notify(
-                        $translate.instant('oops_wrong'));
-                });
-            
-            API.saveItem(metaFile)
-                .success(function (data, status, headers, config) {
-                    console.log(data);
-                })
-                .error(function (data, status, headers, config) {
-                    $rootScope.hide();
-                    $translate.instant('oops_wrong');
-                });
-
-        }).error(function (data, status, headers, config) {
-
-        });
-
-
-
-        /*API.saveItem($scope.newgame)
-            .success(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.doRefresh(1);
-                $ionicHistory.goBack();
-                $scope.newgame = {};
-            })
-            .error(function (data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.notify("Oops something went wrong!! Please try again later");
-                $ionicHistory.goBack();
-                $scope.newgame = {};
-                $scope.numberTask = 0;
-            });
-
-
-    };
-    */
 
     $scope.removeMarkers = function () {
         $scope.modal.remove();
     };
-
-
 
     //Control of Navigation
     $scope.disableSwipe = function () {
@@ -824,7 +674,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.closeModal = function () {
         $scope.modal.hide();
     };
-
 
     $scope.saveEditedGame = function () {
         /*First delete the existing game, then save new instance.
@@ -905,7 +754,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.example = "";
     $scope.myfile = {};
 
-
     // Current location of GeoReference Task Creation
     $scope.map = {
         center: {
@@ -962,7 +810,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 console.log(err);
             });
     };
-
 
     // PHOTO TASK
 
@@ -1099,7 +946,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     };
 
-
     // Submit task for Android device
     $scope.submitGRTaskAndroid = function () {
         Task.addPhoto($scope.imgURI);
@@ -1120,7 +966,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $ionicHistory.goBack();
         Task.clearTask();
     };
-
 
     /* QUESTION TASK -------------------------------*/
     $scope.qaGame = {};
@@ -1145,9 +990,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         //console.log($scope.navactivities);
     };
 
-
-
-
     $scope.cancelGRTask = function () {
         $scope.task = {};
         $scope.imgURI = null;
@@ -1157,7 +999,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.currentPointIndex = null;
         $ionicHistory.goBack();
     };
-
 
     // Two main buttons - one, which submits the complete game to the server and one, which cancels the entire progress of creation
     $scope.submitGame = function () {
@@ -1290,7 +1131,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             handleNextWaypoint();
         }
     };
-
  
     $scope.showWaypointInfoModal = function() {
         createModal('waypointinfo-modal.html', 'wpinfo');
@@ -1348,18 +1188,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         //$scope.nonTextAnswer = false; // True if images are used as answers
         $scope.timeLeft = $scope.TIME_LIMIT;
         $scope.answerPicked = false;
-/*
-        if (typeof $scope.task.answers == 'undefined') {
-            if (typeof $scope.task.imgans != 'undefined') {  
-	            $scope.nonTextAnswer = true;
-                $scope.task.answers = $scope.task.imgans;
-            } else { 
-                // Should not reach here.
-                // TODO: Disallow creation of QA game without images or text answers
-                //console.log($scope.task.imgans); 
-                console.log("Activity did not have any image/text answers for questions");
-            }
-        }*/
 
         if (typeof $scope.task.answers == 'undefined') {
             console.log("No answers for this activity");
@@ -1447,7 +1275,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.answerPicked = false;
         };
     };
-
 
     $scope.$on('qaTaskCompleted', function (event) {
         $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
@@ -1610,9 +1437,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
 }])
-
-
-
 
 /* - Controller for map in student mode
  * - Only shows waypoint and emits signal when waypoint is reached
