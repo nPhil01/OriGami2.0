@@ -101,17 +101,34 @@ angular.module('starter.directives', [])
             replace: true,
             template: '<div><h1>{{qadata.txt}}</h1></div>',
             link: function (scope, element, attrs) {
-                if (scope.qadata && typeof scope.qadata.img != 'undefined') {
-                    element.css({
-                        'background-image': 'url(' + API.getImageURL(scope.qadata.img) + ')',
-                        'background-size': 'cover',
-                        'height': '100%'
-                    });
+                if (scope.qadata) {
+                    /* Image is present */
+                    if (typeof scope.qadata.img != 'undefined') {
+                        element.css({
+                            'background-image': 'linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),' +
+                            'url(' + API.getImageURL(scope.qadata.img) + ')',
+                            'background-size': 'contain',
+                            'background-position': 'center',
+                            'background-repeat': 'no-repeat',
+                            'flex-grow': 1
+                        });
+                    } else {
+                        top_align = '50%';
+                        if (attrs.type=="question") {
+                            top_align = '30%';
+                        }
+                        element.css({
+                            'top' : top_align,
+                            'left' : '50%',
+                            'position' : 'relative',
+                            'transform': 'translateX(-50%) translateY(-50%)'
+                        });
+                    }
                 }
             },
-            scope : {
-                qadata : '=',
-                task : '='
+            scope: {
+                qadata: '=',
+                task: '='
             }
         }
     });

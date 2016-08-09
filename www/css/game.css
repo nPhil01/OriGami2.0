@@ -286,6 +286,8 @@
     width: 100%;
     position: relative;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .qa_question .description {
@@ -754,7 +756,7 @@
 
 
 /* Progress animation */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans);*/
 .skillbar {
   font-family: 'Open Sans', 'sans-serif';
 	position:relative;
