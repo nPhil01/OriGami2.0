@@ -102,25 +102,38 @@ angular.module('starter.directives', [])
             template: '<div><h1>{{qadata.txt}}</h1></div>',
             link: function (scope, element, attrs) {
                 if (scope.qadata) {
-                    /* Image is present */
                     if (typeof scope.qadata.img != 'undefined') {
+                      /* Image is present */
                         element.css({
-                            'background-image': 'linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),' +
+                            'background-image': 'linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),' + // slightly darken image for better contrast
                             'url(' + API.getImageURL(scope.qadata.img) + ')',
                             'background-size': 'contain',
                             'background-position': 'center',
                             'background-repeat': 'no-repeat',
                             'flex-grow': 1
                         });
+                        var textelem = element.find('h1')[0];
+                        // show black outline for text - cross-browser solution
+                        textelem.style['text-shadow'] = '1px 1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333';
+                        if (attrs.type == "answer") {
+                            element.css({
+                                'height': '100%',
+                            });
+                            textelem.style.color = 'white';
+                            textelem.style.top = '50%';
+                            textelem.style.transform = 'translateY(-50%)';
+                            textelem.style.position = 'relative';
+                        }
+
                     } else {
                         top_align = '50%';
-                        if (attrs.type=="question") {
+                        if (attrs.type == "question") {
                             top_align = '30%';
                         }
                         element.css({
-                            'top' : top_align,
-                            'left' : '50%',
-                            'position' : 'relative',
+                            'top': top_align,
+                            'left': '50%',
+                            'position': 'relative',
                             'transform': 'translateX(-50%) translateY(-50%)'
                         });
                     }
