@@ -213,4 +213,7 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
 
     });
 
-});
+    })
+    .config(function ($logProvider) {
+        $logProvider.debugEnabled(false);
+    });

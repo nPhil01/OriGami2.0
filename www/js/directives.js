@@ -124,7 +124,6 @@ angular.module('starter.directives', [])
                             textelem.style.transform = 'translateY(-50%)';
                             textelem.style.position = 'relative';
                         }
-
                     } else {
                         top_align = '50%';
                         if (attrs.type == "question") {
