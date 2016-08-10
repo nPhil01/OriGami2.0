@@ -6,8 +6,8 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 
-                            'leaflet-directive', 'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 
-                            'ngCordova', 'ngAnimate', 'ngFileUpload', 'LocalForageModule'])
+                            'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 
+                            'ngCordova', 'ngAnimate', 'ngFileUpload', 'LocalForageModule', 'nemLogging', 'ui-leaflet'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

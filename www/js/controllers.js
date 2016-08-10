@@ -1509,7 +1509,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     }
                 }
             },
-            markers: {},
             events: {
                 map: {
                     enable: ['contextmenu', 'move', 'zoomend'],
@@ -1520,7 +1519,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 lat: 0,
                 lng: 0,
                 zoom: GameData.getConfig('map.defaultZoom')
-            }
+            },
+            markers: {}, // must be initialized even if empty, else markers and paths won't show up later 
+            paths: {}
         };
 
         $scope.geoLocButtonColor = "button-calm";
