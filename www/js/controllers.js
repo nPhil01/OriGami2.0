@@ -1449,7 +1449,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                                             $timeout, leafletData, $translate, GameData, PathData, PlayerStats) {
 
     $scope.waypointLoaded = false;
-    $scope.allowEdit = false;
+    $scope.allowEdit = false; // flag to toggle map editing when marking in georeferencing game  
     $scope.showMarker = false;
 
     // Initialize map after game is loaded. Needed because config settings are in game data
@@ -1460,7 +1460,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     /* Initialize view of map */
     $scope.initialize = function () {
         $scope.thresholdDistance = GameData.getConfig('thresholdDistance');
-        
+        $scope.geolocationAlwaysOn = GameData.getConfig('geolocationAlwaysOn');
         var defaultLayer = GameData.getConfig('map.defaultLayer')
         var isDefaultLayer = function(layerName) { return (defaultLayer === layerName) ? true : false; };
 
@@ -1534,6 +1534,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.initialDistance = 500;
         $scope.currentDistance = 0;
         $scope.locate();
+        if ($scope.geolocationAlwaysOn) {
+            $scope.toggleGeoLocation(true);
+        }
+        
+
         $scope.$emit('mapLoadedEvent');
     };
 

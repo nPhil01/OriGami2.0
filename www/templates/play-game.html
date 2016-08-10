@@ -288,7 +288,7 @@
                 <!--Button to dislpay player's position on map as icon. Icon is hidden after 5 seconds -->
                 <button class="button button-fab map-button {{playerMarkerButtonColor}} icon ion-pin waves-button waves-light" ng-click="showPositionMarker()"></button>
                 <!--Button to center map with geolocation information. Map panning is disabled as long as this button is active -->
-                <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-android-locate waves-effect waves-button waves-light" ng-click="toggleGeoLocation(true)"></button>
+                <button class="button button-fab map-button next {{geoLocButtonColor}} icon ion-android-locate waves-effect waves-button waves-light" ng-hide="geolocationAlwaysOn" ng-click="toggleGeoLocation(true)"></button>
             </div>
         </div>
     </ion-content>

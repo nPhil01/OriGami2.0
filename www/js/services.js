@@ -253,6 +253,7 @@ angular.module('starter.services', [])
             enableZoom: true,
             defaultLayer : 'satellite' // choose from : satellite / streets / topographic
         },
+        geolocationAlwaysOn : false, // always use GPS. If true, also hide map button to toggle geolocation
         thresholdDistance: 30, // distance (in metres) to target waypoint below which target is treated as reached 
         thresholdDistanceGeolocOn: 10, // same when geolocation is on
         georefThresholdDistance : 25, // threshold distance for georeference game to treat answer as correct and gain points
@@ -352,6 +353,7 @@ angular.module('starter.services', [])
             if (objHasProp(config, prop)) {
                 return getProp(config, prop);
             }
+            console.log("Warning! No property found in config for - ", prop);
             return null;
         }
         return null;
