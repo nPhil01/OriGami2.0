@@ -11,7 +11,7 @@ angular.module('starter').controller('aidController', ['$scope', '$ionicModal',
             },
 
             defaults: {
-                tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                tileLayer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                 maxZoom: 18,
                 zoomControlPosition: 'topleft',
                 lat: 57,
@@ -22,23 +22,23 @@ angular.module('starter').controller('aidController', ['$scope', '$ionicModal',
                 baselayers: {
                     osm: {
                         name: 'Satelite View',
-                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: true,
                         layerOptions: {
-                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                             continuousWorld: false
                         }
                     },
                     streets: {
                         name: 'Streets View',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz',
                         top: false,
                     },
                     topographic: {
                         name: 'Topographic View',
-                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: false,
                         layerOptions: {

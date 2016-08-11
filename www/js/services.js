@@ -142,7 +142,7 @@ angular.module('starter.services', [])
 
 // API for getting data from the remote server (REST interface to Mongodb)
 .factory('API', function ($rootScope, $http, $ionicLoading, $window, Server, Upload) {
-    var base = "http://" + Server;
+    var base = "https://" + Server;
     /*$rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
             content: text ? text : 'Loading',
@@ -361,7 +361,7 @@ angular.module('starter.services', [])
     data.loadGame = function (name) {
         var defer = $q.defer();
         //var games = $http.get('test_data/games.json')
-        var games = $http.get('http://' + Server + '/games/item/' + name)
+        var games = $http.get('https://' + Server + '/games/item/' + name)
             .then(
                 function (response) { // On success
                     game = response.data[0];

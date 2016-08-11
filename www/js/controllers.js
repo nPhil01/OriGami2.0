@@ -178,7 +178,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         },
 
         defaults: {
-            tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            tileLayer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             maxZoom: 18,
             zoomControlPosition: 'topleft',
             lat: 57,
@@ -229,23 +229,23 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             baselayers: {
                 osm: {
                     name: 'Satelite View',
-                    url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                     type: 'xyz',
                     top: true,
                     layerOptions: {
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                         continuousWorld: false
                     }
                 },
                 streets: {
                     name: 'Streets View',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     type: 'xyz',
                     top: false,
                 },
                 topographic: {
                     name: 'Topographic View',
-                    url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
                     type: 'xyz',
                     top: false,
                     layerOptions: {
@@ -265,7 +265,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         },
 
         defaults: {
-            tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            tileLayer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             maxZoom: 18,
             zoomControlPosition: 'topleft',
             lat: 57,
@@ -316,23 +316,23 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             baselayers: {
                 osm: {
                     name: 'Satelite View',
-                    url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                     type: 'xyz',
                     top: true,
                     layerOptions: {
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                         continuousWorld: false
                     }
                 },
                 streets: {
                     name: 'Streets View',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     type: 'xyz',
                     top: false,
                 },
                 topographic: {
                     name: 'Topographic View',
-                    url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
                     type: 'xyz',
                     top: false,
                     layerOptions: {
@@ -769,7 +769,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             zoom: 16
         },
         defaults: {
-            tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            tileLayer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             maxZoom: 18,
             zoomControlPosition: 'topleft',
             lat: 57,
@@ -779,13 +779,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             baselayers: {
                 osm: {
                     name: 'Satelite',
-                    url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                     type: 'xyz',
                     top: true
                 },
                 streets: {
                     name: 'Streets',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     type: 'xyz',
                     top: false,
                 }
@@ -1466,7 +1466,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
         $scope.map = {
             defaults: {
-                tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                tileLayer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                 maxNativeZoom: GameData.getConfig('map.maxNativeZoom'),
                 maxZoom: GameData.getConfig('map.maxZoom'),
                 doubleClickZoom: GameData.getConfig('map.enableZoom'), 
@@ -1479,7 +1479,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 baselayers: {
                     satellite: {
                         name: 'Satellite View',
-                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: isDefaultLayer('satellite'),
                         layerOptions: {
@@ -1489,17 +1489,17 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     },
                     streets: {
                         name: 'OpenStreetMap View',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz',
                         top: isDefaultLayer('streets'),
                         layerOptions: {
-                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                             continuousWorld: false
                         }
                     },
                     topographic: {
                         name: 'Topographic View',
-                        url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
                         type: 'xyz',
                         top: isDefaultLayer('topographic'),
                         layerOptions: {

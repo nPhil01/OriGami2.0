@@ -7,13 +7,17 @@ var md5file = require('md5-file')
 var path = require('path')
 var im = require('imagemagick')
 
-var server = restify.createServer();
+var https_options = {
+  key: fs.readFileSync('path_to_ssl_certificate_key'),
+  certificate: fs.readFileSync('path_to_ssl_certificate')
+}
+
+var server = restify.createServer(https_options);
 
 /* Solving CORS development pains */
 server.use(
   restify.CORS({
     origins: [
-      'http://localhost:8100',
       '*'
     ],
     headers: [
