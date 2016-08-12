@@ -110,7 +110,7 @@
                     <h1>{{congratsMessage}} </h1>
 
                     <p>You reached your goal !</p>
-                    <p>{{CORRECT_ANS_SCORE}} points</p>
+                    <p>{{GameData.getConfig('score.waypointCorrect')}} points</p>
                     <p>Total: {{score}} points</p>
                 </div>
             </ion-content>
@@ -128,7 +128,7 @@
             <ion-content style="height: 100%; background-color:#64B5F6">
                 <div class="answer_output">
                    <!-- <img src="./img/icons/Medal.png" /> -->
-                    <h1 ng-show="score > 0">{{'congrat' | translate}}</h1>
+                    <h1 ng-show="score > 0">{{'congrat' | translate}} {{player.name}}</h1>
                     <h1 ng-hide="score > 0" style="margin-top:10%;">Next time will be better!</h1>
                     <!-- <p> {{'you_completed' | translate}} </p> -->
                     <p style="font-size:3vh;margin-top:1%;">Your Score: <span style="font-size:3.5vh">{{score}} points</span></p>
@@ -149,7 +149,7 @@
                                 <div class="col">Name</div>
                                 <div class="col">Points</div>
                             </div>
-                            <div class="row content" ng-repeat="data in bestPlayers() | orderBy:'-points'">
+                            <div class="row content" ng-repeat="data in bestPlayers | orderBy:'-points'">
                                 <div class="col">{{$index + 1}}</div>
                                 <div class="col">{{data.name}}</div>
                                 <div class="col">{{data.points}}</div>
@@ -160,7 +160,7 @@
 
             </ion-content>
             <div class="exit_butt">
-                <button class="button button-block button-balanced save_but" ng-click="exitGame();modal.remove()">{{'save' | translate}}</button>
+                <button class="button button-block button-balanced save_but" ng-click="modal.remove()">{{'exit' | translate}}</button>
             </div>
         </ion-modal-view>
     </script>
@@ -229,8 +229,8 @@
                         <!--<i class="ion-images"></i> -->
                         <div class="feedback-icon {{georefSmiley}}"></div>
                         <p>Distance to original location {{georefDistance}} metres</p>
-                        <p ng-hide="geoResult">{{WRONG_ANS_PENALTY}} points</p>
-                        <h2 ng-show="geoResult">{{CORRECT_ANS_SCORE}} points</h2>
+                        <p ng-hide="geoResult">{{GameData.getConfig('score.georefIncorrect')}} points</p>
+                        <h2 ng-show="geoResult">{{GameData.getConfig('score.georefCorrect')}} points</h2>
                     </div>
                 </div>
             </ion-content>
@@ -283,8 +283,8 @@
                         <p>Correct Answer</p>
                         <img ng-show="!answer && nonTextAnswer" ng-src="{{imgRightAnswerURL}}" style='max-width:100%; max-height:100%'>
                     </div>
-                    <p ng-hide="answer">{{WRONG_ANS_PENALTY}} points</p>
-                    <p ng-show="answer">{{CORRECT_ANS_SCORE}} points</p>
+                    <p ng-hide="answer">{{GameData.getConfig('score.answerIncorrect')}} points</p>
+                    <p ng-show="answer">{{GameData.getConfig('score.answerCorrect')}} points</p>
                     <p>Total: {{score}} points</p>
                 </div>
             </ion-content>

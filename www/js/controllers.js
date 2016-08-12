@@ -1080,6 +1080,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
 
     $scope.score = 0;
+    $scope.GameData = GameData; // ugly hack to make GameData visible in directives 
 
     /* only for debug purposes */
     var debugState = function () {
@@ -1374,9 +1375,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     });
 
     /* Game Results */
-
     var endGame = function () {
         PlayerStats.endGame($scope.score);
+        $scope.player.points = $scope.score;
+        var info = {
+            id: GameData.getId(),
+            playerInfo : $scope.player
+        };
+
         createModal('gameover-modal.html', 'endgame');
 
         $scope.shareButtons = false;
@@ -1385,6 +1391,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         }, 1200);
         showResults();
         
+        API.addPlayerInfo(info); // Add score to player array for this game
         $scope.$broadcast('gameOverEvent');
 
         $scope.shareViaFacebook = function (message, image, link) {
@@ -1397,65 +1404,43 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     };
 
     $scope.players = [];
+
     var showResults = function () {
         API.getOne($scope.gameName)
             .success(function (data, status, headers, config) {
                 $scope.players = data.slice()[0].players;
+                
+                var addLeader = function () {
+                    $scope.players.push($scope.player);
+                    /* Comparison function in order to get three best players */
+                    function compare(a, b) {
+                        if (a.points > b.points)
+                            return -1;
+                        else if (a.points < b.points)
+                            return 1;
+                        else
+                            return 0;
+                    };
+                    $scope.players.sort(compare);
+                };
+                
+                $scope.bestPlayers = function () {
+                    addLeader();
+                    var maxResults = 10;
+                    /* In order to get three best players */
+                    if ($scope.players.length < maxResults) {
+                        return $scope.players;
+                    } else {
+                        return $scope.players.slice(0, maxResults);
+                    }
+                }();
+
             }).error(function (data, status, headers, config) {
                 $rootScope.notify(
                     $translate.instant('oops_wrong'));
             });
-
-        $scope.bestPlayers = function () {
-            /* In order to get three best players */
-            if ($scope.players.length < 3) {
-                return $scope.players;
-            } else {
-                return $scope.players.slice(0, 3);
-            }
-        };
-
-        $scope.addLeader = function () {
-            $scope.player.points = $scope.score;
-            $scope.players.push($scope.player);
-
-            /* Comparison function in order to get three best players */
-            function compare(a, b) {
-                if (a.points > b.points)
-                    return -1;
-                else if (a.points < b.points)
-                    return 1;
-                else
-                    return 0;
-            };
-            $scope.players.sort(compare);
-        };
-        $scope.addLeader();
     };
-
-
-    $scope.exitGame = function () {
-        var delGame = {};
-
-        //console.log(PathData.getPath());
-
-        API.getOne($scope.gameName)
-            .success(function (data, status, headers, config) {
-                delGame = data.slice()[0];
-                delGame.players = $scope.players;
-                API.deleteItem($scope.gameName)
-                    .success(function (data, status, headers, config) {
-
-                        API.saveItem(delGame)
-                            .success(function (data, status, headers, config) {})
-                            .error(function (data, status, headers, config) {});
-
-                    })
-                    .error(function (data, status, headers, config) {});
-            }).error(function (data, status, headers, config) {});
-
-    };
-
+    
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
 }])
 

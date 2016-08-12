@@ -223,3 +223,18 @@ server.post("/data/img/upload", upload, function(req, res, next) {
   
   return next();
 });
+
+server.post("/games/player", restify.bodyParser(), function (req, res, next) {
+  var item = req.params;
+  var query = { _id: item.id };
+  var playerInfo = item.playerInfo;
+  db.games.update(query, {$push : {players : playerInfo}} , function (err, data) {
+    if (err) throw err;
+    console.log("Success ", data);
+    res.writeHead(200, {
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+    res.end(JSON.stringify(data));
+  });
+  return next();
+});

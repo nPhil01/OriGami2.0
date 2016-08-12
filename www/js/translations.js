@@ -21,6 +21,7 @@ var translations = {
         "error": "Error!",
         "error_geolocat": "Error occurred when geolocating position",
         "error_watching": "Error occurred when watching position",
+        "exit" : "Exit",
         "find_destination": "Find destination",
         "follow_route": "Follow Route",
         "from_location": "m away from the original location",

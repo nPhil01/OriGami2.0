@@ -231,8 +231,12 @@ angular.module('starter.services', [])
                     imgfile: file
                 }
             });
+        },
+        addPlayerInfo : function(info) {
+            return $http.post(base + '/games/player', info, {
+                method: 'POST',
+            });
         }
-
     };
 })
 
@@ -272,6 +276,12 @@ angular.module('starter.services', [])
     };
     data.isLoaded = function () {
         return loaded;
+    };
+    data.getId = function() {
+        if (loaded) {
+            return game._id;
+        }
+        return null;
     };
     data.getNumActivities = function () {
         if (loaded) {
