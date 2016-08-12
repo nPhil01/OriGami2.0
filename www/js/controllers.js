@@ -1072,9 +1072,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 // controller for gameplay
 .controller('PlayCtrl', ['$scope', '$stateParams', '$ionicModal', '$ionicPopup', '$ionicLoading', '$location', '$cordovaSocialSharing', 
-                         '$translate', '$timeout', 'GameData', 'GameState', 'API', 'PathData', 'PlayerStats', 
+                         '$translate', '$timeout', '$cookies', 'GameData', 'GameState', 'API', 'PathData', 'PlayerStats', 
                          function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location,  $cordovaSocialSharing, 
-                                    $translate, $timeout, GameData, GameState, API, PathData, PlayerStats) {
+                                    $translate, $timeout, $cookies, GameData, GameState, API, PathData, PlayerStats) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
@@ -1111,14 +1111,35 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         GameState.resetAll();
         $translate.use(GameData.getConfig('language'));
         $scope.TIME_LIMIT = GameData.getConfig('qaTimeLimit'); // time limit to answer question (in seconds) 
-        createModal('gameinfo-modal.html', 'info');
         $scope.gameLoaded = true;
+        $scope.player = {};
+        getPlayerName();
         PlayerStats.init();
     };
 
     var abortGame = function (message) {
         $scope.errorMsg = message;
         createModal('error-modal.html', 'error');
+    };
+
+    var getPlayerName = function() {
+        /* Read cookie and confirm if same player is playing. Else get name */
+        $scope.newPlayer = false;
+        $scope.player.name = $cookies.get('player.name');
+        if (typeof $scope.player.name == "undefined") {
+            $scope.newPlayer = true;
+            console.log("Setting cookie")
+        }
+        createModal('player-name.html', 'player');
+    };
+
+    $scope.setPlayerName = function(name) {
+        $scope.player.name = name;
+        $cookies.put('player.name', name);
+        //console.log($cookies.get('playerName'));
+        //console.log("Player name set to -", $scope.playerName);
+        createModal('gameinfo-modal.html', 'info');
+
     };
 
     var handleNextActivity = function () {
@@ -1362,9 +1383,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $timeout(function () {
             $scope.shareButtons = true;
         }, 1200);
-
         showResults();
-
+        
         $scope.$broadcast('gameOverEvent');
 
         $scope.shareViaFacebook = function (message, image, link) {
@@ -1395,7 +1415,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             }
         };
 
-        $scope.player = {};
         $scope.addLeader = function () {
             $scope.player.points = $scope.score;
             $scope.players.push($scope.player);
@@ -1411,6 +1430,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             };
             $scope.players.sort(compare);
         };
+        $scope.addLeader();
     };
 
 

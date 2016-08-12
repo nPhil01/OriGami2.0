@@ -924,3 +924,47 @@
     top: 64px;
   }
 }
+
+/* Player name modal */
+
+.playerNameInput {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.playerNameInput h1 {
+    color: #ffffff;
+    display: block;
+    text-align: center;
+    font-size: 5vw;
+    font-weight: 700;
+}
+
+.playerNameInput h1 .nameOuter{
+    display: block;
+}
+
+.playerNameInput h1 .nameInner{
+    color: #fec00f;
+}
+
+.playerNameInput .playerNameButtonContainer {
+    display: table;
+    margin: 0 auto;
+}
+
+.playerNameInput .button {
+    display: table-cell;
+    margin: 2vw;
+    font-size: 3vw;
+}
+
+.playerNameInput input {
+    font-size: 3vw;
+}
+
+.playerNameInput label {
+    height: 4vw;
+}

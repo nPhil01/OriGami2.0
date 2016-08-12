@@ -45,6 +45,40 @@
         </ion-modal-view>
     </script>
 
+    <!-- Get or show player name -->
+    <script id="player-name.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-content style="height: 100%; background-color:#64B5F6;">
+                <div class="playerNameInput" ng-show="newPlayer == false">
+                    <h1> 
+                        <span class="nameOuter"> 
+                            {{ 'hello'| translate}} <span class="nameInner"> {{player.name}}</span>! 
+                        </span>
+                        {{ 'player_name_confirm' | translate }} 
+                     </h1>
+                     <div class="playerNameButtonContainer">
+                        <button class="button button-balanced ion-checkmark" ng-click="setPlayerName(player.name); modal.remove()"> </button>
+                        <button class="button button-assertive ion-close" ng-click="player.name=null; newPlayer=true"> </button>
+                    </div>
+                </div>
+                <div class="playerNameInput" ng-show="newPlayer==true">
+                    <h1>Please enter your name</h1>
+                    <div class="list">
+                        <div class="item item-input-inset">
+                            <label class="item-input-wrapper">
+                                <input type="text" placeholder="name" ng-model="player.name">
+                            </label>
+                        </div>
+                    </div>
+                     <div class="playerNameButtonContainer">
+                         <button class="button button-positive" ng-show="player.name" ng-click="setPlayerName(player.name); modal.remove()"> OK </button>
+                     </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+
     <!-- Information about the next waypoint -->
     <script id="waypointinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
@@ -100,13 +134,11 @@
                     <p style="font-size:3vh;margin-top:1%;">Your Score: <span style="font-size:3.5vh">{{score}} points</span></p>
 
                     <div ng-show="score > 0">
-                        <p style="font-size:3vh;margin-top:5%;">Add your name to leaderboards</p>
-
-                        <div class="lead_name">
+                        <!--<p style="font-size:3vh;margin-top:5%;">Add your name to leaderboards</p>-->
+                        <!--<div class="lead_name">
                             <input type="text" ng-model="player.name" required>
                             <button id="fab" ng-click="addLeader()" class="button button-positive button-fab" style="background-color:#53DF83;"><i class="icon ion-android-done" style="font-size:3vh;color:#1565C0;"></i></button>
-                        </div>
-
+                        </div>-->
                         <p style="font-size:3vh;margin-top:1%;">Leaderboard</p>
                         <!-- Facebook Scharing Button
                     <button id="fab" ng-show="shareButtons" ng-click="shareViaFacebook('I completed OriGami task! ', null, null)" class="button button-positive button-fab" style="background-color:#3b5998"><i class="icon ion-social-facebook" style="color:white"></i></button>-->
@@ -238,8 +270,6 @@
             </ion-content>
         </ion-modal-view>
     </script>
-
-
 
     <!-- QA result Modal -->
     <script id="qa-result-modal.html" type="text/ng-template" class="qa_font">
