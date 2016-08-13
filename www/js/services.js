@@ -283,6 +283,12 @@ angular.module('starter.services', [])
         }
         return null;
     };
+    data.getName = function() {
+        if (loaded) {
+            return game.name;
+        }
+        return null;
+    };
     data.getNumActivities = function () {
         if (loaded) {
             if ('activities' in game) {
@@ -395,7 +401,7 @@ angular.module('starter.services', [])
 })
 
 /* holds current state of the game being played */
-.factory('GameState', function (GameData, $rootScope) {
+.factory('GameState', function (GameData, $rootScope, LocalDB) {
     var gameName = "";
     var startTime = (new Date()).toISOString();
     var endTime = "";
@@ -539,7 +545,46 @@ angular.module('starter.services', [])
         }
         return taskIndex;
     };
-
+    /* Save game state to browser's indexedDB' */
+    state.saveState = function(playerName) {
+        var stateObj = {
+            gameId: GameData.getId(),
+            gameName : GameData.getName(),
+            playerName: playerName,
+            state: {
+                gameFinished: gameFinished,
+                activityFinished: activityFinished,
+                allWaypointsCleared: allWaypointsCleared,
+                tasksFinished: tasksFinished,
+                activityIndex: activityIndex,
+                waypointIndex: waypointIndex,
+                taskIndex: taskIndex
+            }
+        }
+        console.log("Saving State", stateObj);
+        LocalDB.saveState(stateObj);
+    };
+    
+    /* Get saved game state from browser's indexedDB' */
+    state.loadState = function(playerName) {
+        LocalDB.getState().then(
+            function(stateData) {
+                console.log("Got State", stateData)
+                if (stateData.playerName == playerName) {
+                    var state = stateData.state;
+                    gameFinished = state.gameFinished;
+                    activityFinished = state.activityFinished;
+                    allWaypointsCleared = state.allWaypointsCleared;
+                    tasksFinished = state.tasksFinished;
+                    activityIndex = state.activityIndex;
+                    waypointIndex = state.waypointIndex;
+                    taskIndex = state.taskIndex;
+                }
+            },
+            function(err) {
+                console.log("Couldn't get state", err);
+            });
+    };
     return state;
 })
 
@@ -635,15 +680,37 @@ angular.module('starter.services', [])
 .factory('LocalDB', ['$localForage', function ($localForage) {
     // Database has been intialized $localForageProvider.config in app.js 
     db = {};
-    timestamp =(new Date()).toISOString();
-    db.saveItem = function(item) {
-        $localForage.setItem(timestamp, item)
-            .then(function() {
-                $localForage.getItem(timestamp).then(function(data) {
+    var trackerDB = $localForage.createInstance({
+        name: 'origami_tracker',
+        storeName: 'playerdata',
+        description: 'track gameplay, movement, answers and the whole nine yards'
+    });
+    var stateDB = $localForage.createInstance({
+        name: 'origami_state',
+        storeName: 'gameState',
+        description: 'save current state of game for later resumption'
+    });
+    timestamp = (new Date()).toISOString();
+    db.saveItem = function (item) {
+        trackerDB.setItem(timestamp, item)
+            .then(function () {
+                trackerDB.getItem(timestamp).then(function (data) {
                     console.log(data);
                     console.log($localForage.driver());
                 });
             });
+    };
+    db.saveState = function (stateObj) {
+        stateDB.setItem('gameState', stateObj).then(
+            function (data) { // On success
+                    // console.log("GameState - ", data)
+            },
+            function(err) {
+                console.log("Saving State Failed", err);
+            });
+    };
+    db.getState = function () {
+        return stateDB.getItem('gameState');
     };
     return db;
 }]);

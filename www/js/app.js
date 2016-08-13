@@ -5,34 +5,34 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 
-                            'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives', 
-                            'ngCordova', 'ngAnimate', 'ngFileUpload', 'ngCookies', 'LocalForageModule', 'nemLogging', 'ui-leaflet'])
-    .run(function ($ionicPlatform) {
-        $ionicPlatform.ready(function () {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins
-                .Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
+angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate',
+    'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives',
+    'ngCordova', 'ngAnimate', 'ngFileUpload', 'ngCookies', 'LocalForageModule', 'nemLogging', 'ui-leaflet'])
+.run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins
+            .Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
 
-            }
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleLightContent();
-            }
-        });
-    })
-    .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
-        for (lang in translations) {
-            $translateProvider.translations(lang, translations[lang]);
         }
-        $translateProvider.preferredLanguage('en');
-        $translateProvider.fallbackLanguage('en');
-    })
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleLightContent();
+        }
+    });
+})
+.config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+    for (lang in translations) {
+        $translateProvider.translations(lang, translations[lang]);
+    }
+    $translateProvider.preferredLanguage('en');
+    $translateProvider.fallbackLanguage('en');
+})
 
-.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $localForageProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom');
 
@@ -42,15 +42,15 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
     // Each state's controller can be found in controllers.js
     $stateProvider
 
-    // setup an abstract state for the tabs directive
+        // setup an abstract state for the tabs directive
         .state('tab', {
-        url: '/tab',
-        abstract: true,
-        templateUrl: 'templates/tabs.html'
-    })
+            url: '/tab',
+            abstract: true,
+            templateUrl: 'templates/tabs.html'
+        })
 
-    // Each tab has its own nav history stack:
-    .state('tab.info', {
+        // Each tab has its own nav history stack:
+        .state('tab.info', {
             url: '/info',
             views: {
                 'tab-info': {
@@ -94,7 +94,7 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
             }
         })
 
-    .state('tab.avgames', {
+        .state('tab.avgames', {
             url: '/avgames',
             cache: false,
             views: {
@@ -114,8 +114,8 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
             }
         })
 
-    /* Test State : Create new Game  -------------------- */
-    .state('tab.creategame', {
+        /* Test State : Create new Game  -------------------- */
+        .state('tab.creategame', {
             url: '/creategame',
             views: {
                 'tab-home': {
@@ -126,7 +126,7 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
         })
         /* --------------------------------------------------- */
 
-    .state('tab.editgame', {
+        .state('tab.editgame', {
             url: '/editgame/:gameId',
             views: {
                 'tab-home': {
@@ -145,18 +145,18 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
             }
         })
 
-    .state('tab.playgame', {
-        url: '/playgame/:gameName',
-        views: {
-            'tab-home': {
-                templateUrl: 'templates/play-game.html',
-                controller: 'PlayCtrl'
+        .state('tab.playgame', {
+            url: '/playgame/:gameName',
+            views: {
+                'tab-home': {
+                    templateUrl: 'templates/play-game.html',
+                    controller: 'PlayCtrl'
+                }
             }
-        }
-    })
+        })
 
-    // Creation of task - Aided navigation and Path planning
-    .state('tab.aidnavig', {
+        // Creation of task - Aided navigation and Path planning
+        .state('tab.aidnavig', {
             url: "/aidnavig",
             views: {
                 'tab-home': {
@@ -204,16 +204,19 @@ angular.module('starter',  ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.t
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/home');
+})
 
-    $localForageProvider.config({
-        driver: localforage.INDEXEDDB,
-        name: 'origami',
-        storeName: 'playerdata',
-        description: 'keep track of gameplay and movement'
+.config([$localForageProvider, function ($localForageProvider) {
+    // set defaults for creation of new localForage
+    $localForageProvider.config(
+        {
+            driver: localforage.INDEXEDDB,
+            // storeName: 'playerdata',
+            // description: 'keep track of gameplay and movement'
+        }
+    );
+}])
 
-    });
-
-    })
-    .config(function ($logProvider) {
-        $logProvider.debugEnabled(false);
-    });
+.config(function ($logProvider) {
+    $logProvider.debugEnabled(false);
+});
