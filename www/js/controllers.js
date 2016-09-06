@@ -1140,7 +1140,6 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         //console.log($cookies.get('playerName'));
         //console.log("Player name set to -", $scope.playerName);
         createModal('gameinfo-modal.html', 'info');
-
     };
 
     var handleNextActivity = function () {
@@ -1257,7 +1256,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 clearInterval(intervalId);
 
                 if ($scope.chosenAnswer == $scope.rightAnswer) {
-                    $scope.answerResult = "Correct Answer!";
+                    $scope.answerResult = $translate.instant('right_answer');
                     $scope.answer = true;
                     $scope.icon = "ion-android-happy";
 

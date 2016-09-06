@@ -1,4 +1,4 @@
-<ion-view view-title="Play Game - {{}}" cache-view="false">
+<ion-view view-title="{{'play_game' | translate}} - {{}}" cache-view="false">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button class="button-clear"></ion-nav-back-button>
     </ion-nav-bar>
@@ -89,13 +89,13 @@
                     <div ng-show="waypoint.pic" style="height:50%; width: 61.8%; margin:0 auto 0 auto;">
                         <img ng-src="{{waypointImgURL}}" alt="{{waypoint.pic}}" style="max-width: 100%; max-height:100%">
                     </div>
-                    <h1>Your task: {{waypoint.name}}</h1>
-                    <p> Description: {{waypoint.description}} </p>
+                    <h1>{{'your_task' | translate}}: {{waypoint.name}}</h1>
+                    <p> {{'description' | translate}}: {{waypoint.description}} </p>
                 </div>
             </ion-content>
 
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <p class="title">Continue</p>
+                <p class="title">{{'continue' | translate}}</p>
             </ion-footer-bar>
         </ion-modal-view>
     </script>
@@ -109,14 +109,14 @@
                     <i class="ion-ribbon-a"></i>
                     <h1>{{congratsMessage}} </h1>
 
-                    <p>You reached your goal !</p>
-                    <p>{{GameData.getConfig('score.waypointCorrect')}} points</p>
-                    <p>Total: {{score}} points</p>
+                    <p>{{'goal_reached' | translate}}</p>
+                    <p>{{GameData.getConfig('score.waypointCorrect')}} {{'points' | translate}}</p>
+                    <p>{{'total' | translate}}: {{score}} {{'points' | translate}}</p>
                 </div>
             </ion-content>
 
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <p class="title">Continue</p>
+                <p class="title">{{'continue' | translate}}</p>
             </ion-footer-bar>
 
         </ion-modal-view>
@@ -129,7 +129,7 @@
                 <div class="answer_output">
                    <!-- <img src="./img/icons/Medal.png" /> -->
                     <h1 ng-show="score > 0">{{'congrat' | translate}} {{player.name}}</h1>
-                    <h1 ng-hide="score > 0" style="margin-top:10%;">Next time will be better!</h1>
+                    <h1 ng-hide="score > 0" style="margin-top:10%;">{{'wrong_ans_1' | translate}}</h1>
                     <!-- <p> {{'you_completed' | translate}} </p> -->
                     <p style="font-size:3vh;margin-top:1%;">Your Score: <span style="font-size:3.5vh">{{score}} points</span></p>
 
@@ -147,7 +147,7 @@
                             <div class="row header">
                                 <div class="col">Position</div>
                                 <div class="col">Name</div>
-                                <div class="col">Points</div>
+                                <div class="col">{{'points' | translate}}</div>
                             </div>
                             <div class="row content" ng-repeat="data in bestPlayers | orderBy:'-points'">
                                 <div class="col">{{$index + 1}}</div>
@@ -229,8 +229,8 @@
                         <!--<i class="ion-images"></i> -->
                         <div class="feedback-icon {{georefSmiley}}"></div>
                         <p>Distance to original location {{georefDistance}} metres</p>
-                        <p ng-hide="geoResult">{{GameData.getConfig('score.georefIncorrect')}} points</p>
-                        <h2 ng-show="geoResult">{{GameData.getConfig('score.georefCorrect')}} points</h2>
+                        <p ng-hide="geoResult">{{GameData.getConfig('score.georefIncorrect')}} {{'points' | translate}}</p>
+                        <h2 ng-show="geoResult">{{GameData.getConfig('score.georefCorrect')}} {{'points' | translate}}</h2>
                     </div>
                 </div>
             </ion-content>
@@ -249,7 +249,7 @@
                     <div class="skillbar clearfix">
                         <div class="skillbar-bar"  timer-progressbar="timeLeft"></div>
                     </div>
-                    <h1 class="description">Now answer the question: </h1>
+                    <h1 class="description">{{'answer_instruction' | translate}}</h1>
                     <ori-qa type="question" qadata="task.question"> </ori-qa>
                     <button id="fab" ng-show="answerPicked" ng-click="showOutput();modal.remove()" class="button button-positive button-fab" style="background-color:#FFFF00"><i class="icon ion-arrow-right-c" style="color:#1565C0"></i></button>
                 </div>
@@ -280,17 +280,17 @@
                     <h1>{{answerResult}}</h1>
                     <p ng-show="!answer && !nonTextAnswer">{{'right_answer' | translate}}: {{rightAnswer.txt}}</p>
                     <div ng-show="!answer && nonTextAnswer" style='max-width:40%; max-height:40%; margin: 0 auto 0 auto;'>
-                        <p>Correct Answer</p>
+                        <p>{{'right_answer' | translate}}</p>
                         <img ng-show="!answer && nonTextAnswer" ng-src="{{imgRightAnswerURL}}" style='max-width:100%; max-height:100%'>
                     </div>
-                    <p ng-hide="answer">{{GameData.getConfig('score.answerIncorrect')}} points</p>
-                    <p ng-show="answer">{{GameData.getConfig('score.answerCorrect')}} points</p>
-                    <p>Total: {{score}} points</p>
+                    <p ng-hide="answer">{{GameData.getConfig('score.answerIncorrect')}} {{'points' | translate}}</p>
+                    <p ng-show="answer">{{GameData.getConfig('score.answerCorrect')}} {{'points' | translate}}</p>
+                    <p>{{'total' | translate}}: {{score}} {{'points' | translate}}</p>
                 </div>
             </ion-content>
 
             <ion-footer-bar class="bar-positive" ng-click="modal.remove()">
-                <p class="title">Continue</p>
+                <p class="title">{{'continue' | translate}}</p>
             </ion-footer-bar>
 
         </ion-modal-view>
