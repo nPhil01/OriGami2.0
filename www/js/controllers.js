@@ -1115,7 +1115,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.gameLoaded = true;
         $scope.player = {};
         getPlayerName();
-        PlayerStats.init();
+        PlayerStats.init($scope.player.name);
     };
 
     var abortGame = function (message) {

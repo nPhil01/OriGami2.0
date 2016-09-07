@@ -598,20 +598,21 @@ angular.module('starter.services', [])
     var activities = [];
 
     var getTimeStamp = function() {return (new Date()).toISOString()};
-    playerStats.init = function() {
+    playerStats.init = function(name) {
         data = {
+            playerName: name,
             machineID : null,
             startTime : (new Date()).toISOString(),
             endTime : null,
             gameCompleted : false,
             activities : [],
-            total_score : 0
+            totalScore : 0
         }
         activities = [];
 
     };
     playerStats.getMachineID = function() {
-        machineID = "someuniqeid";
+        machineID = "someuniqueid";
     };
     playerStats.startTask = function(task) {
         curTask = {};
@@ -657,9 +658,10 @@ angular.module('starter.services', [])
     playerStats.endGame = function(score) {
         data.gameCompleted = true;
         data.endTime = getTimeStamp();
-        data.total_score = score;
+        data.totalScore = score;
         data.activities = activities;
         data.trajectory = PathData.getPath();
+        LocalDB.saveItem(data);
         /*
         origami_stats = localStorage.getItem('origami_stats') 
         if (!origami_stats) {
@@ -690,13 +692,13 @@ angular.module('starter.services', [])
         storeName: 'gameState',
         description: 'save current state of game for later resumption'
     });
-    timestamp = (new Date()).toISOString();
     db.saveItem = function (item) {
+        timestamp = (new Date()).toISOString();
         trackerDB.setItem(timestamp, item)
             .then(function () {
                 trackerDB.getItem(timestamp).then(function (data) {
-                    console.log(data);
-                    console.log($localForage.driver());
+                    //console.log(data);
+                    //console.log($localForage.driver());
                 });
             });
     };
