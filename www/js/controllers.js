@@ -1300,7 +1300,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     $scope.$on('qaTaskCompleted', function (event) {
         $scope.congratsMessage = congratsMessages[Math.floor(Math.random() * congratsMessages.length)]; // show random congrats message
-        createModal('qa-result-modal.html', 'georefResult');
+        createModal('qa-result-modal.html', 'qaResult');
     });
 
     /* Show message, then execute proc is supplied as argument */
