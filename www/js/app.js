@@ -206,7 +206,7 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
     $urlRouterProvider.otherwise('/tab/home');
 })
 
-.config([$localForageProvider, function ($localForageProvider) {
+.config(['$localForageProvider', function ($localForageProvider) {
     // set defaults for creation of new localForage
     $localForageProvider.config(
         {
