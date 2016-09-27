@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.value('Server', 'giv-origami.uni-muenster.de/origamidb')
+.value('Server', 'ORIGAMI_API_URL')
 
 .factory('Edit', function() {
     var editedGame = {};
@@ -142,7 +142,7 @@ angular.module('starter.services', [])
 
 // API for getting data from the remote server (REST interface to Mongodb)
 .factory('API', function ($rootScope, $http, $ionicLoading, $window, Server, Upload) {
-    var base = "https://" + Server;
+    var base = Server;
     /*$rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
             content: text ? text : 'Loading',
