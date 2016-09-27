@@ -377,7 +377,7 @@ angular.module('starter.services', [])
     data.loadGame = function (name) {
         var defer = $q.defer();
         //var games = $http.get('test_data/games.json')
-        var games = $http.get('https://' + Server + '/games/item/' + name)
+        var games = $http.get(Server + '/games/item/' + name)
             .then(
                 function (response) { // On success
                     game = response.data[0];
