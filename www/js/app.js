@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate',
+angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.translate', 'ngSanitize',
     'ionic-material', 'starter.controllers', 'starter.services', 'starter.directives',
     'ngCordova', 'ngAnimate', 'ngFileUpload', 'ngCookies', 'LocalForageModule', 'nemLogging', 'ui-leaflet'])
 .run(function ($ionicPlatform) {
@@ -30,6 +30,8 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
     }
     $translateProvider.preferredLanguage('en');
     $translateProvider.fallbackLanguage('en');
+    // Enable escaping of HTML
+    $translateProvider.useSanitizeValueStrategy('sanitize');
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
