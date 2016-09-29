@@ -8,14 +8,15 @@ var packageJson = require('./package.json');
 gulp.task('copy_packages', function () {
   var modules = Object.keys(packageJson.dependencies);
   var moduleFiles = modules.map(function(module) {
-    return 'node_modules/' + module + '/**/*.*';
+    return 'node_modules/' + module + '/**';
   });
+
   return gulp.src(moduleFiles, { base: 'node_modules' })
     .pipe(gulp.dest('dist/assets'));
 });
 
 gulp.task('clean', function (cb) {
-  del(['dist']);
+  del.sync(['dist/**', '!dist']);
   cb();
 });
 
@@ -41,3 +42,5 @@ gulp.task('copy', function (cb) {
 });
 
 gulp.task('dev', ['clean', 'copy', 'copy_packages', 'watch', 'webserver']);
+
+gulp.task('build', ['clean', 'copy', 'copy_packages']);
