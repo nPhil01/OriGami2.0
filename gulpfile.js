@@ -1,52 +1,46 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
-var bower = require('bower');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
+var webserver = require('gulp-webserver');
+var watch = require('gulp-watch');
+var inject = require('gulp-inject');
+var del = require('del');
+var packageJson = require('./package.json');
 
-var paths = {
-  sass: ['./scss/**/*.scss']
-};
+gulp.task('copy_packages', function () {
+  var modules = Object.keys(packageJson.dependencies);
+  var moduleFiles = modules.map(function(module) {
+    return 'node_modules/' + module + '/**';
+  });
 
-gulp.task('default', ['sass']);
-
-gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
-    .pipe(sass({
-      errLogToConsole: true
-    }))
-    .pipe(gulp.dest('./www/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
-    .on('end', done);
+  return gulp.src(moduleFiles, { base: 'node_modules' })
+    .pipe(gulp.dest('dist/assets'));
 });
 
-gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+gulp.task('clean', function (cb) {
+  del.sync(['dist/**', '!dist']);
+  cb();
 });
 
-gulp.task('install', ['git-check'], function() {
-  return bower.commands.install()
-    .on('log', function(data) {
-      gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
+gulp.task('webserver', function () {
+  var stream = gulp.src('dist')
+    .pipe(webserver({
+      livereload: true,
+      open: true
+    }));
+  return stream;
 });
 
-gulp.task('git-check', function(done) {
-  if (!sh.which('git')) {
-    console.log(
-      '  ' + gutil.colors.red('Git is not installed.'),
-      '\n  Git, the version control system, is required to download Ionic.',
-      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-    );
-    process.exit(1);
-  }
-  done();
+gulp.task('watch', function () {
+  return gulp.src('www/**/*')
+    .pipe(watch('www/**/*'))
+    .pipe(gulp.dest('dist'));
 });
+
+gulp.task('copy', function (cb) {
+  gulp.src('www/**/*')
+    .pipe(gulp.dest('dist'));
+  cb();
+});
+
+gulp.task('dev', ['clean', 'copy', 'copy_packages', 'watch', 'webserver']);
+
+gulp.task('build', ['clean', 'copy', 'copy_packages']);
