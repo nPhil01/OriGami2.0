@@ -10,24 +10,24 @@
 }
 
 .tabs-positive > .tabs {
-    background-color: #2196F3 !important;
+    background-color: #387ef5 !important;
 }
 
 @font-face {
     font-family: sans-serif;
 }
 
-/* NEW HOME PAGE ---------------------------------------- */
+/* HOMESCREEN END */
 
 .person-type {
     background-color: #80DEEA;
-    height: 100%;
+    height: calc(100% - 49px);
     position: relative;
 }
 
 .person-type .player {
     background-color: #64B5F6;
-    height: 45%;
+    height: 50%;
     position: relative;
 }
 

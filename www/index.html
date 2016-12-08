@@ -9,7 +9,7 @@
     <title></title>
 
     <link href="assets/ionic-sdk/release/css/ionic.min.css" rel="stylesheet">
-    <link href="assets/ionic-material/dist/ionic.material.min.css" rel="stylesheet">
+    <!-- <link href="assets/ionic-material/dist/ionic.material.min.css" rel="stylesheet"> -->
     
     <link href="css/style.css" rel="stylesheet">
     <link href="css/game.css" rel="stylesheet">
@@ -62,11 +62,36 @@
     <script src="js/map-controllers/geoController.js"></script>
     <script src="js/map-controllers/aidController.js"></script>
     <script src="js/map-controllers/pathController.js"></script>
+    <script src="js/controllers/teacher.js"></script>
+    <script src="js/controllers/game.creation.js"></script>
 </head>
 
     
 <body ng-app="starter">
-    <ion-nav-view></ion-nav-view>
+    <ion-nav-view>
+        
+    </ion-nav-view>
+    <ion-tabs class="tabs-icon-top tabs-positive">
+        <!-- Home menu tab -->
+        <ion-tab title="" icon="ion-ios-home" ui-sref="tab.home">
+          <ion-nav-view name="tab-home"></ion-nav-view>
+        </ion-tab>
+
+        <!-- About us tab -->
+        <ion-tab title="" icon-off="ion-chatbubbles" icon-on="ion-chatbubbles" href="#/tab/languages">
+          <ion-nav-view name="languages-tab"></ion-nav-view>
+        </ion-tab>
+        <!-- LeaderBoards -->
+
+        <ion-tab title="" icon-off="ion-trophy" icon-on="ion-trophy" href="#/tab/leaders">
+          <ion-nav-view cache-view="false" name="leaders-tab"></ion-nav-view>
+        </ion-tab>
+
+        <!-- Stats -->
+        <!-- <ion-tab title="" icon-off="ion-stats-bars" icon-on="ion-stats-bars" href="#/tab/stats">
+          <ion-nav-view cache-view="false" name="stat-tab"></ion-nav-view>
+        </ion-tab> -->
+    </ion-tabs>
 </body>
 
 </html>

@@ -1,36 +1,52 @@
 <ion-view view-title="Start Menu">
-  <ion-content  style = "background-color:#80DEEA; height:100%; width:100%; posisiton: absolute;">          
-   <!-- New Home menu -->       
-    <div class = "person-type" style = "background-color:#80DEEA; height:100%; width:100%; posisiton: absolute;">
-        
-        
-      <a ui-sref="tab.avgames">
-        <div class="player">
-            <div class="type-picture">
-                <img src = "./img/icons/Student.png"/>
-                    <div class="info" ui-sref="tab.avgames">
-                     <h2>{{'start_header_stud' | translate}}</h2>
-                     <p>{{'start_info_stud' | translate}}</p>
-                </div>
-                <!-- <button class="button button-fab next button-calm icon ion-map waves-effect waves-button waves-light" 
-                       ui-sref="tab.avgames"></button>  -->
-                </div>
+
+  <ion-content>
+    <div class="row responsive-sm">
+      <div class="col">
+        BANNER
+      </div>
+    </div>
+    <div class="row responsive-sm">
+      <div class="col col-50">
+        <div class="card">
+
+          <div class="item item-avatar">
+            <img src="./img/icons/Student.png">
+            <h2>OriGami für Schüler</h2>
+            <p>{{'start_info_stud' | translate}}</p>
           </div>
-        </a>
-        
-        
-      <a ui-sref="tab.teachmenu">
-        <div  class="teacher">
-             <div class="type-picture">
-                <img src = "./img/icons/Professor.png"/>
-                <div class="info" ui-sref="tab.teachmenu">
-                     <h2>{{'start_header_teach' | translate}}</h2>
-                     <p>{{'start_info_teach' | translate}}</p>
-                </div>
-                  <!-- <button class="button button-fab next button-calm icon ion-settings waves-effect waves-button waves-light" ui-sref="tab.teachmenu"></button> -->
-            </div>
-         </div>
-       </a>
+
+          <div class="item item-body">
+            <p>
+              {{'start_info_stud' | translate}}
+            </p>
+            <p>
+              <a ui-sref="tab.avgames">Spiele</a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+      <div class="col col-50">
+        <div class="card">
+
+          <div class="item item-avatar">
+            <img src="./img/icons/Professor.png">
+            <h2>OriGami für Lehrer</h2>
+            <p>{{'start_info_teach' | translate}}</p>
+          </div>
+
+          <div class="item item-body">
+            <p>
+              {{'start_info_teach' | translate}}
+            </p>
+            <p>
+              <a ui-sref="tab.teachmenu">Lehrer</a>
+            </p>
+          </div>
+
+        </div>
+      </div>
     </div>
   </ion-content>
-</ion-view>
+ </ion-view>
