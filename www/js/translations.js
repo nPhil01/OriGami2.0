@@ -8,6 +8,8 @@ var translations = {
         "avail_games": "Available Games",
         "back": "Back",
         "cancel": "Cancel",
+        "EDIT": "Edit",
+        "DELETE": "DELETE",
         "choose_language": "Choose the language",
         "cool": "Cool!",
         "congrat": "Congratulations!",
@@ -93,7 +95,9 @@ var translations = {
         "wrong_ans_1": "Sorry. Better luck next time!",
         "you_completed": "You finished the game! ",
         "you_reached": "You reached",
-        "your_task": "Your task"
+        "your_task": "Your task",
+        "TEACHMENU_HEADER": "Games",
+        "NEWGAME_STEP1": "General Information"
     },
 
     /* Deutsch --------------------------------------------------- */
@@ -106,6 +110,8 @@ var translations = {
         "avail_games": "Verfügbare Spiele",
         "back": "Zurück",
         "cancel": "Abbrechen",
+        "EDIT": "Editieren",
+        "DELETE": "Löschen",
         "choose_language": "Wähle eine Sprache",
         "congrat": "Gratuliere!",
         "congratz!": "Gratuliere! Du hast das Ziel erreicht",
@@ -188,7 +194,8 @@ var translations = {
         "wrong_ans_1": "Sorry, mehr Glück nächstes Mal",
         "you_completed": "Du hast das Spiel erfolgreich beendet",
         "you_reached": "Du hast erreicht",
-        "your_task": "Deine Aufgabe"
+        "your_task": "Deine Aufgabe",
+        "TEACHMENU_HEADER": "Spiele"
     },
 
     /* Spanish --------------------------------------------------- */
