@@ -12,6 +12,7 @@
 		vm.newgame = {}; //General description of the game
 		vm.abort = abort;
 		vm.invalidForm = true;
+		vm.act_type = 0;
 		vm.previousSlide = previousSlide;
 		vm.nextSlide = nextSlide;
 		vm.slideChanged = slideChanged;
@@ -22,6 +23,7 @@
     	vm.rateGame = rateGame;
     	vm.initSlideBox = initSlideBox;
 		vm.submit = submit;
+		vm.chooseActType = chooseActType;
 
 		activate();
 
@@ -88,5 +90,14 @@
 		function abort () {
 			$ionicHistory.goBack();
 		}
+
+		//Choose Activity
+		function chooseActType (type) {
+		    if (type === vm.act_type)
+		        vm.act_type = 0;
+		    else {
+		        vm.act_type = type;
+		    }
+		};
 	}
 })();
