@@ -11,12 +11,12 @@
     </div>
     <h2 class="title">{{'NEWGAME_STEP1' | translate}}</h2>
     <div class="buttons">
-      <button class="button button-icon icon ion-arrow-right-c" ng-click="game.nextSlide()" ng-show="game.showSlideButtons().showNext"></button>
+      <button ng-disabled="game.invalidForm" class="button button-icon icon ion-arrow-right-c" ng-click="game.nextSlide()" ng-show="game.showSlideButtons().showNext"></button>
       <button class="button button-icon ion-checkmark-round" ng-show="game.showSlideButtons().saveButton"></button>
     </div>
   </div>
   <ion-content class="has-subheader">
-    <ion-slide-box on-slide-changed="game.slideChanged($index)" style="height: 100%;" show-pager="false">
+    <ion-slide-box ng-init="game.initSlideBox()" on-slide-changed="game.slideChanged($index)" style="height: 100%;" show-pager="false">
 
       <!-- Step 1:  General Information -->
       <ion-slide>
@@ -24,48 +24,50 @@
           <div class="page_content">
             <div class="content">
               <div class="main_info">
-                <div class="row">
-                  <span class="input-label">{{'game_title' | translate}}</span>
-                  <input ng-class = "{empty_field: emptyFields[0]}"  type="text" ng-model="game.newgame.name" required>
-                </div>
-                <div class="row">
-                  <span class="input-label">{{'game_description' | translate}}</span>
-                  <textarea rows="4" ng-class = "{empty_field: emptyFields[1]}" ng-model="game.newgame.description" required> </textarea>
-                </div>
-                <div class="row">
-                  <span>{{'time_compl' | translate}}</span>
-                  <input type="text" ng-class = "{empty_field: emptyFields[2]}" class="input_time" ng-model="game.newgame.timecompl" required>
-                </div>
-                <div class="row_diff row">
+                <form name="slide1" novalidate>
+                  <div class="row">
+                    <span class="input-label">{{'game_title' | translate}}</span>
+                    <input name="gameTitle" ng-class = "{empty_field: emptyFields[0]}"  type="text" ng-model="game.newgame.name" ng-change="game.submit(slide1.$invalid)" required>
+                  </div>
+                  <div class="row">
+                    <span class="input-label">{{'game_description' | translate}}</span>
+                    <textarea name="gameDescription" rows="4" ng-class = "{empty_field: emptyFields[1]}" ng-model="game.newgame.description" ng-change="game.submit(slide1.$invalid)" required> </textarea>
+                  </div>
+                  <div class="row">
+                    <span>{{'time_compl' | translate}}</span>
+                    <input name="gameTime" type="number" min="1" step="1" ng-class = "{empty_field: emptyFields[2]}" class="input_time" ng-model="game.newgame.timecompl" ng-change="game.submit(slide1.$invalid)" required>
+                  </div>
+                  <div class="row_diff row">
                     <div class="diff_rate">
-                        <div class="diff_title">
-                            <span> {{'difficulty' | translate}}</span>
-                        </div>
-                        <span>
-                           <a ng-click = "rateGame(0)">
-                               <i class = {{diff[0]}} style="font-size:2em;color:#FFEB3B;"></i>
-                           </a>
-                           <a ng-click = "rateGame(1)">
-                               <i class = {{diff[1]}} style="font-size:2em;color:#FFEB3B;"></i>
-                           </a>
-                           <a ng-click = "rateGame(2)">
-                               <i class = {{diff[2]}} style="font-size:2em;color:#FFEB3B;"></i>
-                           </a>
-                           <a ng-click = "rateGame(3)">
-                               <i class = {{diff[3]}} style="font-size:2em;color:#FFEB3B;"></i>
-                           </a>
-                           <a ng-click = "rateGame(4)">
-                               <i class = {{diff[4]}} style="font-size:2em;color:#FFEB3B;"></i>
-                           </a>
-                        </span>
+                      <div class="diff_title">
+                        <span> {{'difficulty' | translate}}</span>
+                      </div>
+                      <span>
+                        <a ng-click = "game.rateGame(0)">
+                          <i class = {{game.diff[0]}} style="font-size:2em;color:#FFEB3B;"></i>
+                        </a>
+                        <a ng-click = "game.rateGame(1)">
+                          <i class = {{game.diff[1]}} style="font-size:2em;color:#FFEB3B;"></i>
+                        </a>
+                        <a ng-click = "game.rateGame(2)">
+                          <i class = {{game.diff[2]}} style="font-size:2em;color:#FFEB3B;"></i>
+                        </a>
+                        <a ng-click = "game.rateGame(3)">
+                          <i class = {{game.diff[3]}} style="font-size:2em;color:#FFEB3B;"></i>
+                        </a>
+                        <a ng-click = "game.rateGame(4)">
+                          <i class = {{game.diff[4]}} style="font-size:2em;color:#FFEB3B;"></i>
+                        </a>
+                      </span>
                     </div>
-                </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </ion-slide>
-      
+
       <ion-slide>
         <div class="page_maininfo page2">
           <div class="page_content">

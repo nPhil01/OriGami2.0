@@ -11,17 +11,32 @@
 		var vm = this;
 		vm.newgame = {}; //General description of the game
 		vm.abort = abort;
+		vm.invalidForm = true;
 		vm.previousSlide = previousSlide;
 		vm.nextSlide = nextSlide;
 		vm.slideChanged = slideChanged;
 		vm.showSlideButtons = showSlideButtons;
+		vm.diff = Array.apply(null, Array(5)).map(function () {
+        	return "ion-ios-star-outline"
+    	});
+    	vm.rateGame = rateGame;
+    	vm.initSlideBox = initSlideBox;
+		vm.submit = submit;
 
 		activate();
 
 		////////////////////////////
 
 		function activate () {
+			
+		}	
+
+		function initSlideBox () {
 			$ionicSlideBoxDelegate.enableSlide(false);
+		}
+
+		function submit (invalid) {
+			vm.invalidForm = invalid;
 		}
 
 		function previousSlide () {
@@ -30,11 +45,10 @@
 
 		function nextSlide () {
 			$ionicSlideBoxDelegate.next();
-			console.log(vm.newgame);
 		}
 
 		function slideChanged (slideIndex) {
-			
+			console.log('slide changed');
 		}
 
 		function showSlideButtons () {
@@ -59,6 +73,16 @@
 				showNext: showNext, 
 				saveButton: saveButton 
 			}
+		}
+
+		function rateGame (difficulty) {
+			vm.diff = Array.apply(null, Array(5)).map(function () {
+			    return "ion-ios-star-outline"
+			});
+			for (var i = 0; i <= difficulty; i++) {
+			    vm.diff[i] = "ion-ios-star";
+			}
+			vm.newgame.difficulty = difficulty + 1;
 		}
 
 		function abort () {
