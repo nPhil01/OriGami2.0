@@ -72,8 +72,40 @@
         <div class="page_maininfo page2">
           <div class="page_content">
             <div class="content">
+              <ion-scroll style="height: 100%;">
               <div class="act_conts">
-                <div class="act">
+                <div class="row responsive-sm">
+                  <div class="col col-50">
+                    <div class="act">
+                      <a ng-click="chooseActType(1)">
+                        <div class="act_cont" ng-class="{isChoosen: act_type == 1}">
+                          <div class="dest_route">
+                            <div style="margin-bottom:25px;">
+                              <p>Find Destination</p>
+                            </div>
+                            <div><img src="./img/icons/dest.svg"></div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col col-50">
+                    <div class="act">
+                      <a ng-click="chooseActType(2)">
+                        <div class="act_cont" ng-class="{isChoosen: act_type == 2}">
+                          <div class="dest_route">
+                            <div style="margin-bottom:25px;">
+                              <p>Follow Route</p>
+                            </div>
+                            <!-- <div style = "margin-bottom:25px;"><p style="font-size:2vh;">Students will follow the route, consisting of several points</p></div> -->
+                            <div><img src="./img/icons/route.svg"></div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="act">
                   <a ng-click="chooseActType(1)">
                     <div class="act_cont" ng-class="{isChoosen: act_type == 1}">
                       <div class="dest_route">
@@ -92,13 +124,13 @@
                         <div style="margin-bottom:25px;">
                           <p>Follow Route</p>
                         </div>
-                        <!-- <div style = "margin-bottom:25px;"><p style="font-size:2vh;">Students will follow the route, consisting of several points</p></div> -->
                         <div><img src="./img/icons/route.svg"></div>
                       </div>
                     </div>
                   </a>
-                </div>
+                </div> -->
               </div>
+              </ion-scroll>
             </div>
           </div>
         </div>

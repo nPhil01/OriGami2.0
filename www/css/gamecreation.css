@@ -178,7 +178,6 @@ p {
 }
 
 .page_content .content .act_conts .act {
-    width: 50%;
     height: 100%;
 }
 
@@ -193,6 +192,7 @@ p {
     box-shadow: 0 0 0 0;
     text-align: center;
     display: table;
+    padding: 10px;
 }
 
 .act_conts .act .act_cont .dest_route {
@@ -203,6 +203,7 @@ p {
 
 .dest_route p {
     font-size: 4vh;
+    line-height: 5vh;
 }
 
 .dest_route img {
