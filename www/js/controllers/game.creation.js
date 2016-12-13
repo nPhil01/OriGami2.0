@@ -5,9 +5,9 @@
 		.module('starter')
 		.controller('GameCreationController', GameCreationController);
 
-	GameCreationController.$inject = ['$ionicHistory', '$ionicSlideBoxDelegate'];
+	GameCreationController.$inject = ['$scope', '$ionicHistory', '$ionicSlideBoxDelegate', '$ionicModal', 'MapService'];
 
-	function GameCreationController ($ionicHistory, $ionicSlideBoxDelegate) {
+	function GameCreationController ($scope, $ionicHistory, $ionicSlideBoxDelegate, $ionicModal, MapService) {
 		var vm = this;
 		vm.newgame = {}; //General description of the game
 		vm.abort = abort;
@@ -27,6 +27,7 @@
 		vm.chooseActType = chooseActType;
 		vm.finishGame = finishGame;
 		vm.slideTitle = 'General Information';
+		vm.mainMap = MapService;
 
 		activate();
 
@@ -56,8 +57,6 @@
 		}
 
 		function slideChanged (slideIndex) {
-			console.log('slide changed');
-			console.log(vm.newgame)
 			if (slideIndex === 0) {
 				vm.slideTitle = 'General Information';
 			}
@@ -153,5 +152,39 @@
 	        //         // $scope.numberTask = 0;
 	        //     });
 	    }
+
+	    ////////////////////////////
+
+	    //Add Waypoint with modal
+	    $scope.$on('leafletDirectiveMap.click', function (event, locationEvent) {
+	    	console.log('leaflet click');
+	        $scope.newWaypoint = new Waypoint();
+	        $scope.newWaypoint.lat = locationEvent.leafletEvent.latlng.lat;
+	        $scope.newWaypoint.lng = locationEvent.leafletEvent.latlng.lng;
+	        $scope.newWaypoint.tasks = [];
+
+	        createModal('templates/map/waypoint.html', 'm1');
+	    });
+
+	    var Waypoint = function () {
+	        if (!(this instanceof Waypoint)) return new Waypoint();
+	        this.lat = "";
+	        this.lng = "";
+	        this.name = "";
+	        this.tasks = [];
+	    };
+
+	    // Modal Windows Routine
+	    var createModal = function (templateUrl, id) {
+	        $ionicModal.fromTemplateUrl(templateUrl, {
+	            id: id,
+	            scope: $scope,
+	            animation: 'slide-in-up',
+	            backdropClickToClose: false
+	        }).then(function (modal) {
+	            $scope.modal = modal;
+	            $scope.modal.show();
+	        });
+	    };
 	}
 })();
