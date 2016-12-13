@@ -9,10 +9,10 @@
     <div class="buttons" ng-show="game.showSlideButtons().showPrevious">
       <button class="button button-icon icon ion-arrow-left-c" ng-click="game.previousSlide()"></button>
     </div>
-    <h2 class="title">{{'NEWGAME_STEP1' | translate}}</h2>
+    <h2 class="title">{{ game.slideTitle }}</h2>
     <div class="buttons">
       <button ng-disabled="game.invalidForm" class="button button-icon icon ion-arrow-right-c" ng-click="game.nextSlide()" ng-show="game.showSlideButtons().showNext"></button>
-      <button class="button button-icon ion-checkmark-round" ng-show="game.showSlideButtons().saveButton"></button>
+      <button class="button button-icon ion-checkmark-round" ng-show="game.showSlideButtons().saveButton" ng-click="game.finishGame()"></button>
     </div>
   </div>
   <ion-content class="has-subheader">
@@ -112,8 +112,34 @@
         </div>
       </ion-slide>
 
+      <!-- Step 3: Adding Activity Points -->
       <ion-slide>
         slide 3  
+      </ion-slide>
+
+      <!-- Slide 4: Choose Task Type -->
+      <ion-slide>
+        <div class="page_maininfo page4">
+          <div class="page_content">
+            <div class="content">
+                <h2 style="color:white;"> Your game {{game.newgame.name}} is created! </h2>
+                <div class="crtd_icon"><img src="./img/icons/fireworks.svg"> </div>
+                <div class="final_desc">
+                  <p class = "final_info">Your game contains:</p>
+                  <p class = "final_info">{{game.newgame.activities[0].points.length}} waypoints</p>
+                  <p class = "final_info">{{game.numberTask}} tasks</p>
+                  <p class = "final_p_info">Maximum reward: {{game.maxScore}} points</p>
+              </div>
+            </div>
+          </div>
+          <div class="page_menu" ng-hide="allFilled[2]">
+            <div class="navi">
+              <button class="button" ng-click="game.abort()">
+                  Back to Games
+              </button>
+            </div>
+          </div>
+        </div>
       </ion-slide>
     </ion-slide-box>
   </ion-content>
