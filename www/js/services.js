@@ -269,7 +269,7 @@ angular.module('starter.services', [])
             georefCorrect : 10, // points gained when georeference is below 'georefThresholdDistance'
             georefIncorrect : 0 // points lost when georeference is more than 'georefThresholdDistance'
         },
-        qaTimeLimit : 30, // time limit (in seconds) to choose answer in question-answer game
+        qaTimeLimit : 60, // time limit (in seconds) to choose answer in question-answer game
         playerLocationHintTimeout : 5, // time limit (in seconds) to show player's position marker when button is pressed
         language : "en" // recommmended interface language for game (alternatives - de / es / pt / en)
 
