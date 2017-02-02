@@ -1,5 +1,18 @@
 /* white Space Tab bug fix */
 
+.subbar {
+    top: 44px;
+    display: block;
+    height: auto;
+}
+
+.subbar-description {
+    width: 100%;
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .tabs-top > .tabs,
 .tabs.tabs-top {
     top: 0 !important;
@@ -238,7 +251,7 @@
 #smiley {
     position: absolute;
     right: 0%;
-    top: 2%;
+    top: 6%;
     opacity: 0.7;
     z-index: 999;
     outline: 0;

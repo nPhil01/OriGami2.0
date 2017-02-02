@@ -1590,14 +1590,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     /* Add more markers once game is loaded */
     $scope.$on('waypointLoadedEvent', function (event, waypoint) {
         PlayerStats.startWaypoint(waypoint);
-        $ionicModal.fromTemplateUrl('waypointinfo-modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.modal = modal;
-            $scope.waypointName = waypoint.name;
-            $scope.modal.show();
-        });
+        // $ionicModal.fromTemplateUrl('waypointinfo-modal.html', {
+        //     scope: $scope,
+        //     animation: 'slide-in-up'
+        // }).then(function (modal) {
+        //     $scope.modal = modal;
+        //     $scope.waypointName = waypoint.name;
+        //     $scope.modal.show();
+        // });
         var marker = {
             lat: waypoint.lat,
             lng: waypoint.lng,

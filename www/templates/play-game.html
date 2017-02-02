@@ -1,7 +1,15 @@
-<ion-view view-title="{{'play_game' | translate}} - {{}}" cache-view="false">
+<ion-view view-title="{{'play_game' | translate}} - {{gameName}}" cache-view="false">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button class="button-clear"></ion-nav-back-button>
     </ion-nav-bar>
+    <div class="bar subbar">
+        <div class="subbar-description">
+            {{waypoint.name}}: {{waypoint.description}}
+        </div>
+    </div>
+    <!-- <div class="bar bar-subheader">
+      <h4 class="title">{{waypoint.name}}: {{waypoint.description}}</h4>
+    </div> -->
 
     <!-- Information about how to play the game -->
     <script id="gameinfo-modal.html" type="text/ng-template">
@@ -80,7 +88,7 @@
 
 
     <!-- Information about the next waypoint -->
-    <script id="waypointinfo-modal.html" type="text/ng-template">
+    <!-- <script id="waypointinfo-modal.html" type="text/ng-template">
         <ion-modal-view>
 
             <ion-content style="height: 100%; background-color:#64B5F6;">
@@ -98,7 +106,7 @@
                 <p class="title">{{'continue' | translate}}</p>
             </ion-footer-bar>
         </ion-modal-view>
-    </script>
+    </script> -->
 
 
     <!-- Notify when waypoint is reached -->
