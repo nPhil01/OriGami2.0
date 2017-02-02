@@ -1477,7 +1477,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 touchZoom: GameData.getConfig('map.enableZoom'), 
                 scrollWheelZoom: GameData.getConfig('map.enableZoom'), 
                 zoomControl : GameData.getConfig('map.enableZoom'),
-                zoomControlPosition: GameData.getConfig('map.zoomControlPosition')
+                zoomControlPosition: GameData.getConfig('map.zoomControlPosition'),
+                controls: {
+                    layers: {
+                        collapsed: true,
+                        visible: true,
+                        position: 'bottomleft'
+                    }
+                }
             },
             layers: {
                 baselayers: {
@@ -1487,7 +1494,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         type: 'xyz',
                         top: isDefaultLayer('satellite'),
                         layerOptions: {
-                            attribution: '&copy; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
+                            // attribution: '&copy; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
                             continuousWorld: false
                         }
                     },
@@ -1497,7 +1504,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         type: 'xyz',
                         top: isDefaultLayer('streets'),
                         layerOptions: {
-                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                            // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                             continuousWorld: false
                         }
                     },
@@ -1507,7 +1514,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                         type: 'xyz',
                         top: isDefaultLayer('topographic'),
                         layerOptions: {
-                            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+                            // attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
                             continuousWorld: false
                         }
                     }
