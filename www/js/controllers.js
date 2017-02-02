@@ -1608,14 +1608,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         var marker = {
             lat: waypoint.lat,
             lng: waypoint.lng,
-            message: waypoint.name,
-            focus: true
+            // message: waypoint.name,
+            focus: true,
+            opacity: 0.0,
         };
         $scope.map.markers.NextWaypoint = marker;
         $scope.destination = {
             lat: marker.lat,
             lng: marker.lng,
-            name: marker.message
+            opacity: 0.0,
+            // name: marker.message
         };
         $scope.waypointLoaded = true; // reset this flag
     });

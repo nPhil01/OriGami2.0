@@ -21,7 +21,6 @@
 		        zoomControlPosition: 'topleft',
 		        lat: 57,
 		        lng: 8
-
 		    },
 
 		    geojson: {},
