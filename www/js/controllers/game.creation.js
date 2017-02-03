@@ -28,6 +28,7 @@
 		vm.finishGame = finishGame;
 		vm.slideTitle = 'General Information';
 		vm.mainMap = MapService;
+		vm.waypoints = [];
 
 		activate();
 
@@ -172,7 +173,7 @@
 	        this.lng = "";
 	        this.name = "";
 	        this.tasks = [];
-	    };
+	    }
 
 	    // Modal Windows Routine
 	    var createModal = function (templateUrl, id) {
@@ -185,7 +186,15 @@
 	            $scope.modal = modal;
 	            $scope.modal.show();
 	        });
-	    };
+	    }
+
+		var waypointIcon = {
+			type: 'extraMarker',
+			icon: 'fa-number',
+			markerColor: 'blue',
+			shape: 'circle',
+			number: '1'
+		}
 
 	    var newMarker = {};
 	    $scope.numberTask = 0;
@@ -209,70 +218,16 @@
 
 	            newMarker = $scope.newWaypoint;
 	            newMarker.icon = angular.copy(waypointIcon);
-	            newMarker.icon.number = $scope.mainMap.markers.length + 1;
-	            $scope.mainMap.markers.push($scope.newWaypoint);
+	            newMarker.icon.number = vm.waypoints.length + 1;
+	            vm.waypoints.push($scope.newWaypoint);
 
 	            $scope.closeModal();
 	            createModal('templates/tasks/task_choose.html', 'm2');
 	        }
-	    };
-
-	    var waypointIcon = {
-			type: 'extraMarker',
-			icon: 'fa-number',
-			markerColor: 'blue',
-			shape: 'circle',
-			number: '1'
 	    }
-
-	    $scope.mainMap = {
-	        center: {
-	            autoDiscover: true,
-	            zoom: 16
-	        },
-	        defaults: {
-	            tileLayer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-	            maxZoom: 18,
-	            zoomControlPosition: 'topleft',
-	            lat: 57,
-	            lng: 8
-	        },
-	        markers: [],
-	        events: {},
-	        layers: {
-	            baselayers: {
-	                osm: {
-	                    name: 'Satelite View',
-	                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-	                    type: 'xyz',
-	                    top: true,
-	                    layerOptions: {
-	                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	                        continuousWorld: false
-	                    }
-	                },
-	                streets: {
-	                    name: 'Streets View',
-	                    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-	                    type: 'xyz',
-	                    top: false,
-	                },
-	                topographic: {
-	                    name: 'Topographic View',
-	                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-	                    type: 'xyz',
-	                    top: false,
-	                    layerOptions: {
-	                        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
-	                        continuousWorld: false
-	                    }
-	                }
-	            }
-	        }
-	    };
 
 		$scope.closeModal = function () {
 			$scope.modal.remove();
-		};
+		}
 	}
 })();
