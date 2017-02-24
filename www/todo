@@ -1,0 +1,34 @@
+#ich dumm wie Brot!
+
+TODO:
+  Controller.js
+    LoginCtrl
+
+  How to get this Site working?!
+
+
+Structure:
+
+acclogin
+  login
+    profile
+    play
+    create
+  play
+    choose game
+  create
+    choose game
+      edit
+      delete
+    create game
+
+----------------------------------------
+
+TOFIX:
+  acc.log
+    home button
+
+  first page
+    normal origami + login
+
+  

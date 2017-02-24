@@ -74,7 +74,7 @@ angular.module('starter').controller('aidController', ['$scope', '$ionicModal',
 
             $scope.newWaypoint = new Waypoint();
             $scope.newWaypoint.lat = locationEvent.leafletEvent.latlng.lat;
-            $scope.newWaypoint.lng = locationEvent.leafletEvent.latlng.lng;;
+            $scope.newWaypoint.lng = locationEvent.leafletEvent.latlng.lng;
         });
 
 

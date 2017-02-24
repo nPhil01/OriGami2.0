@@ -2,9 +2,87 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 .controller('HomeCtrl', function ($scope) {})
 
-.controller('GamesCtrl', [ '$rootScope', '$scope', '$http', '$location', '$ionicModal', '$window', '$timeout', 
-                            '$ionicPopup', '$ionicHistory', '$translate', 'API', 'Data', 
-                            function ($rootScope, $scope, $http, $location, $ionicModal, $window, $timeout, 
+// #################################################################################################
+// controller login
+// #################################################################################################
+
+// NEW: LoginCtrl
+.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicHistory, $state, LoginService) {
+  console.log("start: LoginCtrl");
+
+  $scope.data = {};
+
+  //Get back in the history
+  $scope.getBack = function () {
+      $ionicHistory.goBack();
+  };
+
+
+  // execute function login() -- see acc-log.html
+  $scope.login = function () {
+    console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+
+    LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
+
+      console.log("loginUser");
+      // ClearInputField.clearInput(data.username);
+      // ClearInputField.clearInput(data.password);
+      console.log($scope.data.username);
+      console.log($scope.data.password);
+
+      $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
+    }).error(function(data) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Login failed!',
+        template: 'Please check your credentials!'
+      });
+    });
+  }
+
+  $scope.register = function () {
+    console.log("REGISTER email: " + $scope.data.REGemail
+              + " - user: " + $scope.data.REGusername
+              + " - PW: " + $scope.data.REGpassword
+              + " - PWctrl: " + $scope.data.REGpasswordCTRL);
+
+  }
+
+  $scope.profileEdit = function (value, def) {
+    console.log(value);
+    console.log(def);
+
+    EditService.editValue(value, def).success(function(data) {
+
+      console.log("EditUser");
+      console.log(value);
+      console.log(def);
+
+      console.log($scope.value);
+      console.log($scope.def);
+
+      // $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
+    }).error(function(data) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Edit failed!',
+        template: 'Please check the fields!'
+      });
+    });
+  }
+
+  $scope.logout = function() {
+    console.log("logout()");
+  }
+
+  console.log("end: LoginCtrl");
+})
+
+// #################################################################################################
+// controller game
+// #################################################################################################
+
+.controller('GamesCtrl', [ '$rootScope', '$scope', '$http', '$location', '$ionicModal', '$window', '$timeout',
+                            '$ionicPopup', '$ionicHistory', '$translate', 'API', 'Data',
+                            function ($rootScope, $scope, $http, $location, $ionicModal, $window, $timeout,
                                         $ionicPopup, $ionicHistory, $translate, API, Data) {
 
     // Info Popups --------------------------------------
@@ -27,6 +105,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
+
+    console.log(API.getMetadata());
 
     // Fetch all the games from the server
     $scope.games = [];
@@ -85,9 +165,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 }])
 
-.controller('TeacherCtrl', ['$rootScope', '$scope', '$timeout', '$ionicModal', '$window', '$ionicHistory', 
-                            '$translate', '$ionicSlideBoxDelegate', '$cordovaCamera', '$q', 'API', 'Edit', 
-                            function ($rootScope, $scope, $timeout, $ionicModal, $window, $ionicHistory, 
+.controller('TeacherCtrl', ['$rootScope', '$scope', '$timeout', '$ionicModal', '$window', '$ionicHistory',
+                            '$translate', '$ionicSlideBoxDelegate', '$cordovaCamera', '$q', 'API', 'Edit',
+                            function ($rootScope, $scope, $timeout, $ionicModal, $window, $ionicHistory,
                                     $translate, $ionicSlideBoxDelegate, $cordovaCamera, $q, API, Edit) {
     // List of all available games fetched from the server
     $scope.list = [];
@@ -463,19 +543,19 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             var isQuestion = false;
 
             switch($event.target.id) {
-                case 'photoAns1': 
+                case 'photoAns1':
                     picIndex = 0;
                     break;
-                case 'photoAns2': 
+                case 'photoAns2':
                     picIndex = 1;
                     break;
-                case 'photoAns3': 
+                case 'photoAns3':
                     picIndex = 2;
                     break;
-                case 'photoAns4': 
+                case 'photoAns4':
                     picIndex = 3;
                     break;
-                case 'photoQuestion': 
+                case 'photoQuestion':
                     isQuestion = true;
                     break;
                 case 'georefPic':
@@ -494,7 +574,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 }
                 $scope.$apply();
             }
-            
+
             reader.readAsDataURL(file);
 
             upload.then(function(res) {
@@ -548,7 +628,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.onLoadG = function (e, reader, file, fileList, fileOjects, fileObj) {
         $scope.georP = fileObj;
     };
-    
+
     $scope.submitGR = function (img_file) {
         /*Creation of game content */
         $scope.geoTask.type = "GeoReference";
@@ -706,11 +786,11 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 }])
 
 // Controller which controls new GAME creation
-.controller('NewGameCtrl', ['$rootScope', '$scope', '$state', '$http', '$location', '$cordovaGeolocation', '$ionicModal', 
-                            '$window', '$ionicPopup', '$ionicHistory', '$stateParams', '$cordovaCamera', 
-                            '$translate', 'leafletData', 'API', 'Edit', 'Data', 'Task', 
+.controller('NewGameCtrl', ['$rootScope', '$scope', '$state', '$http', '$location', '$cordovaGeolocation', '$ionicModal',
+                            '$window', '$ionicPopup', '$ionicHistory', '$stateParams', '$cordovaCamera',
+                            '$translate', 'leafletData', 'API', 'Edit', 'Data', 'Task',
                             function ($rootScope, $scope, $state, $http, $location, $cordovaGeolocation, $ionicModal,
-                                        $window, $ionicPopup, $ionicHistory, $stateParams, $cordovaCamera, 
+                                        $window, $ionicPopup, $ionicHistory, $stateParams, $cordovaCamera,
                                         $translate, leafletData, API, Edit, Data, Task) {
 
     /* Game Parameters ----- */
@@ -1005,7 +1085,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     // Two main buttons - one, which submits the complete game to the server and one, which cancels the entire progress of creation
     $scope.submitGame = function () {
-        if ($scope.newgame.title != null) { // Check if the title is not empty 
+        if ($scope.newgame.title != null) { // Check if the title is not empty
             $scope.border = "black";
 
             $scope.completeGame = {
@@ -1071,16 +1151,16 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 }])
 
 // controller for gameplay
-.controller('PlayCtrl', ['$scope', '$stateParams', '$ionicModal', '$ionicPopup', '$ionicLoading', '$location', '$cordovaSocialSharing', 
-                         '$translate', '$timeout', '$cookies', 'GameData', 'GameState', 'API', 'PathData', 'PlayerStats', 
-                         function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location,  $cordovaSocialSharing, 
+.controller('PlayCtrl', ['$scope', '$stateParams', '$ionicModal', '$ionicPopup', '$ionicLoading', '$location', '$cordovaSocialSharing',
+                         '$translate', '$timeout', '$cookies', 'GameData', 'GameState', 'API', 'PathData', 'PlayerStats',
+                         function ($scope, $stateParams, $ionicModal, $ionicPopup, $ionicLoading, $location,  $cordovaSocialSharing,
                                     $translate, $timeout, $cookies, GameData, GameState, API, PathData, PlayerStats) {
     $scope.gameName = $stateParams.gameName;
     $scope.gameLoaded = false;
     var congratsMessages = ['Good job!', 'Well done!', 'Great!', 'Cool!', 'Perfect!', 'So Fast! :)'];
 
     $scope.score = 0;
-    $scope.GameData = GameData; // ugly hack to make GameData visible in directives 
+    $scope.GameData = GameData; // ugly hack to make GameData visible in directives
 
     /* only for debug purposes */
     var debugState = function () {
@@ -1111,7 +1191,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     var initGame = function () {
         GameState.resetAll();
         $translate.use(GameData.getConfig('language'));
-        $scope.TIME_LIMIT = GameData.getConfig('qaTimeLimit'); // time limit to answer question (in seconds) 
+        $scope.TIME_LIMIT = GameData.getConfig('qaTimeLimit'); // time limit to answer question (in seconds)
         $scope.gameLoaded = true;
         $scope.player = {};
         getPlayerName();
@@ -1153,7 +1233,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             handleNextWaypoint();
         }
     };
- 
+
     $scope.showWaypointInfoModal = function() {
         createModal('waypointinfo-modal.html', 'wpinfo');
     };
@@ -1244,7 +1324,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         $scope.imgAnsURL_3 = API.getImageURL($scope.task.answers[3].img);
         $scope.imgRightAnswerURL = API.getImageURL($scope.rightAnswer.img);
         // console.log($scope.imgAnsURL_0, $scope.imgAnsURL_1, $scope.imgAnsURL_2, $scope.imgAnsURL_3);
-    
+
         $scope.chooseAnswer = function (answer, index) {
             if (!$scope.ansChoosen) {
                 $scope.chosenAnswer = answer;
@@ -1389,7 +1469,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
             $scope.shareButtons = true;
         }, 1200);
         showResults();
-        
+
         API.addPlayerInfo(info); // Add score to player array for this game
         $scope.$broadcast('gameOverEvent');
 
@@ -1408,7 +1488,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         API.getOne($scope.gameName)
             .success(function (data, status, headers, config) {
                 $scope.players = data.slice()[0].players;
-                
+
                 var addLeader = function () {
                     $scope.players.push($scope.player);
                     /* Comparison function in order to get three best players */
@@ -1422,7 +1502,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     };
                     $scope.players.sort(compare);
                 };
-                
+
                 $scope.bestPlayers = function () {
                     addLeader();
                     var maxResults = 10;
@@ -1439,7 +1519,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                     $translate.instant('oops_wrong'));
             });
     };
-    
+
     GameData.loadGame($scope.gameName).then(initGame, gameLoadFailure);
 }])
 
@@ -1447,13 +1527,13 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
  * - Only shows waypoint and emits signal when waypoint is reached or georeference game is played
  * - Is not concerned with GameState or the game progression logic - that is a job for PlayCtrl
  */
-.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading', 
+.controller('StudentMapCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading',
                                 '$timeout', 'leafletData', '$translate', 'GameData', 'PathData', 'PlayerStats',
-                                function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading, 
+                                function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading,
                                             $timeout, leafletData, $translate, GameData, PathData, PlayerStats) {
 
     $scope.waypointLoaded = false;
-    $scope.allowEdit = false; // flag to toggle map editing when marking in georeferencing game  
+    $scope.allowEdit = false; // flag to toggle map editing when marking in georeferencing game
     $scope.showMarker = false;
 
     // Initialize map after game is loaded. Needed because config settings are in game data
@@ -1473,9 +1553,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 tileLayer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                 maxNativeZoom: GameData.getConfig('map.maxNativeZoom'),
                 maxZoom: GameData.getConfig('map.maxZoom'),
-                doubleClickZoom: GameData.getConfig('map.enableZoom'), 
-                touchZoom: GameData.getConfig('map.enableZoom'), 
-                scrollWheelZoom: GameData.getConfig('map.enableZoom'), 
+                doubleClickZoom: GameData.getConfig('map.enableZoom'),
+                touchZoom: GameData.getConfig('map.enableZoom'),
+                scrollWheelZoom: GameData.getConfig('map.enableZoom'),
                 zoomControl : GameData.getConfig('map.enableZoom'),
                 zoomControlPosition: GameData.getConfig('map.zoomControlPosition')
             },
@@ -1524,7 +1604,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                 lng: 0,
                 zoom: GameData.getConfig('map.defaultZoom')
             },
-            markers: {}, // must be initialized even if empty, else markers and paths won't show up later 
+            markers: {}, // must be initialized even if empty, else markers and paths won't show up later
             paths: {}
         };
 
@@ -1542,7 +1622,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
         if ($scope.geolocationAlwaysOn) {
             $scope.toggleGeoLocation(true);
         }
-        
+
 
         $scope.$emit('mapLoadedEvent');
     };
@@ -1815,7 +1895,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.toggleGeoLocation = function (showInfo) {
         if ($scope.getRealTimePos == false) {
             $scope.getRealTimePos = true;
-            
+
             // Geolocation is now ON
             if (showInfo) {
                 $ionicLoading.show({
@@ -1876,4 +1956,49 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
     //$scope.initialize();
 
+}])
+
+
+.controller('registerCtrl', ['$scope', '$rootScope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicLoading',
+    '$timeout', 'leafletData', '$translate', 'GameData', 'PathData', 'PlayerStats', '$location', 'authentication',
+    function ($scope, $rootScope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicLoading,
+              $timeout, leafletData, $translate, GameData, PathData, PlayerStats, $location, authentication) {
+
+        var vm = this;
+        console.log("register is running");
+
+        // Register the new user
+        vm.credentials = {
+            firstName: "",
+            lastName: "",
+            email: "",
+            userName: "",
+            password: "",
+            password2: "",
+            birthday: "",
+            info: "",
+            registrDate: ""
+        };
+
+        console.log(vm);
+
+        vm.onSubmit = function () {
+            console.log("submit");
+            if (vm.credentials.password !== vm.credentials.password2) {
+                console.log("in if");
+                alert("Passwörter stimmen nicht überein!");
+            } else {
+                console.log('Submitting registration');
+                console.log(vm.credentials)
+                authentication
+                    .register(vm.credentials)
+                    .error(function (err) {
+                        console.log(err);
+                        alert(err);
+                    })
+                    .then(function () {
+                        $location.path('/afterlogin');
+                    });
+            }
+        };
 }]);

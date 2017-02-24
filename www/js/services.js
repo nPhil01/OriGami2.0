@@ -1,32 +1,96 @@
 angular.module('starter.services', [])
 
-.value('Server', 'ORIGAMI_API_URL')
+.value('Server', 'localhost:5000')
+
+// #################################################################################################
+// services service
+// #################################################################################################
+
+// NEW: clear input field
+.factory('ClearInputField', function() {
+  console.log("ClearInputField");
+
+  clearInput = function(fieldID) {
+
+    console.log("clearInput");
+    console.log(fieldID);
+    console.log($scope.fieldID);
+    // $scope.fieldID = null;
+  };
+})
+
+// NEW: Login Service
+.service('LoginService', function($q) {
+  return {
+    loginUser: function(name, pw) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      //user & secret = placeholder for DB check
+      if (name == 'user' && pw == 'secret') {
+        deferred.resolve('Welcome ' + name + '!');
+      } else {
+        deferred.reject('Wrong credentials!');
+      }
+      promise.success = function(fn) {
+        promise.then(fn);
+        return promise;
+      }
+      promise.error = function(fn) {
+        promise.then(null, fn);
+        return promise;
+      }
+      return promise;
+    }
+  }
+})
+
+.service('EditService', function() {
+  return {
+    editValue: function(value, def) {
+      console.log("EditService");
+      console.log(value);
+      console.log(def);
+      var back = value + ', ' + def;
+      return back;
+    }
+  }
+})
+
+// NEW: account edit factory
+.factory('EditProfile', function() {
+
+})
+
+// #################################################################################################
+// services factory
+// #################################################################################################
 
 .factory('Edit', function() {
     var editedGame = {};
     var game = {};
-    
+
     editedGame.pushGame = function(value){
         game = value;
     };
-    
+
     editedGame.getGame = function(){
-      return game;  
+      return game;
     };
-    
+
     editedGame.resetGame = function(){
         game = null;
     };
-    
+
     editedGame.resetActivities = function(){
         editedGame.activities = [];
     }
-    return editedGame;    
-}) 
+    return editedGame;
+})
 .factory('PathData',function(){
     var pathObj = {};
     var pathdata = [];
-    
+
     pathObj.addCoord = function(lat,lng){
         pathdata.push({
             'lat' : lat,
@@ -38,9 +102,9 @@ angular.module('starter.services', [])
     pathObj.getPath = function(){
         return pathdata;
     };
-    
-    return pathObj; 
-    
+
+    return pathObj;
+
 })
 .factory('Data', function () {
 
@@ -57,7 +121,7 @@ angular.module('starter.services', [])
 
     var activities = [];
     var tasks = [];
-    var gameType = ""; // Path planning / Aided Wayfinding 
+    var gameType = ""; // Path planning / Aided Wayfinding
     var taskType = ""; // Question - Answer / Georeference
 
 
@@ -100,7 +164,7 @@ angular.module('starter.services', [])
     taskService.addType = function (taskType) {
         task.type = taskType;
     };
-    
+
       // Add relevant information to the PHOTO TASK
     taskService.addPhoto = function (taskPhoto) {
         task.photo = taskPhoto;
@@ -114,14 +178,14 @@ angular.module('starter.services', [])
         task.question = qaGame.question;
         task.answers = qaGame.answers;
     }
-    
-    
+
+
     taskService.addIndexes = function (actIndex, pointIndex) {
         currentActIndex = actIndex;
         currentPointIndex = pointIndex;
     };
 
-    // Get and Clear TASK 
+    // Get and Clear TASK
     taskService.getTask = function () {
         return task;
     };
@@ -258,7 +322,7 @@ angular.module('starter.services', [])
             defaultLayer : 'satellite' // choose from : satellite / streets / topographic
         },
         geolocationAlwaysOn : false, // always use GPS. If true, also hide map button to toggle geolocation
-        thresholdDistance: 30, // distance (in metres) to target waypoint below which target is treated as reached 
+        thresholdDistance: 30, // distance (in metres) to target waypoint below which target is treated as reached
         thresholdDistanceGeolocOn: 10, // same when geolocation is on
         georefThresholdDistance : 25, // threshold distance for georeference game to treat answer as correct and gain points
         // scores and penalties for various scenarios
@@ -269,7 +333,7 @@ angular.module('starter.services', [])
             georefCorrect : 10, // points gained when georeference is below 'georefThresholdDistance'
             georefIncorrect : 0 // points lost when georeference is more than 'georefThresholdDistance'
         },
-        qaTimeLimit : 60, // time limit (in seconds) to choose answer in question-answer game
+        qaTimeLimit : 30, // time limit (in seconds) to choose answer in question-answer game
         playerLocationHintTimeout : 5, // time limit (in seconds) to show player's position marker when button is pressed
         language : "en" // recommmended interface language for game (alternatives - de / es / pt / en)
 
@@ -344,10 +408,10 @@ angular.module('starter.services', [])
         return null;
     };
     data.getConfig = function (prop) {
-        /*       
-            Check if object has nested keys. Angular don't provide inbuilt functions for the same 
+        /*
+            Check if object has nested keys. Angular don't provide inbuilt functions for the same
             e.g. objHasProp (myObj, 'foo.bar.xyz')
-            checks if myObj has 'foo', then 'bar', then 'xyz' as it's properties 
+            checks if myObj has 'foo', then 'bar', then 'xyz' as it's properties
             Second argument is a string
         */
         var objHasProp = function (obj, keys) {
@@ -477,7 +541,7 @@ angular.module('starter.services', [])
     };
 
 
-    /* Return index of next playable Activity. 
+    /* Return index of next playable Activity.
      * If current activity is unfinished, return index of current activity
      */
     state.todoActivityIndex = function () {
@@ -506,7 +570,7 @@ angular.module('starter.services', [])
         return activityIndex;
     };
 
-    /* Return index of next waypoint. 
+    /* Return index of next waypoint.
      * If current waypoint is not cleared, return index of current waypoint
      */
     state.todoWaypointIndex = function () {
@@ -530,7 +594,7 @@ angular.module('starter.services', [])
         }
         return waypointIndex;
     };
-    /* Return index of next task. 
+    /* Return index of next task.
      * If current task is not finished, return index of current task
      */
     state.todoTaskIndex = function () {
@@ -564,7 +628,7 @@ angular.module('starter.services', [])
         console.log("Saving State", stateObj);
         LocalDB.saveState(stateObj);
     };
-    
+
     /* Get saved game state from browser's indexedDB' */
     state.loadState = function(playerName) {
         LocalDB.getState().then(
@@ -663,7 +727,7 @@ angular.module('starter.services', [])
         data.trajectory = PathData.getPath();
         LocalDB.saveItem(data);
         /*
-        origami_stats = localStorage.getItem('origami_stats') 
+        origami_stats = localStorage.getItem('origami_stats')
         if (!origami_stats) {
             origami_stats = [];
         }
@@ -680,7 +744,7 @@ angular.module('starter.services', [])
 
 /* Store gamedata offline using Indexed DB */
 .factory('LocalDB', ['$localForage', function ($localForage) {
-    // Database has been intialized $localForageProvider.config in app.js 
+    // Database has been intialized $localForageProvider.config in app.js
     db = {};
     var trackerDB = $localForage.createInstance({
         name: 'origami_tracker',
@@ -715,4 +779,126 @@ angular.module('starter.services', [])
         return stateDB.getItem('gameState');
     };
     return db;
+}])
+
+.factory('authentication', ['$http', '$window','Server', function ($http, $window, Server) {
+    var base = Server;
+    var saveToken = function (token) {
+        $window.localStorage['mean-token'] = token;
+    };
+
+    var getToken = function () {
+        return $window.localStorage['mean-token'];
+    };
+
+    var isLoggedIn = function() {
+        var token = getToken();
+        var payload;
+
+        if(token){
+            payload = token.split('.')[1];
+            payload = $window.atob(payload);
+            payload = JSON.parse(payload);
+
+            return payload.exp > Date.now() / 1000;
+        } else {
+            return false;
+        }
+    };
+
+    var currentUser = function() {
+        if(isLoggedIn()){
+            var token = getToken();
+            var payload = token.split('.')[1];
+            payload = $window.atob(payload);
+            payload = JSON.parse(payload);
+            return {
+                firstName : payload.firstName,
+                lastName : payload.lastName,
+                email : payload.email,
+                userName : payload.userName
+            };
+        }
+    };
+
+    register = function(user) {
+        return $http.post(base + '/register', user).success(function(data){
+            saveToken(data.token);
+        });
+    };
+
+    login = function(user) {
+        return $http.post(base + 'login', user).success(function(data) {
+            saveToken(data.token);
+        });
+    };
+
+    logout = function() {
+        $window.localStorage.removeItem('mean-token');
+    };
+
+    return {
+        currentUser : currentUser,
+        saveToken : saveToken,
+        getToken : getToken,
+        isLoggedIn : isLoggedIn,
+        register : register,
+        login : login,
+        logout : logout
+    };
+}])
+
+.factory('meanData', ['$http', 'authentication','Server', function ($http, authentication, Server) {
+    var base = Server;
+    var getProfile = function () {
+        return $http.get(base + 'profile', {
+            headers: {
+                Authorization: 'Bearer '+ authentication.getToken()
+            }
+        });
+    };
+
+    var getProfile2 = function(id) {
+        return $http.get(base + 'profile/'+ id);
+    };
+
+
+    return {
+        getProfile : getProfile,
+        getProfile2: getProfile2,
+    };
+}])
+
+.factory('userService', ['$http', 'authentication','Server', function ($http, authentication, Server) {
+    var base = Server;
+    function update(user) {
+        return $http.post(base + 'profileUpdate', user, {
+            headers: {
+                Authorization: 'Bearer ' + authentication.getToken()
+            }})
+    };
+
+    function deleteUsers(user) {
+        return $http.post(base + '/profileDelete', user, {
+            headers: {
+                Authorization: 'Bearer ' + authentication.getToken()
+            }})
+    };
+
+    var collID;
+
+    function setCollID(value){
+        collID = value;
+    };
+
+    function getCollID(){
+        return collID;
+    };
+
+    return {
+        update : update,
+        deleteUsers : deleteUsers,
+        setCollID: setCollID,
+        getCollID: getCollID
+    };
 }]);

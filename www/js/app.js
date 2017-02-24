@@ -203,9 +203,69 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
                     controller: 'NewGameCtrl'
                 }
             }
-        });
+        })
+
+        // ########################################################
+        // starting templates for usermanagement/ OriGami-Base-Game
+        // ########################################################
+
+        // abstract for all "acc"-tabs
+        .state('acc', {
+            url: '/acc',
+            abstract: true,
+            templateUrl: 'templates/acc-tabs.html'
+        })
+
+        .state('acc.log', {
+            url: '/log',
+            views: {
+                'tab-acc': {
+                    templateUrl: 'templates/acc-log.html',
+                    controller: 'LoginCtrl'
+                }
+            }
+        })
+
+        .state('tab.afterlogin', {
+            url: '/afterlogin',
+            views: {
+                'tab-home': {
+                    templateUrl: 'templates/after-login.html',
+                }
+            }
+        })
+
+        .state('acc.profile', {
+            url: '/profile', //     /:accusername',
+            views: {
+                'tab-acc': {
+                    templateUrl: 'templates/acc-profile.html',
+                    controller: 'LoginCtrl'
+                }
+            }
+        })
+
+        .state('tab.account-view', {
+            url: '/account', //     /:accusername',
+            views: {
+                'tab-home': {
+                    templateUrl: 'templates/profil-view.html',
+                }
+            }
+        })
+        .state('tab.register', {
+            url: '/register', //     /:accusername',
+            views: {
+                'tab-home': {
+                    templateUrl: 'templates/acc-register.html',
+                    controller: 'registerCtrl',
+                    controllerAs: "vm"
+                }
+            }
+        })
+
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/home');
+    $urlRouterProvider.otherwise('/tab/home');    // TODO: '/acc/log'
 })
 
 .config(['$localForageProvider', function ($localForageProvider) {

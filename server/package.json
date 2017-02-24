@@ -1,8 +1,30 @@
 {
-  "name": "origami",
-  "version": "1.0.0",
-  "description": "origami: An Ionic project",
+  "name": "origami-server",
+  "version": "0.0.1",
+  "private": true,
+  "description": "server for user management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": [
+    "Torben Kraft <tkraf03@uni-muenster.de"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ifgi-sil/origami-backend.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ifgi-sil/origami-backend/issues"
+  },
   "dependencies": {
+    "body-parser": "~1.13.1",
+    "colors": "^1.1.2",
+    "express": "~4.13.0",
+    "mongoose": "~4.0.6",
+    "nodemon": "^1.9.2",
+
     "angular": "^1.5.8",
     "angular-base64-upload": "^0.1.19",
     "angular-cookies": "^1.5.8",
@@ -10,19 +32,22 @@
     "angular-material-icons": "^0.7.1",
     "angular-simple-logger": "^0.1.7",
     "angular-translate": "^2.12.0",
-    "express-jwt": "^3.0.1",
     "ionic-material": "^0.4.1",
     "ionic-sdk": "git://github.com/driftyco/ionic.git#v1.3.0",
     "jquery": "^3.1.0",
     "leaflet": "^0.7.7",
     "localforage": "^1.4.2",
-    "mongoose": "^4.1.2",
     "ng-cordova": "^0.1.27-alpha",
     "ng-file-upload": "^12.2.8",
-    "passport": "^0.2.2",
-    "passport-local": "^1.0.0",
     "svg-morpheus": "^0.3.0",
-    "ui-leaflet": "^1.0.1"
+    "ui-leaflet": "^1.0.1",
+
+    "imagemagick": "^0.1.3",
+    "md5-file": "^3.1.1",
+    "mongojs": "^2.4.0",
+    "multer": "^1.2.0",
+    "restify": "^4.1.1",
+    "mongoose": "~4.0.6"
   },
   "devDependencies": {
     "bower": "^1.3.3",
